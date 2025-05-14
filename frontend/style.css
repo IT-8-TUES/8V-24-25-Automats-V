@@ -1,0 +1,131 @@
+:root {
+  --gradient-start: #00f5a0;
+  --gradient-end:   #00d9f5;
+  --bg-dark:        #0b0b17;
+  --text-light:     #efefef;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+
+.site-header {
+  text-align: center;
+  padding: 2em 0;
+}
+
+.logo {
+  max-width: 180px;
+}
+
+.site-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3em;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0.2em 0;
+}
+
+.site-subtitle {
+  font-size: 1.2em;
+  opacity: 0.8;
+}
+
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+.main-nav a {
+  color: var(--gradient-start);
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s;
+}
+
+.main-nav a:hover {
+  opacity: 0.7;
+}
+
+.section {
+  padding: 4em 0;
+  text-align: center;
+}
+
+.about-section p,
+.features-section .feature-card p {
+  max-width: 600px;
+  margin: 1em auto;
+  line-height: 1.6;
+}
+
+.features-section .grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.feature-card {
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  border-radius: 12px;
+  padding: 2em;
+  flex: 1 1 250px;
+  font-family: 'Orbitron', sans-serif;
+  color: #0b0b17;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1em;
+  margin-top: 2em;
+}
+
+gallery-grid img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+
+.site-footer {
+  background: #090916;
+  padding: 3em 0;
+}
+
+.site-footer a {
+  color: var(--gradient-end);
+  text-decoration: none;
+}
+
+.socials {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}

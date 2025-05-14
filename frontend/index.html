@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astra Nova</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-container">
+      <img src="../frontend/public/logo/logo.png" alt="Astra Nova Logo" class="logo">
+      <h1 class="site-title">ASTRA NOVA</h1>
+      <p class="site-subtitle">Пътешествие из звездите и тайните на Вселената</p>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="#about">За нас</a></li>
+          <li><a href="#features">Функции</a></li>
+          <li><a href="#gallery">Галерия</a></li>
+          <li><a href="#contact">Контакт</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section id="about" class="section about-section reveal">
+    <div class="container">
+      <h2>За Astra Nova</h2>
+      <p>„Astra Nova“ е вашият портал към безкрайния космос. Научете, разглеждайте и вдъхновявайте се от чудесата на Вселената.</p>
+    </div>
+  </section>
+
+  <section id="features" class="section features-section reveal">
+    <div class="container grid">
+      <div class="feature-card">
+        <h3>Интерактивни карти</h3>
+        <p>Истински 3D модели на планети и системи.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Актуални данни</h3>
+        <p>Последни снимки и научни факти.</p>
+      </div>
+      <div class="feature-card">
+        <h3>VR опит</h3>
+        <p>Пълно потапяне в междузвездни пътешествия.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="section gallery-section reveal">
+    <div class="container">
+      <h2>Галерия</h2>
+      <div class="gallery-grid">
+        <!-- Примерни изображения -->
+        <img src="img/planet1.jpg" alt="Планета 1">
+        <img src="img/planet2.jpg" alt="Планета 2">
+        <img src="img/nebula.jpg" alt="Nebula">
+        <img src="img/galaxy.jpg" alt="Galaxy">
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact" class="site-footer reveal">
+    <div class="container">
+      <h2>Свържете се с нас</h2>
+      <p>Email: <a href="mailto:info@astranova.bg">info@astranova.bg</a></p>
+      <p>Телефон: +359 88 123 4567</p>
+      <div class="socials">
+        <a href="#" aria-label="Facebook">Fb</a>
+        <a href="#" aria-label="Twitter">Tw</a>
+        <a href="#" aria-label="Instagram">Ig</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function reveal() {
+      const reveals = document.querySelectorAll('.reveal');
+      for (const el of reveals) {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) el.classList.add('active');
+      }
+    }
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
+  </script>
+</body>
+</html>
+
