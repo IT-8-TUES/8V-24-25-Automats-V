@@ -97,7 +97,8 @@ body {
 }
 
 gallery-grid img {
-  width: 100%;
+  width: 10px;
+  height:10px;
   border-radius: 10px;
   display: block;
 }
