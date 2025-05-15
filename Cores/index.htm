@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cosmic Descriptions</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(160deg, #0a0c2a, #1d1b3a, #000);
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 30px 0;
+      color: #facc15;
+      text-shadow: 0 0 10px #facc15;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 20px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .card {
+      background: #1f1f2f;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card .info {
+      padding: 15px;
+    }
+
+    .card h2 {
+      color: #facc15;
+      margin: 0 0 10px 0;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.95em;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Explore the Universe</h1>
+
+  <div class="gallery">
+    <!-- Earth -->
+    <div class="card">
+      <img src=""alt= "Earth">
+      <div class="info">
+        <h2>Earth</h2>
+        <p>Our home planet — the only known world to support life, covered in water and a breathable atmosphere.</p>
+      </div>
+    </div>
+
+    <!-- Galaxy -->
+    <div class="card">
+      <img src="https://cdn.pixabay.com/photo/2013/07/18/20/26/space-164501_1280.jpg" alt="Galaxy">
+      <div class="info">
+        <h2>Spiral Galaxy</h2>
+        <p>A beautiful spiral galaxy similar to our Milky Way, filled with billions of stars and solar systems.</p>
+      </div>
+    </div>
+
+    <!-- Nebula -->
+    <div class="card">
+      <img src="https://cdn.pixabay.com/photo/2020/12/14/16/00/nebula-5830109_1280.jpg" alt="Nebula">
+      <div class="info">
+        <h2>Orion Nebula</h2>
+        <p>This glowing cloud of gas and dust is a stellar nursery where new stars are born.</p>
+      </div>
+    </div>
+
+    <!-- Sun -->
+    <div class="card">
+      <img src="https://cdn.pixabay.com/photo/2015/12/01/20/28/sun-1077917_1280.jpg" alt="Sun">
+      <div class="info">
+        <h2>The Sun</h2>
+        <p>A yellow dwarf star at the center of our solar system, providing heat and light to all the planets.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Parts of a Star</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(160deg, #0b0c2a 0%, #1b1b40 30%, #351b4a 60%, #000000 100%);
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-top: 30px;
+      font-size: 2em;
+      color: #facc15;
+      text-shadow: 0 0 10px #facc15;
+    }
+
+    .star-container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      margin-top: 40px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .zone {
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+
+    .zone:hover {
+      opacity: 1;
+    }
+
+    .info-box {
+      background-color: #1f1f2f;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 30px;
+      max-width: 350px;
+      text-align: left;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .info-box h2 {
+      color: #facc15;
+      margin-top: 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Explore the Parts of a Star</h1>
+
+  <div class="star-container">
+    <svg viewBox="0 0 200 200">
+      <!-- Corona -->
+      <circle class="zone" cx="100" cy="100" r="90" fill="#ffffff33"
+              onclick="showInfo('Corona', 'The outer atmosphere of the star. Extremely hot and visible during solar eclipses.')"/>
+
+      <!-- Photosphere -->
+      <circle class="zone" cx="100" cy="100" r="70" fill="#f97316aa"
+              onclick="showInfo('Photosphere', 'The visible surface of the star that emits light we can see from Earth.')"/>
+
+      <!-- Convective Zone -->
+      <circle class="zone" cx="100" cy="100" r="50" fill="#ef4444aa"
+              onclick="showInfo('Convective Zone', 'Energy is transferred by convection: hot plasma rises, cool plasma sinks.')"/>
+
+      <!-- Radiative Zone -->
+      <circle class="zone" cx="100" cy="100" r="30" fill="#eab308cc"
+              onclick="showInfo('Radiative Zone', 'Energy moves outward from the core through radiation (photons).')"/>
+
+      <!-- Core -->
+      <circle class="zone" cx="100" cy="100" r="15" fill="#facc15"
+              onclick="showInfo('Core', 'The center of the star where nuclear fusion generates energy.')"/>
+    </svg>
+  </div>
+
+  <div id="info" class="info-box"></div>
+
+  <script>
+    function showInfo(title, description) {
+      const infoBox = document.getElementById('info');
+      infoBox.innerHTML = `<h2>${title}</h2><p>${description}</p>`;
+      infoBox.style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
