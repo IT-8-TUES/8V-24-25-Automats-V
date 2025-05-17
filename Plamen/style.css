@@ -10,13 +10,13 @@ body {
 /* Хедър */
 .site-header {
   background: linear-gradient(135deg, #0a1e40, #00172d);
-  padding: 20px 20px 10px;
-  text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1);
-  transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    padding: 20px 20px 10px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1);
+    transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 .site-header.hide {
