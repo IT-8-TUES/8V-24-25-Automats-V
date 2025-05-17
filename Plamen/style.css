@@ -205,12 +205,17 @@ section p {
   color: #008877aa;
 }
 .image-section {
-  text-align: center;
-  margin: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: black; /* за да контрастира */
 }
 
+
 .responsive-image {
-  max-width: 90%;
+  display: block;
+  max-width: 60%;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 0 20px #00ffa1aa;
