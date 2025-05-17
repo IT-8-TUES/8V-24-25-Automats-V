@@ -5,47 +5,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Astra Nova</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-   <link rel="icon" type="image/png" href="../Plamen/public/logo/logo.png">
+   <link rel="icon" type="image/png" href="../Plamen/logo.png">
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header show" id="siteHeader">
     <div class="container header-container">
       <img src="../Plamen/logo.png" alt="Astra Nova Logo" class="logo">
       <h1 class="site-title">ASTRA NOVA</h1>
-      <p class="site-subtitle">Пътешествие из звездите и тайните на Вселената</p>
+      <p class="site-subtitle">A journey through the stars and the secrets of the Universe</p>
       <nav class="main-nav">
         <ul>
-            <li><a href="../Plamen/index.html">Home</a></li>
+          <li><a href="../Plamen/index.html">Home</a></li>
           <li><a href="../Plamen/history.html">History</a></li>
        <li><a href="../Nikola/star.html">The Star</a></li>
         <li><a href="../Nikola/Description.html">Description</a></li>
           <!--dachev--><li><a href="#gallery">DachevGallery</a></li>
           <li><a href="#merch">DachevMerch</a></li>
-         
         </ul>
       </nav>
     </div>
   </header>
+  <h1> History of Space Exploration</h1>
+  <h2>Important Dates and Events</h2>
+  
+  
+    <p><strong>October 4, 1957:</strong> USSR launches the first artificial satellite – Sputnik 1.</p>
+    <p><strong>November 3, 1957:</strong> Laika becomes the first animal in orbit aboard Sputnik 2.</p>
+    <p><strong>April 12, 1961:</strong> Yuri Gagarin becomes the first human in space.</p>
+    <p><strong>June 16, 1963:</strong> Valentina Tereshkova becomes the first woman in space.</p>
+    <p><strong>March 18, 1965:</strong> Alexei Leonov performs the first spacewalk.</p>
+    <p><strong>July 20, 1969:</strong> Apollo 11 lands on the Moon – Neil Armstrong is the first person to walk on the Moon.</p>
+    <p><strong>April 19, 1971:</strong> Salyut 1 – the first space station.</p>
+    <p><strong>1975:</strong> Apollo-Soyuz Test Project – the first international space mission (USA & USSR).</p>
+    <p><strong>1981:</strong> USA launches the first reusable space shuttle – Columbia.</p>
+    <p><strong>1990:</strong> Launch of the Hubble Space Telescope.</p>
+    <p><strong>November 20, 1998:</strong> Construction of the International Space Station (ISS) begins.</p>
+    <p><strong>2004:</strong> SpaceShipOne becomes the first private manned spacecraft to reach space.</p>
+    <p><strong>2012:</strong> NASA’s Curiosity rover lands on Mars.</p>
+    <p><strong>2015:</strong> New Horizons spacecraft flies by Pluto.</p>
+    <p><strong>2020:</strong> NASA's Perseverance rover launches to Mars.</p>
+    <p><strong>2021:</strong> First spaceflights with tourists – Blue Origin and SpaceX.</p>
+    <p><strong>2023:</strong> India’s Chandrayaan-3 mission lands near the Moon’s south pole.</p>
+</body>
+</html>
+
   <footer class="site-footer">
   <div class="container footer-container">
     <h3>Contact Us</h3>
     <p>Email: info@astranova.com</p>
     <p>Phone: +359 88 123 4567</p>
     <p>Address: Sofia Bulgaria</p>
+    <h3>About us</h3>
+    <h4> creators</h4>
+    <p>Plamen Yalamov,  Nikola Tareyn,  Alexander Dachev</p>
+    <p> we are from TUES(TECHNOLOGICAL SCHOOL ELECTRONIC SYSTEMS)</p>
+     <p> (bg: ТЕХНОЛОГИЧНО УЧИЛИЩЕ ЕЛКТРОННИ СИСТЕМИ)</p>
+    <p>we are from one class and good friends </p>
     <nav class="footer-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="history.html">History</a></li>
-        <li><a href="#about">About us</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+          <li><a href="history.html">History</a></li>
+       <li><a href="../Cores/index.html">The Star</a></li>
+        <li><a href="../Cores/index1.html">Description</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#merch">Merch</a></li>
     </nav>
     <p class="copyright">© 2025 Astra Nova. All rights reserved.</p>
   </div>
 </footer>
+<script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.fade-in').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Hide/show header on scroll
+    let lastScrollTop = 0;
+    const header = document.getElementById('siteHeader');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop) {
+        // Scrolling down
+        header.classList.remove('show');
+        header.classList.add('hide');
+      } else {
+        // Scrolling up
+        header.classList.remove('hide');
+        header.classList.add('show');
+      }
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+  </script>
 </body>
 </html>
