@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <title>Astra Nova – The Star</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <!-- HEADER -->
+ 
   <header class="site-header show" id="siteHeader">
     <div class="header-inner">
       <img src="../Plamen/public/logo/logo.png" alt="Astra Nova Logo" class="logo">
@@ -22,12 +22,13 @@
           <li><a href="description.html">Description</a></li>
           <li><a href="star.html">The Star</a></li>
           <li><a href="#gallery">Gallery</a></li>
+           <li><a href="#merch">Gallery</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- STAR CONTENT -->
+  
   <h1 class="page-star">Explore the Parts of a Star</h1>
 
   <div class="star-container">
@@ -47,7 +48,7 @@
 
   <div id="infoBox" class="info-box"></div>
 
-  <!-- FOOTER -->
+  
   <footer class="site-footer">
     <div class="footer-container">
       <h3>Contact Us</h3>
@@ -68,15 +69,15 @@
     </div>
   </footer>
 
-  <!-- JS for info pop-up + hide/show header -->
+  
   <script>
-    /* pop-up */
+   
     function showInfo(title,text){
       const box=document.getElementById('infoBox');
       box.innerHTML=`<h2>${title}</h2><p>${text}</p>`;
       box.style.display='block';
     }
-    /* hide header on scroll */
+    
     let last=0;const header=document.getElementById('siteHeader');
     window.addEventListener('scroll',()=>{
       const cur=window.pageYOffset||document.documentElement.scrollTop;
