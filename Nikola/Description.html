@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Astra Nova – Description</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header show" id="siteHeader">
+    <div class="header-inner">
+      <img src="../Plamen/public/logo/logo.png" alt="Astra Nova Logo" class="logo">
+      <div class="site-title">ASTRA NOVA</div>
+      <div class="site-subtitle">A journey through the stars and the secrets of the Universe</div>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="description.html">Description</a></li>
+          <li><a href="star.html">The Star</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <h1>The Universe Around Us</h1>
+
+    <section>
+      <h2>🌌 Our Galaxy – The Milky Way</h2>
+      <p>
+        The Milky Way is a barred spiral galaxy spanning roughly 100 000 light-years.
+        Home to more than 100 billion stars, it hosts giant clouds of gas, dust,
+        ancient clusters and a super-massive black hole at its centre.  
+        Our Solar System orbits this centre at ≈220 km/s, taking 230 million years per revolution.
+      </p>
+    </section>
+
+    <section>
+      <h2>☀️ Our Solar System</h2>
+      <p>
+        Formed 4.6 billion years ago, the Solar System is bound to the Sun by gravity.
+        It contains eight planets, 200+ moons, dwarf planets, asteroids and comets.
+        99.8 % of the system’s mass lies in the Sun, a G-type star fusing hydrogen into helium.
+        Rocky inner worlds contrast with the gas and ice giants beyond the Asteroid Belt.
+      </p>
+    </section>
+
+    <section>
+      <h2>🌍 Planet Earth</h2>
+      <p>
+        Earth is the third planet from the Sun and the only known world with life.
+        Vast oceans cover 71 % of its surface, while a magnetic field and atmosphere
+        shield life from radiation. Plate tectonics sculpt continents and recycle
+        nutrients; the Moon stabilises Earth’s tilt, producing tides that nurture ecosystems.
+      </p>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <h3>Contact Us</h3>
+      <p>Email: info@astranova.com</p>
+      <p>Phone: +359 88 123 4567</p>
+      <p>Address: Sofia, Bulgaria</p>
+
+      <nav class="footer-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="../Cores/index.html">The Star</a></li>
+          <li><a href="../Cores/index1.html">Description</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#merch">Merch</a></li>
+        </ul>
+      </nav>
+
+      <p class="copyright">© 2025 Astra Nova. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* hide header on scroll */
+    let last=0;const header=document.getElementById('siteHeader');
+    window.addEventListener('scroll',()=>{
+      const cur=window.pageYOffset||document.documentElement.scrollTop;
+      if(cur>last){header.classList.replace('show','hide');}
+      else         {header.classList.replace('hide','show');}
+      last=cur<=0?0:cur;
+    });
+  </script>
+</body>
+</html>

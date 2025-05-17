@@ -1,110 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Astra Nova</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="../Plamen/public/logo/logo.png">
+  <meta charset="UTF-8" />
+  <title>ASTRA NOVA – Star Anatomy</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(160deg, #0b0c2a, #1b1b40, #351b4a, #000);
+      color: #aefeff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: linear-gradient(135deg, #0a1e40, #00172d);
+      padding: 20px 20px 10px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1);
+      transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .site-header.hide {
+      top: -120px;
+      opacity: 0;
+    }
+
+    .site-header.show {
+      top: 0;
+      opacity: 1;
+    }
+
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      height: 60px;
+      margin-bottom: 10px;
+    }
+
+    .site-title {
+      font-size: 2.5rem;
+      color: #00ffa1;
+      margin: 10px 0 0;
+    }
+
+    .site-subtitle {
+      font-size: 1rem;
+      color: #aefeff;
+      margin-top: 5px;
+    }
+
+    .main-nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 10px 0 0;
+    }
+
+    .main-nav a {
+      color: #aefeff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .main-nav a::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: -6px;
+      left: 0;
+      background-color: #00ffa1;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .main-nav a:hover {
+      color: #00ffa1;
+    }
+
+    .main-nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* STAR VISUAL */
+    h1 {
+      margin-top: 40px;
+      font-size: 2rem;
+      color: #00ffa1;
+    }
+
+    .star-container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      margin-top: 30px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .zone {
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+
+    .zone:hover {
+      opacity: 1;
+    }
+
+    .info-box {
+      background: #1f1f2f;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 30px;
+      max-width: 350px;
+      text-align: left;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      display: none;
+      animation: fadeIn 0.4s forwards;
+      color: #ffffff;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <!-- HEADER -->
   <header class="site-header show" id="siteHeader">
     <div class="container header-container">
-      <img src="../Plamen/public/logo/logo.png" alt="Astra Nova Logo" class="logo">
+      <img src="../Plamen/public/logo/logo.png" alt="Astra Nova Logo" class="logo" />
       <h1 class="site-title">ASTRA NOVA</h1>
       <p class="site-subtitle">A journey through the stars and the secrets of the Universe</p>
       <nav class="main-nav">
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="history.html">History</a></li>
-       <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#gallery">Gallery</a></li>
+          <li><a href="description.html">Description</a></li>
+          <li><a href="star.html">The Star</a></li>
           <li><a href="#gallery">Gallery</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <section class="fade-in">
-    <h2 class="section-title">Welcome to Astra Nova</h2>
-    <p>Here you will find comprehensive information about the Universe, its wonders and mysteries. Astra Nova is created with people of all ages in mind and aims to make space knowledge accessible and inspiring.</p>
-  </section>
+  <!-- TITLE -->
+  <h1>Explore the Star</h1>
 
-  <section class="fade-in">
-  <h2 class="section-title">Planets and Stars</h2>
-  <p>Discover the structure and diversity of our Solar System
-     — from the rocky inner planets to the gas giants and icy worlds beyond. 
-     Learn about fascinating exoplanets orbiting distant stars, 
-     and explore the life cycles of stars: from birth in nebula to supernova, 
-     black holes, and neutron stars.</p>
-</section>
-
-<section class="image-section">
-  <img src="../Plamen/public/images/planeti.jpg" alt="Solar System" class="responsive-image">
-</section>
-
-<section class="fade-in">
-  <h2 class="section-title">Space Missions</h2>
-  <p>
-  Explore the most iconic space missions in human <a href="history.html" class="inline-history-link">history</a>. 
-  From the groundbreaking Apollo moon landings and the far-reaching Voyager probes, 
-  to modern observatories like the James Webb Space Telescope, uncover how these 
-  missions have expanded our understanding of the cosmos and our place in it.
-</p>
-</section>
-
-<section class="image-section">
-  <img src="images/space-mission.jpg" alt="Space Mission" class="responsive-image">
-</section>
-
-<footer class="site-footer">
-  <div class="container footer-container">
-    <h3>Contact Us</h3>
-    <p>Email: info@astranova.com</p>
-    <p>Phone: +359 88 123 4567</p>
-    <p>Address: Sofia Bulgaria</p>
-    <nav class="footer-nav">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="history.html">History</a></li>
-        <li><a href="#about">About us</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-    <p class="copyright">© 2025 Astra Nova. All rights reserved.</p>
+  <!-- STAR SVG -->
+  <div class="star-container fade-in">
+    <svg viewBox="0 0 200 200">
+      <circle class="zone" cx="100" cy="100" r="90" fill="#ffffff33"
+              onclick="showInfo('Corona','The outer atmosphere of the star. It’s very hot and extends millions of kilometers into space.')"/>
+      <circle class="zone" cx="100" cy="100" r="70" fill="#f97316aa"
+              onclick="showInfo('Photosphere','The visible surface of the star that emits light.')"/>
+      <circle class="zone" cx="100" cy="100" r="50" fill="#ef4444aa"
+              onclick="showInfo('Convective Zone','In this layer, energy is transported outward by convection.')"/>
+      <circle class="zone" cx="100" cy="100" r="30" fill="#eab308cc"
+              onclick="showInfo('Radiative Zone','Energy moves outward by radiation in this region.')"/>
+      <circle class="zone" cx="100" cy="100" r="15" fill="#facc15"
+              onclick="showInfo('Core','The center of the star, where nuclear fusion takes place.')"/>
+    </svg>
   </div>
-</footer>
 
+  <!-- INFO BOX -->
+  <div id="infoBox" class="info-box"></div>
+
+  <!-- SCRIPT -->
   <script>
+    // Show info about part
+    function showInfo(title, text) {
+      const box = document.getElementById('infoBox');
+      box.innerHTML = `<h2 style="color:#00ffa1">${title}</h2><p>${text}</p>`;
+      box.style.display = 'block';
+    }
+
+    // Fade in and header hide on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
       });
-    }, {
-      threshold: 0.1
-    });
+    }, { threshold: 0.1 });
 
     document.querySelectorAll('.fade-in').forEach(section => {
       observer.observe(section);
     });
 
-    // Hide/show header on scroll
     let lastScrollTop = 0;
     const header = document.getElementById('siteHeader');
 
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       if (scrollTop > lastScrollTop) {
-        // Scrolling down
         header.classList.remove('show');
         header.classList.add('hide');
       } else {
-        // Scrolling up
         header.classList.remove('hide');
         header.classList.add('show');
       }
