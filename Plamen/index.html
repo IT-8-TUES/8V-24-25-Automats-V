@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Astra Nova</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/png" href="../Plamen/public/logo/logo.png">
+  <!--<link rel="stylesheet" href="style.css">-->
+  <link rel="icon" type="image/png" href="logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -18,9 +18,10 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="history.html">History</a></li>
-       <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#gallery">Gallery</a></li>
+       <li><a href="../Cores/index.html">The Star</a></li>
+        <li><a href="../Cores/index1.html">Description</a></li>
           <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#merch">Merch</a></li>
         </ul>
       </nav>
     </div>
@@ -38,11 +39,10 @@
      Learn about fascinating exoplanets orbiting distant stars, 
      and explore the life cycles of stars: from birth in nebula to supernova, 
      black holes, and neutron stars.</p>
+  
 </section>
 
-<section class="image-section">
-  <img src="../Plamen/public/images/planeti.jpg" alt="Solar System" class="responsive-image">
-</section>
+
 
 <section class="fade-in">
   <h2 class="section-title">Space Missions</h2>
@@ -52,11 +52,13 @@
   to modern observatories like the James Webb Space Telescope, uncover how these 
   missions have expanded our understanding of the cosmos and our place in it.
 </p>
+<section class="image-section">
+ <img src="images/1.jpg" alt="Space Mission" class="responsive-image">
+
+</section>
 </section>
 
-<section class="image-section">
-  <img src="images/space-mission.jpg" alt="Space Mission" class="responsive-image">
-</section>
+
 
 <footer class="site-footer">
   <div class="container footer-container">
@@ -67,18 +69,17 @@
     <nav class="footer-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="history.html">History</a></li>
-        <li><a href="#about">About us</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+          <li><a href="history.html">History</a></li>
+       <li><a href="../Cores/index.html">The Star</a></li>
+        <li><a href="../Cores/index1.html">Description</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#merch">Merch</a></li>
     </nav>
     <p class="copyright">© 2025 Astra Nova. All rights reserved.</p>
   </div>
 </footer>
 
-  <script>
+ <script>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
