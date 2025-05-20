@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System - Astra Nova</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Load THREE.js from a reliable CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <!-- Add OrbitControls as a separate global variable -->
+    <script>
+        // Wait for Three.js to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create a script element for OrbitControls
+            var script = document.createElement('script');
+            script.src = "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js";
+            script.onload = function() {
+                console.log("OrbitControls loaded successfully");
+                // Initialize the solar system after OrbitControls is loaded
+                if (typeof initSolarSystem === 'function') {
+                    initSolarSystem();
+                }
+            };
+            script.onerror = function() {
+                console.error("Failed to load OrbitControls");
+                alert("Failed to load necessary components. Please check your internet connection and try again.");
+            };
+            document.head.appendChild(script);
+        });
+    </script>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <!-- Theme transition overlay -->
+    <div class="theme-transition-overlay"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="../index.html"><span>Astra</span>Nova</a>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Explore <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="planets.html" class="active">Planets</a></li>
+                            <li><a href="galaxies.html">Galaxies</a></li>
+                            <li><a href="universe.html">Multiverse</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../index.html#features">Features</a></li>
+                    <li><a href="../index.html#about">About</a></li>
+                    <li><a href="../index.html#newsletter">Newsletter</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <button class="theme-toggle" aria-label="Toggle dark/light mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" class="btn outline-btn">Sign In</a>
+                    <a href="#" class="btn primary-btn">Join Us</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="solar-system-intro">
+            <div class="container">
+                <h1 class="title">Our <span class="gradient-text">Solar System</span></h1>
+                <p class="subtitle">Explore the planets, moons, and other celestial bodies orbiting our star</p>
+            </div>
+        </section>
+
+        <section class="solar-system-container">
+            <div id="solar-system"></div>
+            <div id="planet-info" class="planet-info">
+                <h2 id="planet-name">Select a planet</h2>
+                <p id="planet-description">Hover over a planet to see details</p>
+                <div id="planet-stats"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-column">
+                        <div class="footer-logo">
+                            <span>Astra</span>Nova
+                        </div>
+                        <p class="footer-text">Exploring the cosmos since 2023</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Explore</h3>
+                        <ul class="footer-links">
+                            <li><a href="planets.html">Solar System</a></li>
+                            <li><a href="galaxies.html">Galaxies</a></li>
+                            <li><a href="universe.html">Multiverse</a></li>
+                            <li><a href="#">Space News</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <ul class="footer-links">
+                            <li><a href="../index.html#about">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Legal</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                            <li><a href="#">Accessibility</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">&copy; 2023 Astra Nova. All rights reserved.</p>
+                <p class="attribution">Made with <i class="fas fa-heart"></i> for space enthusiasts</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        console.log("Page loading...");
+        console.log("THREE available:", typeof THREE !== 'undefined');
+    </script>
+    <!-- Load solar-system.js after everything else -->
+    <script src="../js/viewers/solar-system.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html> 

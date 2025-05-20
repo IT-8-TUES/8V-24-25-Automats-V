@@ -1,0 +1,184 @@
+/* Light Theme Variables and Overrides */
+
+.light-theme {
+    /* Light theme variable overrides */
+    --text-light: #121212;
+    --text-dark: #ffffff;
+    --text-muted: #555566;
+    --background-dark: rgba(10, 10, 26, 0.5); /* Keep dark but slightly transparent */
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Light Theme Layout Elements */
+
+.light-theme header {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.light-theme footer {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.light-theme .mobile-menu-btn span {
+    background-color: var(--text-light);
+}
+
+.light-theme .nav-links a,
+.light-theme .footer-links a {
+    color: var(--text-light);
+}
+
+.light-theme .theme-toggle,
+.light-theme .logo a,
+.light-theme .nav-links a:not(:hover),
+.light-theme .dropdown-menu a {
+    color: var(--text-light);
+}
+
+.light-theme .dropdown-menu {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .dropdown-menu a:hover {
+    background: rgba(138, 43, 226, 0.1);
+}
+
+.light-theme .cookie-consent {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--text-light);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .social-links a {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .social-links a:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.light-theme #back-to-top {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Light Theme Content Elements */
+
+.light-theme .section-title,
+.light-theme .fact-content h2,
+.light-theme .newsletter-content h2,
+.light-theme .about-text h3 {
+    color: var(--primary-color);
+}
+
+.light-theme .btn.secondary {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.light-theme .btn.outline-btn {
+    border-color: var(--text-muted);
+    color: var(--text-light);
+}
+
+/* Light theme for hero/content containers */
+.light-theme .hero-content::before,
+.light-theme .about-text::before,
+.light-theme .section-header::before,
+.light-theme .testimonial-content::before,
+.light-theme .newsletter-content::before,
+.light-theme .feature-card::before {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(5px);
+    box-shadow: var(--box-shadow);
+}
+
+/* Light theme specific component styles */
+.light-theme .feature-card {
+    background: var(--card-bg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.light-theme .feature-card .card-image {
+    background: rgba(240, 242, 248, 0.9);
+}
+
+.light-theme .feature-card p {
+    color: var(--text-muted);
+}
+
+.light-theme .cosmos-fact {
+    background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url('../../images/neutron_star.jpg') center/cover no-repeat;
+}
+
+.light-theme .testimonial-content,
+.light-theme .newsletter-content,
+.light-theme .about-image .image-container {
+    background: var(--card-bg);
+    box-shadow: var(--box-shadow);
+}
+
+/* Fix for telescope image in light mode */
+.light-theme .about-image .image-container {
+    background: url('../../images/ground-based-telescope.jpg') center/cover no-repeat;
+}
+
+.light-theme .stat-box {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.light-theme .testimonials::before {
+    opacity: 0.15;
+}
+
+/* Light theme for visualization pages */
+.light-theme .planet-info,
+.light-theme .galaxy-info,
+.light-theme .universe-info {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: var(--box-shadow);
+}
+
+.light-theme .planet-info h2,
+.light-theme .galaxy-info h2,
+.light-theme .universe-info h2 {
+    color: var(--primary-color);
+}
+
+.light-theme .stat-item {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.light-theme .stat-label {
+    color: var(--primary-color);
+}
+
+.light-theme .camera-reset-btn {
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+/* Keep the cosmic background in light theme */
+.light-theme .stars,
+.light-theme .twinkling {
+    /* Retain the cosmic background */
+}
+
+/* Media queries for light theme on mobile devices */
+@media (max-width: 768px) {
+    /* Fix for image loading in mobile view with light theme */
+    .light-theme .cosmic-image {
+        background-image: url('../../images/pillarsofcreation_composite.jpg') !important; /* Relative path with !important */
+    }
+    
+    .light-theme .about-image .image-container {
+        background-image: url('../../images/ground-based-telescope.jpg') !important; /* Relative path with !important */
+    }
+} 

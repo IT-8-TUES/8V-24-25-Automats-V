@@ -1,0 +1,238 @@
+/* Основен стил */
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: radial-gradient(circle at top, #0b0c2a, #000);
+  color: #e0f7fa;
+  scroll-behavior: smooth;
+  text-align: center;
+}
+
+/* Хедър */
+.site-header {
+  background: linear-gradient(135deg, #0a1e40, #00172d);
+    padding: 20px 20px 10px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1);
+    transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.site-header.hide {
+  top: -120px;
+  opacity: 0;
+}
+
+.site-header.show {
+  top: 0;
+  opacity: 1;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Лого */
+.logo {
+  width: 200px;
+  height: 120px;
+  animation: pulse 4s infinite ease-in-out;
+}
+.inline-history-link {
+  color: #aefeff; /* същият цвят като линковете в навигацията */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.inline-history-link:hover {
+  color: #00ffa1; /* ефект при задържане */
+}
+
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+/* Заглавие */
+.site-title {
+  font-size: 2.2rem;
+  margin: 10px 0 5px;
+  background: linear-gradient(90deg, #00f9ff, #00ffa1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+/* Подзаглавие */
+.site-subtitle {
+  font-size: 1rem;
+  color: #a2c4ff;
+  margin-bottom: 15px;
+  text-shadow: 0 0 5px #0088ff55;
+}
+
+/* Навигация */
+.main-nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 0;
+}
+
+.main-nav a {
+  color: #aefeff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background-color: #00ffa1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease-in-out;
+}
+
+.main-nav a:hover {
+  color: #00ffa1;
+}
+
+.main-nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Секции */
+section {
+  min-height: 60vh;
+  padding: 40px 20px;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease-out;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  text-align: center;
+  background: linear-gradient(90deg, #00f9ff, #00ffa1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px #00ffa144;
+}
+
+/* Параграфи */
+section p {
+  text-align: center;
+  font-size: 1rem;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  line-height: 1.5;
+}
+.site-footer {
+  background: linear-gradient(135deg, #00172d, #0a1e40);
+  color: #aefeff;
+  padding: 40px 20px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  margin-top: 40px;
+  box-shadow: 0 -4px 20px rgba(0, 255, 255, 0.1);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.site-footer h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #00ffa1;
+}
+
+.site-footer p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.footer-nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.footer-nav a {
+  color: #aefeff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.footer-nav a:hover {
+  color: #00ffa1;
+}
+
+.site-footer .copyright {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #008877aa;
+}
+.image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: black; /* за да контрастира */
+}
+
+
+.responsive-image {
+  display: block;
+  max-width: 60%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #00ffa1aa;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.responsive-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #00fffacc;
+}
+ .site-header.hide {
+      transform: translateY(-100%);
+      transition: transform 0.4s ease-in-out;
+    }
+    .site-header.show {
+      transform: translateY(0);
+      transition: transform 0.4s ease-in-out;
+    }

@@ -1,0 +1,140 @@
+/* History Page Styles */
+
+/* History Intro Section */
+.history-intro {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 80px 20px 40px;
+  overflow: hidden;
+}
+
+.history-intro::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)), url('../../images/cosmos_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  filter: blur(2px);
+}
+
+.history-intro .title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.history-intro .subtitle {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+/* Timeline Section */
+.history-timeline {
+  padding: 60px 20px;
+  background: rgba(0, 10, 30, 0.4);
+}
+
+.timeline-entries {
+  position: relative;
+  max-width: 800px;
+  margin: 40px auto 0;
+  padding: 20px 0;
+}
+
+/* Vertical line */
+.timeline-entries::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: calc(120px + 10px);
+  height: 100%;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(0, 249, 255, 0.5), rgba(0, 255, 161, 0.5));
+  z-index: 1;
+}
+
+.timeline-entry {
+  position: relative;
+  margin-bottom: 30px;
+  padding-left: 140px;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-date {
+  position: absolute;
+  left: 0;
+  width: 120px;
+  text-align: right;
+  padding-right: 20px;
+  font-weight: bold;
+  color: #00ffa1;
+}
+
+/* Timeline dots */
+.timeline-entry::before {
+  content: '';
+  position: absolute;
+  left: calc(120px + 10px);
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #00f9ff, #00ffa1);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(0, 249, 255, 0.6);
+  z-index: 2;
+}
+
+.timeline-content {
+  background: rgba(5, 15, 35, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  border-left: 3px solid #00ffa1;
+  transition: all 0.3s;
+}
+
+.timeline-content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 249, 255, 0.2);
+}
+
+.timeline-content p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .timeline-entries::before {
+    left: 30px;
+  }
+  
+  .timeline-entry {
+    padding-left: 60px;
+  }
+  
+  .timeline-date {
+    position: static;
+    width: 100%;
+    text-align: left;
+    padding: 0 0 10px 60px;
+    font-size: 0.9rem;
+  }
+  
+  .timeline-entry::before {
+    left: 30px;
+  }
+} 

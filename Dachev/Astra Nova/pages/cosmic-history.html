@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic History Timeline - Astra Nova</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .cosmic-timeline-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000205;
+        }
+        
+        .timeline-viewer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .timeline-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 20px;
+            background: rgba(0, 10, 30, 0.7);
+            padding: 10px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .timeline-controls button {
+            background: #1a2d5c;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .timeline-controls button:hover {
+            background: #2e4b90;
+        }
+        
+        .event-info-panel {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            width: 400px;
+            background: rgba(0, 10, 30, 0.85);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            transform: translateX(500px);
+            transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .event-info-panel.visible {
+            transform: translateX(0);
+        }
+        
+        .event-info-panel h2 {
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+            font-size: 24px;
+            color: #c4e0ff;
+        }
+        
+        .event-info-panel .date {
+            font-size: 16px;
+            color: #ffd380;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .event-info-panel p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .event-info-panel img {
+            width: 100%;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-progress {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 2px;
+            z-index: 10;
+        }
+        
+        .timeline-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4a7fc1, #8ab4ff);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .timeline-markers {
+            position: absolute;
+            bottom: 84px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 20px;
+            z-index: 9;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #8ab4ff;
+            transform: translateY(-50%);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .timeline-marker:hover {
+            background: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+        
+        .timeline-marker.active {
+            background: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+        
+        .marker-label {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+        }
+        
+        .timeline-marker:hover .marker-label {
+            color: #ffffff;
+        }
+        
+        .autoplay-toggle {
+            background: transparent !important;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .autoplay-toggle span {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #2e4b90;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .autoplay-toggle.active span {
+            background: #64d362;
+        }
+        
+        .era-label {
+            position: absolute;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 10, 30, 0.7);
+            padding: 5px 15px;
+            border-radius: 15px;
+            z-index: 10;
+        }
+        
+        .loading-screen {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #000205;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 1s;
+        }
+        
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-icon {
+            width: 100px;
+            height: 100px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid #4a7fc1;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 18px;
+            color: #8ab4ff;
+        }
+        
+        .nav-back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 20;
+            background: rgba(0, 10, 30, 0.7);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .nav-back-btn:hover {
+            background: rgba(0, 20, 60, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-timeline-container">
+        <button class="nav-back-btn" onclick="window.location.href='../index.html'">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 12L6 8L10 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+        </button>
+        
+        <div id="timeline-viewer" class="timeline-viewer"></div>
+        
+        <div class="era-label" id="era-label">Big Bang</div>
+        
+        <div class="timeline-progress">
+            <div class="timeline-progress-bar" id="timeline-progress-bar"></div>
+        </div>
+        
+        <div class="timeline-markers" id="timeline-markers"></div>
+        
+        <div class="timeline-controls">
+            <button id="prev-event-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 12L6 8L10 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Previous
+            </button>
+            <button id="play-pause-btn">
+                <svg id="play-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 3L12 8L5 13V3Z" fill="white"/>
+                </svg>
+                <svg id="pause-icon" style="display: none;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="4" y="3" width="3" height="10" fill="white"/>
+                    <rect x="9" y="3" width="3" height="10" fill="white"/>
+                </svg>
+                Play
+            </button>
+            <button id="next-event-btn">
+                Next
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 4L10 8L6 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button id="autoplay-toggle" class="autoplay-toggle">
+                <span>&#10003;</span> Autoplay
+            </button>
+        </div>
+        
+        <div class="event-info-panel" id="event-info-panel">
+            <h2 id="event-title">The Big Bang</h2>
+            <span class="date" id="event-date">13.8 billion years ago</span>
+            <div id="event-content">
+                <p>The universe began with a rapid expansion from an extremely hot, dense state. This initial expansion set the stage for everything that followed.</p>
+                <img src="../images/cosmic-history/big-bang.jpg" alt="Artist's conception of the Big Bang">
+                <p>During the first moments after the Big Bang, the universe was filled with an incredibly hot, dense plasma of elementary particles. As the universe expanded and cooled, these particles began to combine to form the first atomic nuclei.</p>
+            </div>
+        </div>
+        
+        <div class="loading-screen" id="loading-screen">
+            <div class="loading-icon"></div>
+            <div class="loading-text">Loading Cosmic Timeline...</div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="../js/viewers/cosmic-timeline.js"></script>
+</body>
+</html> 

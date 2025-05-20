@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Astra Nova – The Star</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+
+ 
+  <header class="site-header show" id="siteHeader">
+    <div class="container header-container">
+      <img src="../Plamen/logo.png" alt="Astra Nova Logo" class="logo">
+      <h1 class="site-title">ASTRA NOVA</h1>
+      <p class="site-subtitle">A journey through the stars and the secrets of the Universe</p>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="indexMain.html">Home</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="star.html">The Star</a></li>
+          <li><a href="Description.html">Description</a></li>
+          <!--dachev--><li><a href="#gallery">DachevGallery</a></li>
+          <li><a href="#merch">DachevMerch</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  
+  <h1 class="page-star">Explore the Parts of a Star</h1>
+
+  <div class="star-container">
+    <svg viewBox="0 0 200 200">
+      <circle class="zone" cx="100" cy="100" r="90" fill="#ffffff33"
+              onclick="showInfo('Corona','The outer atmosphere of a star, extending millions of kilometres.')"/>
+      <circle class="zone" cx="100" cy="100" r="70" fill="#f97316aa"
+              onclick="showInfo('Photosphere','The visible surface of the star that emits most of its light.')"/>
+      <circle class="zone" cx="100" cy="100" r="50" fill="#ef4444aa"
+              onclick="showInfo('Convective Zone','Energy is carried by convection — hot plasma rises, cool plasma sinks.')"/>
+      <circle class="zone" cx="100" cy="100" r="30" fill="#eab308cc"
+              onclick="showInfo('Radiative Zone','Energy moves by radiation — photons scatter outward slowly.')"/>
+      <circle class="zone" cx="100" cy="100" r="15" fill="#facc15"
+              onclick="showInfo('Core','The centre where nuclear fusion powers the star.')"/>
+    </svg>
+  </div>
+
+  <div id="infoBox" class="info-box"></div>
+
+  
+  <footer class="site-footer">
+    <div class="container footer-container">
+    <h3>Contact Us</h3>
+    <p>Email: info@astranova.com</p>
+    <p>Phone: +359 88 123 4567</p>
+    <p>Address: Sofia Bulgaria</p>
+    <h3>About us</h3>
+    <h4> creators</h4>
+    <p>Plamen Yalamov,  Nikola Tareyn,  Alexander Dachev</p>
+    <p> we are from TUES(TECHNOLOGICAL SCHOOL ELECTRONIC SYSTEMS)</p>
+     <p> (bg: ТЕХНОЛОГИЧНО УЧИЛИЩЕ ЕЛКТРОННИ СИСТЕМИ)</p>
+    <p>we are from one class and good friends </p>
+    <nav class="footer-nav">
+      <ul>
+        <li><a href="indexMain.html">Home</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="star.html">The Star</a></li>
+        <li><a href="Description.html">Description</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#merch">Merch</a></li>
+    </nav>
+    <p class="copyright">© 2025 Astra Nova. All rights reserved.</p>
+  </div>
+  </footer>
+
+  
+  <script>
+   
+    function showInfo(title,text){
+      const box=document.getElementById('infoBox');
+      box.innerHTML=`<h2>${title}</h2><p>${text}</p>`;
+      box.style.display='block';
+    }
+    
+    let last=0;const header=document.getElementById('siteHeader');
+    window.addEventListener('scroll',()=>{
+      const cur=window.pageYOffset||document.documentElement.scrollTop;
+      if(cur>last){header.classList.replace('show','hide');}
+      else         {header.classList.replace('hide','show');}
+      last=cur<=0?0:cur;
+    });
+  </script>
+</body>
+</html>

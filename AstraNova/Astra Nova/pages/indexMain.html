@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Astra Nova - Explore the wonders of the universe, galaxies, planets and the theoretical multiverse">
+    <title>Astra Nova - Cosmic Explorer</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Critical image loading CSS -->
+    <style>
+        /* Direct CSS to ensure images load */
+        .cosmic-image {
+            background-image: url('../images/pillarsofcreation_composite.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+        
+        .about-image .image-container {
+            background-image: url('../images/ground-based-telescope.jpg') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+        
+        /* Light mode fixes */
+        .light-theme .cosmic-image {
+            background-image: url('../images/pillarsofcreation_composite.jpg') !important;
+        }
+        
+        .light-theme .about-image .image-container {
+            background-image: url('../images/ground-based-telescope.jpg') !important;
+        }
+        
+        /* Mobile-specific fixes */
+        @media (max-width: 768px) {
+            .cosmic-image {
+                background-image: url('../images/pillarsofcreation_composite.jpg') !important;
+            }
+            
+            .about-image .image-container {
+                background-image: url('../images/ground-based-telescope.jpg') !important;
+            }
+            
+            /* Light theme mobile */
+            .light-theme .cosmic-image {
+                background-image: url('../images/pillarsofcreation_composite.jpg') !important;
+            }
+            
+            .light-theme .about-image .image-container {
+                background-image: url('../images/ground-based-telescope.jpg') !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <!-- Theme transition overlay -->
+    <div class="theme-transition-overlay"></div>
+    
+    <!-- Announcement Banner -->
+    <div class="announcement-banner">
+        <div class="container">
+            <p><i class="fas fa-star-half-alt"></i> New Feature: Explore the Theoretical Multiverse in 3D! <a href="universe.html">Try it now</a></p>
+            <button class="close-banner"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="indexMain.html"><span>Astra</span>Nova</a>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="indexMain.html" class="active">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Explore <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="planets.html">Planets</a></li>
+                            <li><a href="galaxies.html">Galaxies</a></li>
+                            <li><a href="universe.html">Multiverse</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#newsletter">Newsletter</a></li>
+            </ul>
+                
+                <div class="nav-actions">
+                    <button class="theme-toggle" aria-label="Toggle dark/light mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" class="btn outline-btn">Sign In</a>
+                    <a href="#" class="btn primary-btn">Join Us</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section with Animated Background -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="title">Explore Our <span class="gradient-text">Cosmic Home</span></h1>
+                    <p class="subtitle">Journey from Earth to the farthest reaches of space and discover the wonders of our universe</p>
+                <div class="cta-buttons">
+                        <a href="planets.html" class="btn primary">Begin Exploration</a>
+                        <a href="#features" class="btn secondary"><i class="fas fa-info-circle"></i> Learn More</a>
+                    </div>
+                    <div class="scroll-indicator">
+                        <span>Scroll to Discover</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="floating-element"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Destinations Section -->
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Cosmic Destinations</h2>
+                    <p class="section-subtitle">Explore the wonders that await you in our cosmic journey</p>
+                </div>
+                <div class="feature-cards">
+                    <div class="feature-card" id="planets">
+                        <div class="card-image">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Solar System</h3>
+                            <p>Explore our solar system's planets and their unique characteristics in interactive 3D.</p>
+                            <a href="planets.html" class="card-link">Discover Planets <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="feature-card" id="galaxies">
+                        <div class="card-image">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="card-content">
+                        <h3>Galaxies</h3>
+                            <p>Discover vast collections of stars, gas, dust, and dark matter throughout the universe.</p>
+                            <a href="galaxies.html" class="card-link">Explore Galaxies <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="feature-card" id="universe">
+                        <div class="card-image">
+                            <i class="fas fa-atom"></i>
+                        </div>
+                        <div class="card-content">
+                        <h3>Multiverse</h3>
+                            <p>Explore the theoretical multiverse, where multiple universe bubbles coexist in cosmic space.</p>
+                            <a href="universe.html" class="card-link">Visit Multiverse <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Fact Section -->
+        <section class="cosmos-fact">
+            <div class="container">
+                <div class="fact-content">
+                    <h2>Cosmic Knowledge</h2>
+                    <p id="random-fact" style="min-height: 100px; display: flex; align-items: center; justify-content: center; text-align: center;">The universe is estimated to be about 13.8 billion years old.</p>
+                    <button id="new-fact" class="btn primary"><i class="fas fa-sync-alt"></i> New Fact</button>
+                </div>
+                <div class="fact-image">
+                    <div class="cosmic-image" style="background-image: url('../images/pillarsofcreation_composite.jpg') !important; background-size: cover; background-position: center;">
+                        <!-- Fallback image -->
+                        <img src="../images/pillarsofcreation_composite.jpg" alt="Pillars of Creation" style="width: 100%; height: 100%; object-fit: cover; opacity: 0;">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">About Astra Nova</h2>
+                    <p class="section-subtitle">Our mission to bring the cosmos to everyone</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-image">
+                        <div class="image-container" style="background-image: url('../images/ground-based-telescope.jpg') !important; background-size: cover; background-position: center; background-repeat: no-repeat;">
+                            <!-- Fallback image -->
+                            <img src="../images/ground-based-telescope.jpg" alt="Ground Based Telescope" style="width: 100%; height: 100%; object-fit: cover; opacity: 0;">
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        <h3>Explore the Universe</h3>
+                        <p>Astra Nova was founded with a passion for making cosmic exploration accessible to everyone. Our interactive tools let you visualize and understand celestial objects in new and exciting ways.</p>
+                        <p>Using the latest astronomical data and 3D visualization technology, we bring the wonders of space right to your screen.</p>
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <span class="stat-number">8+</span>
+                                <span class="stat-label">Planets</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number">1M+</span>
+                                <span class="stat-label">Galaxies</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-number">7+</span>
+                                <span class="stat-label">Universes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">What Explorers Say</h2>
+                    <p class="section-subtitle">Hear from fellow cosmic enthusiasts</p>
+                </div>
+                <div class="testimonial-slider">
+                    <div class="testimonial-container">
+                        <div class="testimonial-content active" data-index="0">
+                            <div class="quote">
+                                <i class="fas fa-quote-left"></i>
+                                <p class="quote-text">The multiverse visualization blew my mind! I've never seen theoretical physics represented in such an intuitive way.</p>
+                            </div>
+                            <div class="author">
+                                <div class="author-image">
+                                    <i class="fas fa-user-astronaut"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Jane Cosmos</h4>
+                                    <p>Astrophysics Student</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-content" data-index="1" style="display: none;">
+                            <div class="quote">
+                                <i class="fas fa-quote-left"></i>
+                                <p class="quote-text">As a teacher, I use Astra Nova to introduce my students to astronomy. The 3D planets exploration is their absolute favorite!</p>
+                            </div>
+                            <div class="author">
+                                <div class="author-image">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Mark Stellar</h4>
+                                    <p>Science Educator</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-content" data-index="2" style="display: none;">
+                            <div class="quote">
+                                <i class="fas fa-quote-left"></i>
+                                <p class="quote-text">The galaxy explorer helped me visualize concepts from my astronomy textbooks. It's like having a virtual observatory at my fingertips.</p>
+                            </div>
+                            <div class="author">
+                                <div class="author-image">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Sarah Nebula</h4>
+                                    <p>Astronomy Enthusiast</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial navigation -->
+                    <div class="testimonial-nav">
+                        <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                        <div class="dots">
+                            <span class="dot active" data-index="0"></span>
+                            <span class="dot" data-index="1"></span>
+                            <span class="dot" data-index="2"></span>
+                        </div>
+                        <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter" id="newsletter">
+            <div class="container">
+                <div class="newsletter-content">
+                    <h2>Stay Updated with Cosmic Discoveries</h2>
+                    <p>Join our newsletter to receive the latest updates, features and cosmic facts</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn primary">Subscribe</button>
+                    </form>
+                    <p class="privacy-note">We respect your privacy and will never share your information</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-top">
+        <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-column">
+                <div class="footer-logo">
+                    <span>Astra</span>Nova
+                </div>
+                <p class="footer-text">Exploring the cosmos since 2023</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Explore</h3>
+                        <ul class="footer-links">
+                            <li><a href="planets.html">Solar System</a></li>
+                            <li><a href="galaxies.html">Galaxies</a></li>
+                            <li><a href="universe.html">Multiverse</a></li>
+                            <li><a href="#">Space News</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <ul class="footer-links">
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Legal</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                            <li><a href="#">Accessibility</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">&copy; 2023 Astra Nova. All rights reserved.</p>
+                <p class="attribution">Made with <i class="fas fa-heart"></i> for space enthusiasts</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Cookie consent -->
+    <div class="cookie-consent">
+        <div class="container">
+            <p>We use cookies to enhance your browsing experience. <a href="#">Learn more</a></p>
+            <div class="cookie-buttons">
+                <button class="btn outline-btn">Preferences</button>
+                <button class="btn primary">Accept All</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html> 

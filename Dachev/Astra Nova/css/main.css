@@ -1,0 +1,17 @@
+/* Astra Nova - Main CSS File */
+
+/* Import base styles, variables, and reset */
+@import 'base.css';
+
+/* Import layout components */
+@import 'layout.css';
+
+/* Import page specific styles */
+@import 'pages/home.css';
+@import 'pages/visualization.css';
+
+/* Import theme styles */
+@import 'themes/light.css';
+
+/* Import responsive media queries */
+@import 'responsive.css'; 

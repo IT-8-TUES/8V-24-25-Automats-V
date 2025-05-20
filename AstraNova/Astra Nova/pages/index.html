@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astra Nova</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="icon" type="image/png" href="../Plamen/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header show" id="siteHeader">
+    <div class="container header-container">
+      <img src="../Plamen/logo.png" alt="Astra Nova Logo" class="logo">
+      <h1 class="site-title">ASTRA NOVA</h1>
+      <p class="site-subtitle">A journey through the stars and the secrets of the Universe</p>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="indexMain.html">Home</a></li>
+          <li><a href="history.html">History</a></li>
+          <li><a href="star.html">The Star</a></li>
+          <li><a href="Description.html">Description</a></li>
+          <!--dachev--><li><a href="#gallery">DachevGallery</a></li>
+          <li><a href="#merch">DachevMerch</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="fade-in">
+    <h2 class="section-title">Welcome to Astra Nova</h2>
+    <p>Here you will find comprehensive information about the Universe,
+       its wonders and mysteries. Astra Nova is created with people of 
+       all ages in mind and aims to make space knowledge accessible and inspiring.</p>
+       <div class="image-section">
+    <img src="../images/1.jpg" alt="Space Mission" class="responsive-image">
+  </div>
+  </section>
+
+  <section class="fade-in">
+  <h2 class="section-title">Planets and Stars</h2>
+  <p>Discover the structure and diversity of our Solar System
+     — from the rocky inner planets to the gas giants and icy worlds beyond. 
+     Learn about fascinating exoplanets orbiting distant stars, 
+     and explore the life cycles of stars: from birth in nebula to supernova, 
+     black holes, and neutron stars.</p>
+  <div class="image-section">
+    <img src="../images/planeti.jpg" alt="Space Mission" class="responsive-image">
+  </div>
+</section>
+
+
+
+<section class="fade-in">
+  <h2 class="section-title">Space Missions</h2>
+  <p>
+    Explore the most iconic space missions in human <a href="history.html" class="inline-history-link">history</a>.
+    From the groundbreaking Apollo moon landings and the far-reaching Voyager probes,
+    to modern observatories like the James Webb Space Telescope, uncover how these
+    missions have expanded our understanding of the cosmos and our place in it.
+  </p>
+
+  <div class="image-section">
+    <img src="../images/nebula.png" alt="Space Mission" class="responsive-image">
+  </div>
+</section>
+
+
+
+
+<footer class="site-footer">
+  <div class="container footer-container">
+    <h3>Contact Us</h3>
+    <p>Email: info@astranova.com</p>
+    <p>Phone: +359 88 123 4567</p>
+    <p>Address: Sofia Bulgaria</p>
+    <h3>About us</h3>
+    <h4> creators</h4>
+    <p>Plamen Yalamov,  Nikola Tareyn,  Alexander Dachev</p>
+    <p> we are from TUES(TECHNOLOGICAL SCHOOL ELECTRONIC SYSTEMS)</p>
+     <p> (bg: ТЕХНОЛОГИЧНО УЧИЛИЩЕ ЕЛКТРОННИ СИСТЕМИ)</p>
+    <p>we are from one class and good friends </p>
+    <nav class="footer-nav">
+      <ul>
+        <li><a href="indexMain.html">Home</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="star.html">The Star</a></li>
+        <li><a href="Description.html">Description</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#merch">Merch</a></li>
+    </nav>
+    <p class="copyright">© 2025 Astra Nova. All rights reserved.</p>
+  </div>
+</footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    document.querySelectorAll('.fade-in').forEach(section => {
+      observer.observe(section);
+    });
+
+    // Hide/show header on scroll
+    let lastScrollTop = 0;
+    const header = document.getElementById('siteHeader');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop) {
+        // Scrolling down
+        header.classList.remove('show');
+        header.classList.add('hide');
+      } else {
+        // Scrolling up
+        header.classList.remove('hide');
+        header.classList.add('show');
+      }
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+  </script>
+</body>
+</html>

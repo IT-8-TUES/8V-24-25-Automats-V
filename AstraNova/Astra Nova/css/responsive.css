@@ -1,0 +1,361 @@
+/* Responsive Media Queries */
+
+/* Large Desktops (up to 1200px) */
+@media (max-width: 1200px) {
+    .hero-content, .hero-image {
+        flex-basis: 50%;
+    }
+    
+    .feature-card {
+        width: calc(50% - 20px);
+    }
+}
+
+/* Tablets and Small Desktops (up to 992px) */
+@media (max-width: 992px) {
+    .title {
+        font-size: 3rem;
+    }
+    
+    .hero .container {
+        flex-direction: column;
+    }
+    
+    .hero-content {
+        text-align: center;
+        order: 2;
+        margin-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-image {
+        order: 1;
+        margin-bottom: 2rem;
+    }
+    
+    .cta-buttons {
+        justify-content: center;
+    }
+    
+    .scroll-indicator {
+        align-items: center;
+    }
+    
+    .about-content {
+        flex-direction: column;
+    }
+    
+    .cosmos-fact .container {
+        flex-direction: column;
+    }
+    
+    /* Fix for the cosmic knowledge section on mobile */
+    .fact-content {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .fact-content h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Fix for dynamic fact content */
+    .fact-content p#random-fact {
+        min-height: 80px; /* Set consistent height for facts */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem auto;
+        text-align: center;
+    }
+    
+    /* Fix button alignment */
+    .fact-content .btn {
+        margin: 0 auto;
+        display: inline-block;
+    }
+    
+    /* Navigation for mobile */
+    .nav-container {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 400px;
+        height: 100vh;
+        background: rgba(15, 15, 35, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem 2rem;
+        transition: right var(--transition-normal);
+        z-index: 101;
+    }
+    
+    .nav-container.active {
+        right: 0;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .nav-actions {
+        margin-top: 2rem;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    /* Dropdown menu for mobile */
+    .dropdown-menu {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height var(--transition-normal);
+        margin-top: 0.5rem;
+    }
+    
+    .dropdown.active .dropdown-menu {
+        max-height: 500px;
+    }
+    
+    .dropdown-menu a {
+        padding: 10px 20px;
+    }
+    
+    /* Light theme mobile adjustments */
+    .light-theme .nav-container {
+        background: rgba(255, 255, 255, 0.95);
+    }
+    
+    /* Content containers - smaller padding for mobile */
+    .hero-content,
+    .about-text,
+    .section-header,
+    .testimonial-content,
+    .newsletter-content {
+        padding: 1.5rem;
+    }
+}
+
+/* Mobile Landscape (up to 768px) */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .feature-card {
+        width: 100%;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .newsletter-form input {
+        width: 100%;
+        max-width: none;
+    }
+    
+    /* Fix for image loading in mobile view */
+    .cosmic-image {
+        background-image: url('../images/pillarsofcreation_composite.jpg') !important; /* Relative path with !important to force override */
+        height: 250px; /* Slightly shorter for mobile */
+    }
+    
+    .about-image .image-container {
+        background-image: url('../images/ground-based-telescope.jpg') !important; /* Relative path with !important to force override */
+        height: 300px; /* Slightly shorter for mobile */
+    }
+    
+    .cookie-consent .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-columns {
+        flex-direction: column;
+    }
+    
+    .footer-column {
+        margin-bottom: 2rem;
+    }
+    
+    .footer-bottom .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .announcement-banner .container {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    /* Visualization pages */
+    .solar-system-container, 
+    .galaxy-container, 
+    .universe-container {
+        height: 70vh;
+        min-height: 450px; /* Ensure minimum height even on small screens */
+    }
+    
+    #solar-system, 
+    #galaxy-viewer, 
+    #universe-viewer {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        overflow: visible; /* Allow content to be visible outside the container */
+    }
+    
+    #universe-viewer canvas {
+        height: 100% !important; /* Force height to 100% to prevent shrinking */
+        width: 100% !important; /* Force width to 100% */
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    
+    .planet-info, 
+    .galaxy-info, 
+    .universe-info {
+        top: auto;
+        bottom: 2rem;
+        right: 50%;
+        transform: translateX(50%);
+        width: 90%;
+        max-width: 320px;
+    }
+}
+
+/* Mobile Portrait (up to 480px) */
+@media (max-width: 480px) {
+    .title {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Make sure the nav is fully hidden at smaller sizes */
+    .nav-links {
+        display: none;
+    }
+    
+    .hero {
+        padding: 4rem 0;
+    }
+    
+    .feature-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Additional fixes for visualization on small screens */
+    .solar-system-container, 
+    .galaxy-container, 
+    .universe-container {
+        height: 60vh;
+        min-height: 400px;
+    }
+    
+    /* Ensure hover message doesn't overlap with info panels */
+    .hover-message {
+        bottom: 120px; /* Move up to avoid overlapping with info panel */
+        max-width: 90%;
+        font-size: 0.8rem;
+    }
+    
+    /* Adjust camera reset button position for very small screens */
+    .camera-reset-btn {
+        bottom: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Additional mobile image fixes - these need to take precedence */
+@media (max-width: 767px) {
+    /* Ensure these important rules for mobile images */
+    .cosmic-image {
+        background-image: url('../images/pillarsofcreation_composite.jpg') !important; /* Relative path with !important */
+        background-size: cover !important;
+        background-position: center !important;
+    }
+    
+    .about-image .image-container {
+        background-image: url('../images/ground-based-telescope.jpg') !important; /* Relative path with !important */
+        background-size: cover !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+    
+    /* Fix for the cosmic knowledge section layout */
+    .cosmos-fact .container {
+        flex-direction: column;
+    }
+    
+    .fact-content {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .fact-content h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Fix for dynamic fact content to prevent layout shift */
+    #random-fact {
+        min-height: 100px !important;
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem auto !important;
+        max-width: 90%;
+        text-align: center;
+        font-size: 1.05rem;
+    }
+    
+    /* Fix button alignment */
+    .fact-content .btn {
+        margin: 0 auto;
+        display: inline-block;
+    }
+}
+
+/* Extra small mobile device fixes */
+@media (max-width: 380px) {
+    #random-fact {
+        min-height: 130px !important;
+        font-size: 1rem;
+    }
+} 

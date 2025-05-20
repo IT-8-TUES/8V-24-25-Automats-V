@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxies - Astra Nova</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Mobile device detection and notification -->
+    <script>
+        // Check if on mobile and add support class to body
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.body.classList.add('mobile-device');
+            }
+        });
+    </script>
+    <!-- Load THREE.js from a reliable CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <!-- Add OrbitControls as a separate global variable -->
+    <script>
+        // Wait for Three.js to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if THREE is already loaded
+            if (typeof THREE === 'undefined') {
+                console.error("THREE is not defined! Attempting to reload Three.js");
+                var threeScript = document.createElement('script');
+                threeScript.src = "https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js";
+                threeScript.onload = loadOrbitControls;
+                threeScript.onerror = function() {
+                    console.error("Failed to load Three.js");
+                    alert("Failed to load necessary 3D components. Please check your internet connection and refresh the page.");
+                };
+                document.head.appendChild(threeScript);
+            } else {
+                loadOrbitControls();
+            }
+            
+            function loadOrbitControls() {
+                // Create a script element for OrbitControls
+                var script = document.createElement('script');
+                script.src = "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js";
+                script.onload = function() {
+                    console.log("OrbitControls loaded successfully");
+                    // Initialize the galaxy viewer after OrbitControls is loaded
+                    if (typeof initGalaxyViewer === 'function') {
+                        initGalaxyViewer();
+                    } else {
+                        // If the galaxy viewer isn't loaded yet, wait for it
+                        var checkInterval = setInterval(function() {
+                            if (typeof initGalaxyViewer === 'function') {
+                                initGalaxyViewer();
+                                clearInterval(checkInterval);
+                            }
+                        }, 100);
+                        
+                        // Stop checking after 10 seconds
+                        setTimeout(function() {
+                            clearInterval(checkInterval);
+                            if (typeof initGalaxyViewer !== 'function') {
+                                console.error("Failed to load galaxy viewer");
+                                alert("Failed to initialize the galaxy viewer. Please refresh the page or try another browser.");
+                            }
+                        }, 10000);
+                    }
+                };
+                script.onerror = function() {
+                    console.error("Failed to load OrbitControls");
+                    alert("Failed to load necessary components. Please check your internet connection and refresh the page.");
+                };
+                document.head.appendChild(script);
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <!-- Theme transition overlay -->
+    <div class="theme-transition-overlay"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="indexMain.html"><span>Astra</span>Nova</a>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="indexMain.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Explore <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="planets.html">Planets</a></li>
+                            <li><a href="galaxies.html" class="active">Galaxies</a></li>
+                            <li><a href="universe.html">Multiverse</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="indexMain.html#features">Features</a></li>
+                    <li><a href="indexMain.html#about">About</a></li>
+                    <li><a href="indexMain.html#newsletter">Newsletter</a></li>
+                </ul>
+                
+                <div class="nav-actions">
+                    <button class="theme-toggle" aria-label="Toggle dark/light mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" class="btn outline-btn">Sign In</a>
+                    <a href="#" class="btn primary-btn">Join Us</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="galaxy-intro">
+            <div class="container">
+                <h1 class="title">Explore <span class="gradient-text">Galaxies</span></h1>
+                <p class="subtitle">Discover the vast collections of stars, gas, dust, and dark matter across the universe</p>
+            </div>
+        </section>
+
+        <section class="galaxy-container">
+            <div id="galaxy-viewer"></div>
+            <div id="galaxy-info" class="galaxy-info">
+                <h2 id="region-name">Select a galaxy</h2>
+                <p id="region-description">Hover over a galaxy to see details</p>
+                <div id="region-stats"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-column">
+                        <div class="footer-logo">
+                            <span>Astra</span>Nova
+                        </div>
+                        <p class="footer-text">Exploring the cosmos since 2023</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Explore</h3>
+                        <ul class="footer-links">
+                            <li><a href="planets.html">Solar System</a></li>
+                            <li><a href="galaxies.html">Galaxies</a></li>
+                            <li><a href="universe.html">Multiverse</a></li>
+                            <li><a href="#">Space News</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Company</h3>
+                        <ul class="footer-links">
+                            <li><a href="indexMain.html#about">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Legal</h3>
+                        <ul class="footer-links">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Cookie Policy</a></li>
+                            <li><a href="#">Accessibility</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">&copy; 2023 Astra Nova. All rights reserved.</p>
+                <p class="attribution">Made with <i class="fas fa-heart"></i> for space enthusiasts</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Load the galaxy viewer script after everything else -->
+    <script src="../js/viewers/galaxy-viewer.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html> 

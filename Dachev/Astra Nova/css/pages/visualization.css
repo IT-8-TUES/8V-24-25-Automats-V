@@ -1,0 +1,325 @@
+/* Common CSS for Visualization Pages (Planets, Galaxies, Universe) */
+
+/* Page Intro Sections */
+.solar-system-intro, 
+.galaxy-intro, 
+.universe-intro {
+    padding: 6rem 0 2rem;
+    text-align: center;
+}
+
+/* Visualization Containers */
+.solar-system-container, 
+.galaxy-container, 
+.universe-container {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    margin: 0 auto 4rem;
+    overflow: hidden;
+}
+
+#solar-system, 
+#galaxy-viewer, 
+#universe-viewer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+#solar-system canvas, 
+#galaxy-viewer canvas, 
+#universe-viewer canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Hover Instructions Message */
+.hover-message {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: rgba(0, 10, 30, 0.7);
+    color: #aaddff;
+    border: 1px solid #4488dd;
+    padding: 10px 15px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 100;
+    font-size: 14px;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(50, 100, 200, 0.2);
+}
+
+.hover-message.show {
+    opacity: 1;
+}
+
+/* Info Panels */
+.planet-info, 
+.galaxy-info, 
+.universe-info {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(10, 10, 26, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    width: 320px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    z-index: 10;
+    transition: all var(--theme-transition);
+    box-shadow: var(--box-shadow);
+    opacity: 0.7;
+    transform: translateZ(0);
+}
+
+.planet-info:hover, 
+.galaxy-info:hover, 
+.universe-info:hover {
+    opacity: 1;
+    border-color: var(--secondary-color);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+.planet-info h2, 
+.galaxy-info h2, 
+.universe-info h2 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    text-shadow: 0 0 10px rgba(0, 191, 255, 0.3);
+}
+
+.planet-info p, 
+.galaxy-info p, 
+.universe-info p {
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Info Panel Stats */
+#planet-stats, 
+#region-stats, 
+#structure-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.stat-item {
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.stat-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.stat-label {
+    font-weight: bold;
+    color: var(--secondary-color);
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+/* Camera Reset Button */
+.camera-reset-btn {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    background: rgba(0, 20, 40, 0.8);
+    color: #66aaff;
+    border: 1px solid #4488dd;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 10px rgba(50, 100, 200, 0.3);
+    z-index: 100;
+}
+
+.camera-reset-btn:hover {
+    background: rgba(0, 40, 80, 0.9);
+    box-shadow: 0 0 15px rgba(70, 130, 230, 0.5);
+}
+
+/* NASA-style elements (for Galaxy/Universe visualizations) */
+.nasa-credit {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    color: rgba(150, 180, 255, 0.7);
+    font-size: 12px;
+    z-index: 100;
+}
+
+.nasa-credit a {
+    color: rgba(170, 200, 255, 0.9);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.nasa-credit a:hover {
+    color: rgba(200, 220, 255, 1);
+    text-decoration: underline;
+}
+
+.region-label.nasa-style {
+    transition: all 0.2s ease;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.region-label.nasa-style:hover {
+    color: #ffffff;
+    background-color: rgba(5, 40, 80, 0.7);
+    border-color: rgba(170, 204, 255, 0.6);
+}
+
+/* Universe/Galaxy viewer enhanced styles */
+#galaxy-viewer {
+    background: radial-gradient(ellipse at center, rgba(5, 10, 20, 0.8) 0%, rgba(0, 0, 5, 1) 100%);
+}
+
+#universe-viewer {
+    background: radial-gradient(ellipse at center, rgba(0, 5, 15, 0.8) 0%, rgba(0, 0, 0, 1) 100%);
+    position: relative;
+    z-index: 1; /* Ensure universe viewer is above other elements */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Enhanced Galaxy Info Panel */
+.galaxy-info {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    background: rgba(0, 10, 30, 0.8);
+    border: 2px solid rgba(100, 150, 255, 0.5);
+    border-radius: 10px;
+    padding: 15px;
+    color: #eef;
+    z-index: 100;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(50, 120, 255, 0.3);
+}
+
+.galaxy-info:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        rgba(100, 150, 255, 0) 0%, 
+        rgba(100, 150, 255, 0.8) 50%, 
+        rgba(100, 150, 255, 0) 100%);
+    border-radius: 2px;
+}
+
+.galaxy-info h2 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #adf;
+    text-shadow: 0 0 5px rgba(100, 200, 255, 0.7);
+    border-bottom: 1px solid rgba(100, 150, 255, 0.3);
+    padding-bottom: 8px;
+}
+
+.galaxy-info .stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(100, 150, 255, 0.1);
+}
+
+.galaxy-info .stat-label {
+    color: #9bd;
+    font-weight: bold;
+}
+
+.galaxy-info .stat-value {
+    color: #eef;
+}
+
+/* Mobile optimizations for visualization */
+.mobile-device .universe-container,
+.mobile-device .galaxy-container,
+.mobile-device .solar-system-container {
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    transform: translateZ(0);
+}
+
+.mobile-device #universe-viewer,
+.mobile-device #galaxy-viewer,
+.mobile-device #solar-system {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: visible;
+}
+
+.mobile-device #universe-viewer canvas,
+.mobile-device #galaxy-viewer canvas,
+.mobile-device #solar-system canvas {
+    height: 100% !important;
+    width: 100% !important;
+}
+
+/* Mobile adjustments for info panel */
+@media (max-width: 768px) {
+    .galaxy-info {
+        top: auto;
+        right: auto;
+        bottom: 10px;
+        left: 10px;
+        width: calc(100% - 40px);
+        max-height: 40vh;
+        overflow-y: auto;
+    }
+    
+    .camera-reset-btn {
+        bottom: auto;
+        top: 10px;
+        left: 10px;
+    }
+    
+    .hover-message {
+        display: none;
+    }
+}
+
+.filament-hover {
+    transition: all 0.3s ease;
+    filter: brightness(1.5);
+}
+
+.cluster-label {
+    color: #aaddff;
+    font-size: 12px;
+    transition: opacity 0.3s;
+} 
