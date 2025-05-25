@@ -18,31 +18,56 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 1.5rem;
-    max-width: 1400px;
-    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+    height: 60px; /* Fixed height for navbar */
 }
 
 .logo {
     font-size: 1.8rem;
     color: var(--text-light);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* Crop logo if it's too big */
+    margin-left: 10px; /* Very small margin from absolute left edge */
+    position: absolute;
+    left: 0;
 }
 
 .logo a {
     text-decoration: none;
     color: var(--text-light);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* Crop logo if it's too big */
 }
 
 .logo span {
     color: var(--secondary-color);
 }
 
+.logo-img {
+    height: 175px;
+    width: auto;
+    max-width: none;
+    object-fit: contain;
+    transition: transform var(--transition-fast);
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
 .nav-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-grow: 1;
-    margin-left: 2rem;
+    width: 100%;
+    padding: 0 1rem;
+    position: relative;
 }
 
 .nav-links {
@@ -140,6 +165,10 @@ nav {
     display: flex;
     align-items: center;
     gap: 1rem;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .theme-toggle {

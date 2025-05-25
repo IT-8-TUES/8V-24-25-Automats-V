@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Astra Nova - Kosmos: Discover fascinating facts about celestial objects and cosmic phenomena">
+    <title>Astra Nova – Kosmos (Cosmic Knowledge)</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    <style>
+        /* Custom styles for Kosmos page */
+        .kosmos-hero {
+            background: linear-gradient(135deg, var(--background-dark) 0%, rgba(138, 43, 226, 0.3) 50%, rgba(0, 191, 255, 0.2) 100%);
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .kosmos-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="star" cx="50%" cy="50%" r="2%"><stop offset="0%" stop-color="white" stop-opacity="1"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient></defs><circle cx="20" cy="30" r="1" fill="url(%23star)"/><circle cx="80" cy="20" r="0.5" fill="url(%23star)"/><circle cx="60" cy="70" r="0.8" fill="url(%23star)"/><circle cx="30" cy="80" r="0.6" fill="url(%23star)"/><circle cx="90" cy="60" r="0.4" fill="url(%23star)"/></svg>') repeat;
+            opacity: 0.3;
+            animation: twinkle 20s infinite linear;
+        }
+        
+        @keyframes twinkle {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+        
+        .kosmos-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .kosmos-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .greek-subtitle {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 3rem;
+            font-style: italic;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cosmic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 0 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .cosmic-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .cosmic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .cosmic-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .cosmic-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            text-align: center;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(0, 191, 255, 0.3));
+        }
+        
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .card-content {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        .card-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            display: block;
+        }
+        
+        .stat-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        
+        .category-section {
+            margin-bottom: 4rem;
+        }
+        
+        .category-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .category-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .category-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        .category-description {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 15s infinite linear;
+        }
+        
+        .floating-element:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .floating-element:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .floating-element:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .floating-element:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .floating-element:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .floating-element:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .floating-element:nth-child(7) { left: 70%; animation-delay: 12s; }
+        .floating-element:nth-child(8) { left: 80%; animation-delay: 14s; }
+        .floating-element:nth-child(9) { left: 90%; animation-delay: 16s; }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            90% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            100% {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3rem;
+            background: var(--card-bg);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-tab {
+            padding: 0.8rem 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+        }
+        
+        .filter-tab:hover,
+        .filter-tab.active {
+            background: var(--secondary-color);
+            color: var(--background-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 191, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .cosmic-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0 1rem;
+            }
+            
+            .cosmic-card {
+                padding: 1.5rem;
+            }
+            
+            .kosmos-hero {
+                padding: 100px 0 60px;
+            }
+            
+            .category-title {
+                font-size: 2rem;
+            }
+            
+            .filter-tabs {
+                gap: 0.5rem;
+            }
+            
+            .filter-tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .reveal-animation {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .reveal-animation.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <!-- Floating elements for ambiance -->
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+    
+    <!-- Theme transition overlay -->
+    <div class="theme-transition-overlay"></div>
+    
+    <!-- Announcement Banner -->
+    <div class="announcement-banner">
+        <div class="container">
+            <p><i class="fas fa-star-half-alt"></i> New Feature: Explore the Theoretical Multiverse in 3D! <a href="universe.html">Try it now</a></p>
+            <button class="close-banner"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="indexMain.html">
+                    <img src="../images/logo/logo.png" alt="Astra Nova" class="logo-img">
+                </a>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="indexMain.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Explore <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="planets.html">Planets</a></li>
+                    </ul>
+                </li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="star.html">Celestials</a></li>
+                <li><a href="kosmos.html" class="active">Kosmos</a></li>
+            </ul>
+                
+                <div class="nav-actions">
+                    <button class="theme-toggle" aria-label="Toggle dark/light mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" class="btn outline-btn">Sign In</a>
+                    <a href="#" class="btn primary-btn">Join Us</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="kosmos-hero">
+            <div class="container">
+                <h1 class="kosmos-title">Kosmos</h1>
+                <p class="greek-subtitle">"The universe is not only stranger than we imagine, it is stranger than we can imagine"</p>
+                <p class="kosmos-subtitle">Discover the fascinating facts and phenomena that shape our cosmic reality</p>
+                
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-box" placeholder="Search cosmic knowledge..." id="searchInput">
+                </div>
+                
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-category="all">All Objects</button>
+                    <button class="filter-tab" data-category="stellar">Stellar Objects</button>
+                    <button class="filter-tab" data-category="planetary">Planetary Bodies</button>
+                    <button class="filter-tab" data-category="galactic">Galactic Structures</button>
+                    <button class="filter-tab" data-category="exotic">Exotic Phenomena</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="cosmic-knowledge">
+            <div class="container">
+                <!-- Stellar Objects -->
+                <div class="category-section" data-category="stellar">
+                    <div class="category-header reveal-animation">
+                        <h2 class="category-title">Stellar Phenomena</h2>
+                        <p class="category-description">The magnificent stars that illuminate our universe and the incredible processes that power them</p>
+                    </div>
+                    
+                    <div class="cosmic-grid">
+                        <div class="cosmic-card reveal-animation" data-category="stellar">
+                            <div class="card-icon">☀️</div>
+                            <h3 class="card-title">The Sun</h3>
+                            <div class="card-content">
+                                <p>Our nearest star formed 4.6 billion years ago from a collapsing nebula. Every second, it converts 600 million tons of hydrogen into helium through nuclear fusion, releasing energy equivalent to 100 billion hydrogen bombs.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">5,778K</span>
+                                    <span class="stat-label">Surface Temp</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">15M K</span>
+                                    <span class="stat-label">Core Temp</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">333,000×</span>
+                                    <span class="stat-label">Earth's Mass</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cosmic-card reveal-animation" data-category="stellar">
+                            <div class="card-icon">💫</div>
+                            <h3 class="card-title">Neutron Stars</h3>
+                            <div class="card-content">
+                                <p>The collapsed cores of massive stars, neutron stars are so dense that a teaspoon would weigh about 6 billion tons. They can spin up to 700 times per second and have magnetic fields trillions of times stronger than Earth's.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">20km</span>
+                                    <span class="stat-label">Diameter</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">1.4M☉</span>
+                                    <span class="stat-label">Typical Mass</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">10¹⁵ G</span>
+                                    <span class="stat-label">Magnetic Field</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cosmic-card reveal-animation" data-category="stellar">
+                            <div class="card-icon">💥</div>
+                            <h3 class="card-title">Supernovae</h3>
+                            <div class="card-content">
+                                <p>When massive stars exhaust their fuel, they explode in supernovae—events so bright they can outshine entire galaxies. These cosmic furnaces forge elements heavier than iron and scatter them across the universe.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">10²⁸</span>
+                                    <span class="stat-label">Megatons TNT</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">30 days</span>
+                                    <span class="stat-label">Peak Brightness</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">30,000 km/s</span>
+                                    <span class="stat-label">Ejecta Speed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Planetary Bodies -->
+                <div class="category-section" data-category="planetary">
+                    <div class="category-header reveal-animation">
+                        <h2 class="category-title">Planetary Worlds</h2>
+                        <p class="category-description">From rocky terrestrial worlds to gas giants and mysterious dwarf planets</p>
+                    </div>
+                    
+                    <div class="cosmic-grid">
+                        <div class="cosmic-card reveal-animation" data-category="planetary">
+                            <div class="card-icon">🌍</div>
+                            <h3 class="card-title">Earth</h3>
+                            <div class="card-content">
+                                <p>Our blue marble harbors the only known life in the universe. Earth's magnetic field, generated by its molten iron core, protects us from deadly solar radiation. The planet's 23.5° axial tilt gives us our seasons.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">71%</span>
+                                    <span class="stat-label">Ocean Coverage</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">12,756km</span>
+                                    <span class="stat-label">Diameter</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">1 AU</span>
+                                    <span class="stat-label">From Sun</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cosmic-card reveal-animation" data-category="planetary">
+                            <div class="card-icon">♃</div>
+                            <h3 class="card-title">Jupiter</h3>
+                            <div class="card-content">
+                                <p>The solar system's giant protector, Jupiter's immense gravity acts as a cosmic vacuum cleaner, deflecting asteroids and comets. Its Great Red Spot is a storm larger than Earth that has raged for centuries.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">95</span>
+                                    <span class="stat-label">Known Moons</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">318×</span>
+                                    <span class="stat-label">Earth's Mass</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">10h</span>
+                                    <span class="stat-label">Day Length</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cosmic-card reveal-animation" data-category="planetary">
+                            <div class="card-icon">🌕</div>
+                            <h3 class="card-title">The Moon</h3>
+                            <div class="card-content">
+                                <p>Earth's faithful companion stabilizes our planet's rotation and creates tides. Formed from debris after a Mars-sized object collided with early Earth, the Moon is slowly drifting away at 3.8 cm per year.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">384,400km</span>
+                                    <span class="stat-label">Distance</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">27.3 days</span>
+                                    <span class="stat-label">Orbital Period</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">1/6</span>
+                                    <span class="stat-label">Earth's Gravity</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Galactic Structures -->
+                <div class="category-section" data-category="galactic">
+                    <div class="category-header reveal-animation">
+                        <h2 class="category-title">Galactic Marvels</h2>
+                        <p class="category-description">Vast cosmic structures that organize matter across billions of light-years</p>
+                    </div>
+                    
+                    <div class="cosmic-grid">
+                        <div class="cosmic-card reveal-animation" data-category="galactic">
+                            <div class="card-icon">🌌</div>
+                            <h3 class="card-title">The Milky Way</h3>
+                            <div class="card-content">
+                                <p>Our galactic home contains 100-400 billion stars arranged in a barred spiral structure. We orbit the galactic center once every 230 million years at a speed of 828,000 km/h, completing one "galactic year."</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">100,000</span>
+                                    <span class="stat-label">Light-years Wide</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">4×10⁶ M☉</span>
+                                    <span class="stat-label">Central Black Hole</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">26,000 ly</span>
+                                    <span class="stat-label">To Galactic Center</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cosmic-card reveal-animation" data-category="galactic">
+                            <div class="card-icon">🌠</div>
+                            <h3 class="card-title">Andromeda Galaxy</h3>
+                            <div class="card-content">
+                                <p>Our nearest major galactic neighbor is approaching us at 250,000 mph and will collide with the Milky Way in about 4.5 billion years, creating a new galaxy astronomers have nicknamed "Milkomeda."</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">2.5M ly</span>
+                                    <span class="stat-label">Distance</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">1T</span>
+                                    <span class="stat-label">Stars</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">4.5B years</span>
+                                    <span class="stat-label">Until Collision</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cosmic-card reveal-animation" data-category="galactic">
+                            <div class="card-icon">🕳️</div>
+                            <h3 class="card-title">Sagittarius A*</h3>
+                            <div class="card-content">
+                                <p>The supermassive black hole at our galaxy's center has a mass 4 million times that of our Sun. In 2022, the Event Horizon Telescope captured the first image of its shadow, confirming Einstein's predictions.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">4M M☉</span>
+                                    <span class="stat-label">Mass</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">24M km</span>
+                                    <span class="stat-label">Event Horizon</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">7,000 km/s</span>
+                                    <span class="stat-label">Orbital Velocity</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Exotic Phenomena -->
+                <div class="category-section" data-category="exotic">
+                    <div class="category-header reveal-animation">
+                        <h2 class="category-title">Exotic Phenomena</h2>
+                        <p class="category-description">The universe's most mysterious and extreme manifestations of physics</p>
+                    </div>
+                    
+                    <div class="cosmic-grid">
+                        <div class="cosmic-card reveal-animation" data-category="exotic">
+                            <div class="card-icon">🌑</div>
+                            <h3 class="card-title">Dark Matter</h3>
+                            <div class="card-content">
+                                <p>This invisible substance makes up 85% of all matter in the universe. Though we can't see it directly, its gravitational effects shape the large-scale structure of the cosmos and hold galaxies together.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">27%</span>
+                                    <span class="stat-label">Of Universe</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">5:1</span>
+                                    <span class="stat-label">vs Normal Matter</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">Unknown</span>
+                                    <span class="stat-label">Composition</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cosmic-card reveal-animation" data-category="exotic">
+                            <div class="card-icon">⚡</div>
+                            <h3 class="card-title">Dark Energy</h3>
+                            <div class="card-content">
+                                <p>The mysterious force driving the accelerating expansion of the universe. Discovered in 1998, dark energy comprises about 68% of the total energy density of the observable universe.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">68%</span>
+                                    <span class="stat-label">Of Universe</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">1998</span>
+                                    <span class="stat-label">Discovery Year</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">Repulsive</span>
+                                    <span class="stat-label">Gravity Effect</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cosmic-card reveal-animation" data-category="exotic">
+                            <div class="card-icon">🌊</div>
+                            <h3 class="card-title">Gravitational Waves</h3>
+                            <div class="card-content">
+                                <p>Ripples in spacetime itself, predicted by Einstein and first detected in 2015. These waves travel at light speed and are created by the most violent events in the universe, like colliding black holes.</p>
+                            </div>
+                            <div class="card-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">2015</span>
+                                    <span class="stat-label">First Detection</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">10⁻²¹</span>
+                                    <span class="stat-label">Strain Amplitude</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">c</span>
+                                    <span class="stat-label">Speed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-column">
+                        <div class="footer-logo">
+                            <span>Astra</span>Nova
+                        </div>
+                        <p class="footer-text">Exploring the cosmos since 2023</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Explore</h3>
+                        <ul class="footer-links">
+                            <li><a href="planets.html">Solar System</a></li>
+                            <li><a href="galaxies.html">Galaxies</a></li>
+                            <li><a href="universe.html">Multiverse</a></li>
+                            <li><a href="history.html">History</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Pages</h3>
+                        <ul class="footer-links">
+                            <li><a href="indexMain.html">Home</a></li>
+                            <li><a href="history.html">History</a></li>
+                            <li><a href="star.html">Celestials</a></li>
+                            <li><a href="kosmos.html">Kosmos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Contact Us</h3>
+                        <ul class="footer-links">
+                            <li>Email: info@astranova.com</li>
+                            <li>Phone: +359 88 123 4567</li>
+                            <li>Address: Sofia, Bulgaria</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">&copy; 2025 Astra Nova. All rights reserved.</p>
+                <p class="attribution">Made by Plamen Yalamov, Nikola Tareyn, Alexander Dachev (TUES)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Cookie consent -->
+    <div class="cookie-consent">
+        <div class="container">
+            <p>We use cookies to enhance your browsing experience. <a href="#">Learn more</a></p>
+            <div class="cookie-buttons">
+                <button class="btn outline-btn">Preferences</button>
+                <button class="btn primary">Accept All</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Kosmos page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const cards = document.querySelectorAll('.cosmic-card');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const content = card.querySelector('.card-content').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        card.style.opacity = '1';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Filter functionality
+            const filterTabs = document.querySelectorAll('.filter-tab');
+            const categorySections = document.querySelectorAll('.category-section');
+            
+            filterTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    filterTabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    if (category === 'all') {
+                        // Show all sections
+                        categorySections.forEach(section => {
+                            section.style.display = 'block';
+                        });
+                        cards.forEach(card => {
+                            card.style.display = 'block';
+                        });
+                    } else {
+                        // Hide all sections first
+                        categorySections.forEach(section => {
+                            section.style.display = 'none';
+                        });
+                        
+                        // Show only the selected category section
+                        const targetSection = document.querySelector(`[data-category="${category}"].category-section`);
+                        if (targetSection) {
+                            targetSection.style.display = 'block';
+                        }
+                    }
+                });
+            });
+            
+            // Reveal animation on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all elements with reveal-animation class
+            document.querySelectorAll('.reveal-animation').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Card hover effects
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

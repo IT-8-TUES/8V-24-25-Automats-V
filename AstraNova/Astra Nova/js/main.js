@@ -313,21 +313,21 @@ function checkScroll() {
 // Feature Card Click
 if (planetsCard) {
     planetsCard.addEventListener('click', function() {
-        window.location.href = 'planets.html';
+        window.location.href = 'pages/planets.html';
     });
     planetsCard.style.cursor = 'pointer';
 }
 
 if (galaxiesCard) {
     galaxiesCard.addEventListener('click', function() {
-        window.location.href = 'galaxies.html';
+        window.location.href = 'pages/galaxies.html';
     });
     galaxiesCard.style.cursor = 'pointer';
 }
 
 if (universeCard) {
     universeCard.addEventListener('click', function() {
-        window.location.href = 'universe.html';
+        window.location.href = 'pages/universe.html';
     });
     universeCard.style.cursor = 'pointer';
 }

@@ -1,261 +1,1083 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Astra Nova - History of Space Exploration">
-  <title>History - Astra Nova</title>
-  <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" href="../Plamen/logo.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Astra Nova - Cosmic History Timeline from ancient astronomy to modern space exploration">
+    <title>Astra Nova - Cosmic Timeline</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    <style>
+        /* Timeline specific styles */
+        .timeline-wrapper {
+            position: relative;
+            overflow-x: hidden;
+            padding: 40px 0;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            margin-left: -2px;
+            background: linear-gradient(to bottom, transparent, var(--accent-color), var(--accent-color), transparent);
+            z-index: 1;
+        }
+        
+        .timeline-container {
+            width: 100%;
+            position: relative;
+        }
+        
+        .timeline-era {
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .timeline-era.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .era-header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .era-header h2 {
+            display: inline-block;
+            background: var(--card-bg);
+            padding: 10px 30px;
+            border-radius: 30px;
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .timeline-items {
+            position: relative;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+            transform: translateX(-50px);
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+            transform: translateX(50px);
+        }
+        
+        .timeline-item.appear {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 25px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content:after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -15px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 15px solid var(--card-bg);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content:after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -15px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 15px solid var(--card-bg);
+        }
+        
+        .timeline-date {
+            font-family: "Orbitron", sans-serif;
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .timeline-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .timeline-text {
+            line-height: 1.6;
+        }
+        
+        .timeline-icon {
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .read-more {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--secondary-color);
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .read-more:hover {
+            color: var(--text-light);
+        }
+        
+        .timeline-image {
+            width: 100%;
+            height: 180px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .timeline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .timeline-content:hover .timeline-image img {
+            transform: scale(1.1);
+        }
+        
+        .timeline-details {
+            height: 0;
+            overflow: hidden;
+            transition: height 0.5s ease;
+            opacity: 0;
+        }
+        
+        .timeline-details.open {
+            height: auto;
+            opacity: 1;
+            margin-top: 15px;
+        }
+        
+        .era-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .era-nav-btn {
+            padding: 8px 15px;
+            background: var(--card-bg);
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .era-nav-btn:hover, .era-nav-btn.active {
+            background: var(--secondary-color);
+            color: var(--background-dark);
+            transform: translateY(-2px);
+        }
+        
+        .timeline-animation {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0;
+        }
+        
+        @media (max-width: 992px) {
+            .timeline-line {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                justify-content: flex-start !important;
+                margin-left: 60px;
+            }
+            
+            .timeline-item:before {
+                left: 30px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content:after,
+            .timeline-item:nth-child(even) .timeline-content:after {
+                left: -15px;
+                right: auto;
+                border-right: 15px solid var(--card-bg);
+                border-left: none;
+            }
+        }
+        
+        .hero-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .timeline-control-btn {
+            padding: 10px 20px;
+            background: var(--secondary-color);
+            color: var(--background-dark);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 191, 255, 0.4);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            width: 90%;
+            max-width: 800px;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(30px);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            color: var(--secondary-color);
+        }
+        
+        .modal-header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+        
+        .modal-date {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        
+        .modal-body {
+            line-height: 1.6;
+        }
+        
+        .modal-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .source-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .source-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-  <div class="stars"></div>
-  <div class="twinkling"></div>
-  
-  <!-- Theme transition overlay -->
-  <div class="theme-transition-overlay"></div>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
     
-  <header>
-    <nav>
-      <div class="logo">
-        <a href="indexMain.html"><span>Astra</span>Nova</a>
-      </div>
-      
-      <button class="mobile-menu-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      
-      <div class="nav-container">
-        <ul class="nav-links">
-          <li><a href="indexMain.html">Home</a></li>
-          <li><a href="history.html" class="active">History</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle">Explore <i class="fas fa-chevron-down"></i></a>
-            <ul class="dropdown-menu">
-              <li><a href="planets.html">Planets</a></li>
-              <li><a href="galaxies.html">Galaxies</a></li>
-              <li><a href="universe.html">Multiverse</a></li>
-            </ul>
-          </li>
-          <li><a href="star.html">The Star</a></li>
-          <li><a href="Description.html">Description</a></li>
-        </ul>
-        
-        <div class="nav-actions">
-          <button class="theme-toggle" aria-label="Toggle dark/light mode">
-            <i class="fas fa-moon"></i>
-          </button>
-          <a href="#" class="btn outline-btn">Sign In</a>
-          <a href="#" class="btn primary-btn">Join Us</a>
+    <!-- Theme transition overlay -->
+    <div class="theme-transition-overlay"></div>
+    
+    <!-- Announcement Banner -->
+    <div class="announcement-banner">
+        <div class="container">
+            <p><i class="fas fa-star-half-alt"></i> New Feature: Explore the Theoretical Multiverse in 3D! <a href="universe.html">Try it now</a></p>
+            <button class="close-banner"><i class="fas fa-times"></i></button>
         </div>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <!-- History Header Section -->
-    <section class="history-intro">
-      <div class="container">
-        <h1 class="title">History of <span class="gradient-text">Space Exploration</span></h1>
-        <p class="subtitle">Key milestones in humanity's journey to the stars</p>
-      </div>
-    </section>
-
-    <!-- History Timeline Section -->
-    <section class="history-timeline">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Important Dates and Events</h2>
-          <p class="section-subtitle">Charting our progress beyond Earth</p>
-        </div>
-        
-        <div class="timeline-entries">
-          <div class="timeline-entry">
-            <div class="timeline-date">October 4, 1957</div>
-            <div class="timeline-content">
-              <p>USSR launches the first artificial satellite – Sputnik 1.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">November 3, 1957</div>
-            <div class="timeline-content">
-              <p>Laika becomes the first animal in orbit aboard Sputnik 2.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">April 12, 1961</div>
-            <div class="timeline-content">
-              <p>Yuri Gagarin becomes the first human in space.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">June 16, 1963</div>
-            <div class="timeline-content">
-              <p>Valentina Tereshkova becomes the first woman in space.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">March 18, 1965</div>
-            <div class="timeline-content">
-              <p>Alexei Leonov performs the first spacewalk.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">July 20, 1969</div>
-            <div class="timeline-content">
-              <p>Apollo 11 lands on the Moon – Neil Armstrong is the first person to walk on the Moon.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">April 19, 1971</div>
-            <div class="timeline-content">
-              <p>Salyut 1 – the first space station.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">1975</div>
-            <div class="timeline-content">
-              <p>Apollo-Soyuz Test Project – the first international space mission (USA & USSR).</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">1981</div>
-            <div class="timeline-content">
-              <p>USA launches the first reusable space shuttle – Columbia.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">1990</div>
-            <div class="timeline-content">
-              <p>Launch of the Hubble Space Telescope.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">November 20, 1998</div>
-            <div class="timeline-content">
-              <p>Construction of the International Space Station (ISS) begins.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">2004</div>
-            <div class="timeline-content">
-              <p>SpaceShipOne becomes the first private manned spacecraft to reach space.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">2012</div>
-            <div class="timeline-content">
-              <p>NASA's Curiosity rover lands on Mars.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">2015</div>
-            <div class="timeline-content">
-              <p>New Horizons spacecraft flies by Pluto.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">2020</div>
-            <div class="timeline-content">
-              <p>NASA's Perseverance rover launches to Mars.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">2021</div>
-            <div class="timeline-content">
-              <p>First spaceflights with tourists – Blue Origin and SpaceX.</p>
-            </div>
-          </div>
-          
-          <div class="timeline-entry">
-            <div class="timeline-date">2023</div>
-            <div class="timeline-content">
-              <p>India's Chandrayaan-3 mission lands near the Moon's south pole.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-top">
-      <div class="container">
-        <div class="footer-columns">
-          <div class="footer-column">
-            <div class="footer-logo">
-              <span>Astra</span>Nova
-            </div>
-            <p class="footer-text">Exploring the cosmos since 2023</p>
-            <div class="social-links">
-              <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-              <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-              <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
-          </div>
-          <div class="footer-column">
-            <h3>Explore</h3>
-            <ul class="footer-links">
-              <li><a href="planets.html">Solar System</a></li>
-              <li><a href="galaxies.html">Galaxies</a></li>
-              <li><a href="universe.html">Multiverse</a></li>
-              <li><a href="#">Space News</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>Company</h3>
-            <ul class="footer-links">
-              <li><a href="indexMain.html#about">About Us</a></li>
-              <li><a href="#">Our Team</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Contact Us</a></li>
-            </ul>
-          </div>
-          <div class="footer-column">
-            <h3>Legal</h3>
-            <ul class="footer-links">
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
-              <li><a href="#">Cookie Policy</a></li>
-              <li><a href="#">Accessibility</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="footer-bottom">
-      <div class="container">
-        <p class="copyright">&copy; 2025 Astra Nova. All rights reserved.</p>
-        <p class="attribution">Made with <i class="fas fa-heart"></i> for space enthusiasts</p>
-      </div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="indexMain.html">
+                    <img src="../images/logo/logo.png" alt="Astra Nova" class="logo-img">
+                </a>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="indexMain.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Explore <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="planets.html">Planets</a></li>
+                    </ul>
+                </li>
+                <li><a href="history.html" class="active">History</a></li>
+                <li><a href="star.html">Celestials</a></li>
+                <li><a href="kosmos.html">Kosmos</a></li>
+            </ul>
+                
+                <div class="nav-actions">
+                    <button class="theme-toggle" aria-label="Toggle dark/light mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" class="btn outline-btn">Sign In</a>
+                    <a href="#" class="btn primary-btn">Join Us</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="title">Cosmic <span class="gradient-text">Timeline</span></h1>
+                    <p class="subtitle">Journey through the history of celestial discoveries from ancient times to modern space exploration</p>
+                    
+                    <div class="hero-controls">
+                        <button class="timeline-control-btn" id="play-timeline">
+                            <i class="fas fa-play"></i> Animate Timeline
+                        </button>
+                        <button class="timeline-control-btn" id="scroll-to-modern">
+                            <i class="fas fa-rocket"></i> Skip to Modern Era
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Cosmic Discoveries Through Time</h2>
+                    <p class="section-subtitle">From ancient star gazers to quantum physics and future explorations</p>
+                </div>
+                
+                <div class="era-navigation">
+                    <button class="era-nav-btn" data-era="ancient">Ancient Astronomy</button>
+                    <button class="era-nav-btn" data-era="classical">Classical Age</button>
+                    <button class="era-nav-btn" data-era="renaissance">Renaissance</button>
+                    <button class="era-nav-btn" data-era="enlightenment">Enlightenment</button>
+                    <button class="era-nav-btn" data-era="modern">Modern Era</button>
+                    <button class="era-nav-btn" data-era="space-age">Space Age</button>
+                    <button class="era-nav-btn" data-era="recent">Recent Discoveries</button>
+                </div>
+                
+                <div class="timeline-wrapper">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-container" id="timeline-container">
+                        <!-- Timeline content will be added here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for detailed view -->
+    <div class="modal" id="event-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-header">
+                <div class="modal-date" id="modal-date"></div>
+                <h3 class="modal-title" id="modal-title"></h3>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <img src="" alt="" class="modal-image" id="modal-image">
+                <div id="modal-description"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="source-link" id="modal-source" target="_blank">Learn More</a>
+            </div>
+        </div>
     </div>
-  </footer>
 
-  <!-- Back to top button -->
-  <button id="back-to-top" aria-label="Back to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-column">
+                        <div class="footer-logo">
+                            <span>Astra</span>Nova
+                        </div>
+                        <p class="footer-text">Exploring the cosmos since 2023</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Explore</h3>
+                        <ul class="footer-links">
+                            <li><a href="planets.html">Solar System</a></li>
+                            <li><a href="galaxies.html">Galaxies</a></li>
+                            <li><a href="universe.html">Multiverse</a></li>
+                            <li><a href="history.html">History</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Pages</h3>
+                        <ul class="footer-links">
+                            <li><a href="indexMain.html">Home</a></li>
+                            <li><a href="history.html">History</a></li>
+                            <li><a href="star.html">Celestials</a></li>
+                            <li><a href="kosmos.html">Kosmos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Contact Us</h3>
+                        <ul class="footer-links">
+                            <li>Email: info@astranova.com</li>
+                            <li>Phone: +359 88 123 4567</li>
+                            <li>Address: Sofia, Bulgaria</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">&copy; 2025 Astra Nova. All rights reserved.</p>
+                <p class="attribution">Made by Plamen Yalamov, Nikola Tareyn, Alexander Dachev (TUES)</p>
+            </div>
+        </div>
+    </footer>
 
-  <script src="../js/main.js"></script>
+    <!-- Back to top button -->
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Cookie consent -->
+    <div class="cookie-consent">
+        <div class="container">
+            <p>We use cookies to enhance your browsing experience. <a href="#">Learn more</a></p>
+            <div class="cookie-buttons">
+                <button class="btn outline-btn">Preferences</button>
+                <button class="btn primary">Accept All</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/history-timeline.js"></script>
+    <script>
+        // Timeline data organized by eras
+        // NOTE: Image sources need to be replaced with high-quality historical images
+        // Recommended sources for historical astronomy images:
+        // 1. NASA Image Gallery (public domain): https://images.nasa.gov/
+        // 2. Wikimedia Commons (Creative Commons): https://commons.wikimedia.org/
+        // 3. Library of Congress (public domain): https://www.loc.gov/
+        // 4. ESA/Hubble (Creative Commons): https://www.spacetelescope.org/
+        // 5. Smithsonian Institution (various licenses): https://www.si.edu/
+        // 6. British Museum (various licenses): https://www.britishmuseum.org/
+        // 7. Metropolitan Museum of Art (public domain): https://www.metmuseum.org/
+        
+        const timelineData = {
+            "ancient": {
+                "name": "Ancient Astronomy",
+                "period": "c. 3000 BCE - 500 CE",
+                "events": [
+                    {
+                        "date": "c. 3000 BCE",
+                        "title": "First Astronomical Observations",
+                        "description": "Ancient civilizations in Mesopotamia begin systematic observations of the night sky, creating the earliest known astronomical records.",
+                        "icon": "fa-star",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cuneiform_tablet_recording_observation_of_Halley%27s_Comet.JPG/800px-Cuneiform_tablet_recording_observation_of_Halley%27s_Comet.JPG",
+                        "details": "The earliest evidence of astronomical observations dates back to the Sumerian civilization in Mesopotamia. These ancient astronomers meticulously recorded celestial events, creating stone tablets that tracked the movements of the sun, moon, and visible planets. These observations were closely tied to religious practices and helped establish the first calendars based on lunar cycles.",
+                        "source": "https://en.wikipedia.org/wiki/History_of_astronomy"
+                    },
+                    {
+                        "date": "c. 2800 BCE",
+                        "title": "Egyptian Astronomical Alignments",
+                        "description": "Egyptians align the pyramids to the north star and other celestial bodies, demonstrating advanced astronomical knowledge.",
+                        "icon": "fa-landmark",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Kheops-Pyramid.jpg/800px-Kheops-Pyramid.jpg",
+                        "details": "The Great Pyramid of Giza shows remarkable astronomical alignments. Its four sides are aligned almost perfectly with the cardinal directions (north, south, east, west), with an accuracy of 0.05 degrees. The north-facing side aligns with true north with exceptional precision. Some shafts within the pyramid appear to align with important stars in Egyptian cosmology, such as Sirius and stars in Orion's belt.",
+                        "source": "https://en.wikipedia.org/wiki/Egyptian_astronomy"
+                    },
+                    {
+                        "date": "c. 1750 BCE",
+                        "title": "Babylonian Star Catalogs",
+                        "description": "Babylonian astronomers create detailed star catalogs and recognize the periodic nature of astronomical events.",
+                        "icon": "fa-scroll",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Babylonian_tablet_recording_Halley%27s_comet.jpg/600px-Babylonian_tablet_recording_Halley%27s_comet.jpg",
+                        "details": "The Babylonians created MUL.APIN, a comprehensive star catalog that listed constellations, stars, and their risings and settings. They developed mathematical astronomy and could predict lunar eclipses. Their astronomical knowledge was recorded on clay tablets using cuneiform script, many of which have survived to modern times. The Babylonians divided the zodiac into 12 equal signs, a system we still use today.",
+                        "source": "https://en.wikipedia.org/wiki/Babylonian_astronomy"
+                    },
+                    {
+                        "date": "c. 1300 BCE",
+                        "title": "Chinese Oracle Bones",
+                        "description": "Early Chinese astronomers record solar eclipses and other celestial events on oracle bones.",
+                        "icon": "fa-moon",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Oracle_bone_script.jpg/600px-Oracle_bone_script.jpg",
+                        "details": "Oracle bones from the Shang Dynasty contain some of the earliest Chinese astronomical records. These bones and tortoise shells were used for divination and record numerous astronomical observations, including solar eclipses, comets, and 'guest stars' (novae or supernovae). Chinese astronomers maintained detailed astronomical records continuously for thousands of years, making their observations invaluable for modern astronomers studying historical celestial events.",
+                        "source": "https://en.wikipedia.org/wiki/Chinese_astronomy"
+                    },
+                    {
+                        "date": "c. 500 BCE",
+                        "title": "Greek Cosmological Models",
+                        "description": "Greek philosophers propose early models of the cosmos, with Earth at the center of the universe.",
+                        "icon": "fa-globe",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Ptolemaic_system.jpg/600px-Ptolemaic_system.jpg",
+                        "details": "Early Greek philosophers like Thales, Anaximander, and Pythagoras began developing theoretical models of the cosmos. Anaximander proposed that the Earth floated freely in space, rather than resting on something. The Pythagoreans suggested that the Earth was spherical, not flat. These ideas marked a shift from pure observation to theoretical astronomy, attempting to explain the underlying structure of the cosmos through rational thought.",
+                        "source": "https://en.wikipedia.org/wiki/Greek_astronomy"
+                    },
+                    {
+                        "date": "350 BCE",
+                        "title": "Aristotle's Geocentric Universe",
+                        "description": "Aristotle formalizes the geocentric model with Earth at the center and celestial bodies moving in perfect circles.",
+                        "icon": "fa-circle",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Aristotle_Altemps_Inv8575.jpg/400px-Aristotle_Altemps_Inv8575.jpg",
+                        "details": "Aristotle's model of the universe placed Earth at the center, surrounded by concentric spheres carrying the Moon, Sun, planets, and stars. He proposed a clear division between the terrestrial and celestial realms, with objects in the heavens made of a perfect, unchanging fifth element called 'aether.' This geocentric model, with some modifications, would dominate Western and Middle Eastern astronomy for nearly 2,000 years.",
+                        "source": "https://en.wikipedia.org/wiki/Aristotelian_physics#Astronomy"
+                    },
+                    {
+                        "date": "240 BCE",
+                        "title": "Eratosthenes Measures Earth",
+                        "description": "Greek mathematician Eratosthenes calculates the circumference of Earth with remarkable accuracy.",
+                        "icon": "fa-ruler",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Eratosthenes_measure_of_Earth_circumference.svg/600px-Eratosthenes_measure_of_Earth_circumference.svg.png",
+                        "details": "Eratosthenes observed that on the summer solstice at noon in Syene (modern Aswan), the sun was directly overhead, casting no shadows. At the same time in Alexandria, the sun cast a shadow indicating an angle of about 7.2 degrees. Using the distance between the cities and basic geometry, he calculated Earth's circumference to be approximately 40,000 kilometers—remarkably close to the modern value of 40,075 kilometers at the equator.",
+                        "source": "https://en.wikipedia.org/wiki/Eratosthenes#Measurement_of_the_Earth's_circumference"
+                    },
+                    {
+                        "date": "150 CE",
+                        "title": "Ptolemy's Almagest",
+                        "description": "Claudius Ptolemy compiles his astronomical masterpiece, the Almagest, providing mathematical models to predict planetary positions.",
+                        "icon": "fa-calculator",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Ptolemy_16century.jpg/400px-Ptolemy_16century.jpg",
+                        "details": "Ptolemy's 'Almagest' was the definitive astronomical text for over a millennium. It contained a star catalog with 1,022 stars organized into 48 constellations. Ptolemy refined the geocentric model using epicycles (small circles) and eccentrics to account for the irregular movements of planets. His mathematical models were so effective at predicting planetary positions that they remained in use until the Renaissance, despite being based on an incorrect cosmological framework.",
+                        "source": "https://en.wikipedia.org/wiki/Ptolemy's_Almagest"
+                    }
+                ]
+            },
+            "classical": {
+                "name": "Classical & Medieval Astronomy",
+                "period": "500 CE - 1400 CE",
+                "events": [
+                    {
+                        "date": "499 CE",
+                        "title": "Aryabhata's Model of the Universe",
+                        "description": "Indian astronomer Aryabhata proposes that the Earth rotates on its axis and calculates the length of the solar year.",
+                        "icon": "fa-sync",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Aryabhata_statue.jpg/400px-Aryabhata_statue.jpg",
+                        "details": "Aryabhata was the first major mathematician-astronomer from India's classical age. His work 'Aryabhatiya' included remarkably accurate calculations of the solar year at 365.258681 days (the modern value is 365.256363 days). He correctly proposed that the Earth rotates on its axis daily, explaining the apparent motion of the stars. He also accurately calculated the circumference of Earth and suggested a rational scientific explanation for solar and lunar eclipses, rather than the mythological explanations common at the time.",
+                        "source": "https://en.wikipedia.org/wiki/Aryabhata"
+                    },
+                    {
+                        "date": "650-1000 CE",
+                        "title": "Islamic Golden Age of Astronomy",
+                        "description": "Muslim astronomers preserve and expand on Greek knowledge, building observatories and creating precise star catalogs.",
+                        "icon": "fa-crescent-moon",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Al-Sufi_-_Andromeda.jpg/600px-Al-Sufi_-_Andromeda.jpg",
+                        "details": "During the Islamic Golden Age, astronomers made tremendous advances. They built sophisticated observatories like Maragheh and Samarkand, developed new instruments such as the astrolabe, and created highly accurate astronomical tables. Notable astronomers included Al-Battani, who improved Ptolemy's calculations; Ibn Yunus, who created the important Hakemite Tables; and Al-Sufi, who wrote the 'Book of Fixed Stars,' identifying many new stars and giving the first written description of the Andromeda Galaxy.",
+                        "source": "https://en.wikipedia.org/wiki/Astronomy_in_the_medieval_Islamic_world"
+                    },
+                    {
+                        "date": "964 CE",
+                        "title": "Al-Sufi's Star Catalog",
+                        "description": "Persian astronomer Al-Sufi publishes 'The Book of Fixed Stars', precisely documenting over 1,000 stars.",
+                        "icon": "fa-book-open",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Constellations_by_Al-Sufi.jpg/600px-Constellations_by_Al-Sufi.jpg",
+                        "details": "Abd al-Rahman al-Sufi's comprehensive star catalog combined the traditional Arabic knowledge of the stars with Ptolemy's Greco-Roman astronomical traditions. He gave the first written description of what we now call the Andromeda Galaxy, describing it as a 'small cloud.' His work included detailed illustrations of each constellation as seen from the earth (not reversed as in celestial globes), and he corrected many of Ptolemy's brightness measurements for stars. His catalog remained influential for centuries.",
+                        "source": "https://en.wikipedia.org/wiki/Abd_al-Rahman_al-Sufi"
+                    },
+                    {
+                        "date": "1054 CE",
+                        "title": "Supernova Creates Crab Nebula",
+                        "description": "Chinese and Arab astronomers record a 'guest star' - actually a supernova that created the Crab Nebula.",
+                        "icon": "fa-radiation",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Crab_Nebula.jpg/600px-Crab_Nebula.jpg",
+                        "details": "On July 4, 1054, Chinese astronomers recorded a 'guest star' in the constellation Taurus that was visible in daylight for 23 days and remained visible at night for nearly two years. Now known to be a supernova explosion, this event created what we call the Crab Nebula. The remnant neutron star (Crab Pulsar) at its center rotates 30 times per second, emitting pulses of radiation. The explosion was also recorded by Arab astronomers and possibly by Native American rock artists.",
+                        "source": "https://en.wikipedia.org/wiki/SN_1054"
+                    },
+                    {
+                        "date": "1259 CE",
+                        "title": "Maragheh Observatory",
+                        "description": "The Maragheh Observatory is established in Persia, becoming the most advanced astronomical center of its time.",
+                        "icon": "fa-eye",
+                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Maragheh_observatory_13th_century.jpg/600px-Maragheh_observatory_13th_century.jpg",
+                        "details": "Under the direction of Nasir al-Din al-Tusi, the Maragheh Observatory in present-day Iran became the scientific centerpiece of the Islamic world. It housed a library with over 400,000 volumes and the most advanced astronomical instruments available. Al-Tusi developed the 'Tusi couple,' a mathematical device to account for linear motion from circular motions, which was later used by Copernicus. The observatory's work resulted in the highly influential Ilkhanic Tables of planetary movements.",
+                        "source": "https://en.wikipedia.org/wiki/Maragheh_observatory"
+                    }
+                ]
+            }
+        };
+
+        // Renaissance era (1400-1700)
+        timelineData["renaissance"] = {
+            "name": "Renaissance Astronomy",
+            "period": "1400 CE - 1700 CE",
+            "events": [
+                {
+                    "date": "1473-1543",
+                    "title": "Copernicus & Heliocentrism",
+                    "description": "Polish astronomer Nicolaus Copernicus develops the heliocentric model, placing the Sun at the center of the universe.",
+                    "icon": "fa-sun",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Nikolaus_Kopernikus.jpg/400px-Nikolaus_Kopernikus.jpg",
+                    "details": "Copernicus' revolutionary work 'De revolutionibus orbium coelestium' (On the Revolutions of the Celestial Spheres) proposed that the Earth rotates on its axis daily and revolves around the Sun annually. Though published the year of his death in 1543, his ideas had circulated privately for years. This heliocentric model solved certain problems with Ptolemy's model, such as retrograde motion, more elegantly, though it wasn't immediately accepted. Copernicus still used circular orbits and epicycles, so his model wasn't significantly more accurate than Ptolemy's for predictions.",
+                    "source": "https://en.wikipedia.org/wiki/Nicolaus_Copernicus"
+                },
+                {
+                    "date": "1572",
+                    "title": "Tycho's Supernova",
+                    "description": "Tycho Brahe observes a supernova in the constellation Cassiopeia, proving that the heavens are not unchangeable.",
+                    "icon": "fa-bomb",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/SN_1572.png/600px-SN_1572.png",
+                    "details": "Danish astronomer Tycho Brahe observed a 'new star' that appeared in the constellation Cassiopeia in November 1572. This observation was revolutionary because it contradicted Aristotle's belief that the heavens were fixed and unchanging. The supernova was visible to the naked eye for 16 months and was brighter than Venus at its peak. Tycho's precise measurements of its position showed that it had to be very distant—in the realm of the 'fixed stars'—not a local atmospheric phenomenon as some suggested.",
+                    "source": "https://en.wikipedia.org/wiki/SN_1572"
+                },
+                {
+                    "date": "1580s-1601",
+                    "title": "Tycho Brahe's Precise Observations",
+                    "description": "Tycho builds advanced observatories and compiles the most accurate pre-telescope star catalog.",
+                    "icon": "fa-compass",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Tycho_Brahe.JPG/400px-Tycho_Brahe.JPG",
+                    "details": "Tycho Brahe built a sophisticated observatory called Uraniborg on the island of Hven (now in Sweden), equipped with the most advanced instruments of his time. Without telescopes, he achieved unprecedented accuracy, with observations precise to within about one arcminute (1/60 of a degree). His catalog of stellar and planetary positions was approximately five times more accurate than previous measurements. Though Tycho rejected the full Copernican model, proposing instead a system where planets orbited the Sun while the Sun orbited Earth, his meticulous data would later enable Kepler to discover the laws of planetary motion.",
+                    "source": "https://en.wikipedia.org/wiki/Tycho_Brahe"
+                },
+                {
+                    "date": "1609-1619",
+                    "title": "Kepler's Laws of Planetary Motion",
+                    "description": "Johannes Kepler discovers that planets move in elliptical orbits, not circles, revolutionizing our understanding of the solar system.",
+                    "icon": "fa-ellipsis-h",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Johannes_Kepler_1610.jpg/400px-Johannes_Kepler_1610.jpg", 
+                    "details": "Using Tycho Brahe's precise data, German astronomer Johannes Kepler discovered three laws of planetary motion: (1) Planets orbit in ellipses with the Sun at one focus; (2) Planets sweep out equal areas in equal times as they travel around their orbits; and (3) The square of a planet's orbital period is proportional to the cube of its semi-major axis. These laws overturned the 2,000-year-old concept of perfect circular motion in the heavens and laid the groundwork for Newton's later theory of universal gravitation.",
+                    "source": "https://en.wikipedia.org/wiki/Kepler%27s_laws_of_planetary_motion"
+                },
+                {
+                    "date": "1610",
+                    "title": "Galileo's Telescopic Discoveries",
+                    "description": "Galileo Galilei uses one of the first telescopes for astronomy, discovering Jupiter's moons, Venus's phases, and mountains on the Moon.",
+                    "icon": "fa-telescope",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg/400px-Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg",
+                    "details": "In 1610, Galileo published 'Sidereus Nuncius' (Starry Messenger), documenting his revolutionary telescopic discoveries. He observed four moons orbiting Jupiter, proving that not all celestial bodies orbit Earth. He saw that Venus went through phases like the Moon, supporting the Copernican model. He discovered that the Moon had mountains and craters, contradicting the belief that celestial bodies were perfect spheres. Galileo's observations provided crucial evidence for the heliocentric model, though they led to his famous conflict with the Church and his eventual house arrest.",
+                    "source": "https://en.wikipedia.org/wiki/Galileo_Galilei"
+                },
+                {
+                    "date": "1656",
+                    "title": "Christiaan Huygens and Saturn's Rings",
+                    "description": "Dutch astronomer Huygens identifies the true nature of Saturn's rings and discovers its largest moon, Titan.",
+                    "icon": "fa-ring",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Christiaan_Huygens-painting.jpeg/400px-Christiaan_Huygens-painting.jpeg",
+                    "details": "Christiaan Huygens solved the mystery of Saturn's strange appearance, which had puzzled Galileo who described the planet as having 'handles' or 'ears.' Using a more powerful telescope of his own design, Huygens correctly identified that Saturn was surrounded by a thin, flat ring that doesn't touch the planet. In 1655, he also discovered Saturn's largest moon, Titan. Huygens was a brilliant polymath who also invented the pendulum clock, developed wave theory of light, and contributed to probability theory and centrifugal force.",
+                    "source": "https://en.wikipedia.org/wiki/Christiaan_Huygens"
+                },
+                {
+                    "date": "1687",
+                    "title": "Newton's Law of Universal Gravitation",
+                    "description": "Isaac Newton publishes 'Principia,' establishing the laws of motion and gravity that explain planetary orbits.",
+                    "icon": "fa-apple-alt",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/GodfreyKneller-IsaacNewton-1689.jpg/400px-GodfreyKneller-IsaacNewton-1689.jpg",
+                    "details": "Isaac Newton's monumental work 'Philosophiæ Naturalis Principia Mathematica' unified the physics of heaven and Earth for the first time. His law of universal gravitation demonstrated that the same force that makes an apple fall also keeps the Moon in orbit around Earth and planets around the Sun. Newton showed that Kepler's laws could be derived from his more fundamental principles. This work established the foundation of classical mechanics and secured the heliocentric model of the cosmos, providing the first comprehensive mathematical framework explaining how the universe works.",
+                    "source": "https://en.wikipedia.org/wiki/Isaac_Newton"
+                }
+            ]
+        };
+        
+        // Enlightenment era (1700-1800)
+        timelineData["enlightenment"] = {
+            "name": "Enlightenment & Early Modern Astronomy",
+            "period": "1700 CE - 1900 CE",
+            "events": [
+                {
+                    "date": "1705",
+                    "title": "Halley Predicts Comet's Return",
+                    "description": "Edmund Halley uses Newton's laws to predict the periodic return of a comet that would later bear his name.",
+                    "icon": "fa-meteor",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Edmond_Halley_074.jpg/400px-Edmond_Halley_074.jpg",
+                    "details": "Applying Newton's laws of motion and gravity, Edmund Halley calculated the orbits of several comets and recognized that comets seen in 1531, 1607, and 1682 were actually the same object returning every 76 years. He predicted it would return in 1758, which it did, though Halley didn't live to see it. This was the first successful prediction of a comet's return and a triumph for Newtonian physics. Halley's Comet has been observed for over 2,000 years, with its earliest confirmed appearance recorded by Chinese astronomers in 240 BCE.",
+                    "source": "https://en.wikipedia.org/wiki/Halley%27s_Comet"
+                },
+                {
+                    "date": "1750s",
+                    "title": "Wright & Kant's Island Universes",
+                    "description": "Thomas Wright and Immanuel Kant propose that nebulous objects in the night sky might be distant 'island universes' (galaxies).",
+                    "icon": "fa-cloud",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Immanuel_Kant_%28painted_portrait%29.jpg/400px-Immanuel_Kant_%28painted_portrait%29.jpg",
+                    "details": "Thomas Wright first proposed in 1750 that the Milky Way was a flattened disk of stars, with our Sun as just one star within it. Shortly after, philosopher Immanuel Kant extended this idea, suggesting that the 'nebulae' (fuzzy patches of light) observed in the night sky might be entire 'island universes' similar to but separate from our Milky Way. This remarkably prescient theory would not be confirmed observationally until the 1920s when Edwin Hubble measured the distances to these objects, proving they were indeed separate galaxies far beyond our own.",
+                    "source": "https://en.wikipedia.org/wiki/Island_universe_theory"
+                },
+                {
+                    "date": "1781",
+                    "title": "Herschel Discovers Uranus",
+                    "description": "William Herschel discovers the planet Uranus, the first new planet found since antiquity.",
+                    "icon": "fa-globe",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/William_Herschel01.jpg/400px-William_Herschel01.jpg",
+                    "details": "On March 13, 1781, German-British astronomer William Herschel was conducting a systematic survey of stars when he observed an object that appeared to be a disk rather than a point of light. Initially thinking it was a comet, further observations confirmed it was a planet beyond Saturn—the first new planet discovered in modern times. Herschel wanted to name it 'Georgium Sidus' after King George III, but the astronomical community eventually adopted 'Uranus' to maintain the tradition of naming planets after classical deities. Herschel also discovered infrared radiation and constructed the largest telescopes of his day.",
+                    "source": "https://en.wikipedia.org/wiki/William_Herschel"
+                },
+                {
+                    "date": "1783",
+                    "title": "Caroline Herschel's Comets",
+                    "description": "Caroline Herschel becomes the first woman to discover a comet and goes on to discover eight comets and numerous deep-sky objects.",
+                    "icon": "fa-user-astronaut",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Caroline_Herschel.jpg/400px-Caroline_Herschel.jpg",
+                    "details": "Working alongside her brother William, Caroline Herschel became the first professional female astronomer. She discovered eight comets between 1786 and 1797, as well as several deep-sky objects, including the companion of the Andromeda Galaxy (M110). Despite minimal formal education and physical challenges (smallpox scarring and stunted growth from childhood typhus), she created a new catalog of nebulae and star clusters, correcting many errors in Flamsteed's earlier catalog. King George III granted her an annual salary for her work as William's assistant, making her the first woman professional scientist.",
+                    "source": "https://en.wikipedia.org/wiki/Caroline_Herschel"
+                },
+                {
+                    "date": "1814-1815",
+                    "title": "Fraunhofer Lines in Solar Spectrum",
+                    "description": "Joseph von Fraunhofer discovers dark lines in the solar spectrum, laying groundwork for spectroscopy and astrophysics.",
+                    "icon": "fa-stream",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Joseph_von_Fraunhofer.jpg/400px-Joseph_von_Fraunhofer.jpg",
+                    "details": "German optician Joseph von Fraunhofer discovered and carefully mapped 574 dark lines in the sun's spectrum, which are now known as Fraunhofer lines. These lines are caused by elements in the Sun's atmosphere absorbing specific wavelengths of light. Though Fraunhofer didn't understand their cause, his systematic classification provided crucial data for later scientists. In the 1860s, Gustav Kirchhoff and Robert Bunsen would demonstrate that each element produces a unique spectral fingerprint, allowing astronomers to determine the chemical composition of distant celestial objects. This marked the birth of astrophysics as a science.",
+                    "source": "https://en.wikipedia.org/wiki/Fraunhofer_lines"
+                },
+                {
+                    "date": "1838",
+                    "title": "First Stellar Parallax Measurements",
+                    "description": "Friedrich Bessel measures the first reliable stellar distance using parallax, finally proving the Earth orbits the Sun.",
+                    "icon": "fa-ruler-combined",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Friedrich_Wilhelm_Bessel_%281784%E2%80%931846%29.jpg/400px-Friedrich_Wilhelm_Bessel_%281784%E2%80%931846%29.jpg",
+                    "details": "Friedrich Bessel successfully measured the parallax (apparent shift in position) of the star 61 Cygni as Earth orbited the Sun, calculating its distance as 10.4 light-years (modern value is 11.4 light-years). This was the first direct measurement of a star's distance and provided conclusive proof of Earth's orbital motion around the Sun, validating the Copernican model nearly 300 years after it was proposed. The same year, Friedrich Struve measured the parallax of Vega, and Thomas Henderson measured Alpha Centauri. These measurements revealed for the first time the true scale of the universe and the vast distances to the stars.",
+                    "source": "https://en.wikipedia.org/wiki/Stellar_parallax"
+                },
+                {
+                    "date": "1846",
+                    "title": "Neptune Predicted and Discovered",
+                    "description": "Astronomers discover Neptune based on mathematical predictions, a triumph for Newtonian physics.",
+                    "icon": "fa-calculator",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Urbain_Le_Verrier.jpg/400px-Urbain_Le_Verrier.jpg",
+                    "details": "After observing irregularities in Uranus's orbit that couldn't be explained by Newton's laws, mathematicians John Couch Adams and Urbain Le Verrier independently calculated where an unknown planet should be located to account for these perturbations. Le Verrier sent his predictions to the Berlin Observatory, where Johann Gottfried Galle and Heinrich d'Arrest found Neptune within 1° of the predicted position on their first night of searching (September 23, 1846). This discovery was considered a spectacular validation of Newton's theory of gravity and demonstrated the predictive power of mathematics in astronomy.",
+                    "source": "https://en.wikipedia.org/wiki/Discovery_of_Neptune"
+                },
+                {
+                    "date": "1859-1861",
+                    "title": "Kirchhoff's Laws of Spectroscopy",
+                    "description": "Gustav Kirchhoff and Robert Bunsen establish the laws of spectroscopy, allowing astronomers to determine the composition of distant stars.",
+                    "icon": "fa-rainbow",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Gustav_Robert_Kirchhoff.jpg/400px-Gustav_Robert_Kirchhoff.jpg",
+                    "details": "Building on Fraunhofer's observations of dark lines in the solar spectrum, Gustav Kirchhoff and Robert Bunsen discovered the fundamental laws of spectroscopy: (1) A hot solid or dense gas produces a continuous spectrum; (2) A hot, low-density gas produces an emission line spectrum; and (3) A continuous spectrum passing through a cool gas produces an absorption line spectrum with dark lines at the same frequencies where the gas would emit light. These laws revolutionized astronomy by providing a way to determine the chemical composition of stars and nebulae from their light alone, creating the field of astrophysics.",
+                    "source": "https://en.wikipedia.org/wiki/Gustav_Kirchhoff#Spectroscopy"
+                }
+            ]
+        };
+        
+        // Modern Era (1900-1957)
+        timelineData["modern"] = {
+            "name": "Modern Astronomy",
+            "period": "1700 CE - 1900 CE",
+            "events": [
+                {
+                    "date": "1705",
+                    "title": "Halley Predicts Comet Return",
+                    "description": "Edmond Halley uses Newton's laws to predict that a comet will return in 1758, proving the power of mathematical astronomy.",
+                    "icon": "fa-meteor",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Edmond_Halley_074.jpg/400px-Edmond_Halley_074.jpg",
+                    "details": "Edmond Halley applied Newton's law of universal gravitation to calculate the orbit of a bright comet that had appeared in 1682. He realized it was the same comet that had been recorded in 1531 and 1607, and predicted it would return in 1758. When the comet appeared as predicted (though Halley had died by then), it provided dramatic confirmation of Newton's theories and marked the beginning of predictive astronomy. The comet was subsequently named Halley's Comet in his honor.",
+                    "source": "https://en.wikipedia.org/wiki/Halley%27s_Comet"
+                },
+                {
+                    "date": "1781",
+                    "title": "Discovery of Uranus",
+                    "description": "William Herschel discovers Uranus, the first planet found with a telescope, doubling the known size of the solar system.",
+                    "icon": "fa-globe",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/William_Herschel01.jpg/400px-William_Herschel01.jpg",
+                    "details": "While conducting a systematic survey of the sky with his homemade telescope, William Herschel noticed an object that appeared as a disk rather than a point of light. Initially thinking it might be a comet, further observations revealed it was a new planet orbiting beyond Saturn. The discovery of Uranus doubled the known diameter of the solar system and demonstrated that there were still major discoveries to be made. Herschel originally wanted to name it 'Georgium Sidus' (George's Star) after King George III, but it was eventually named Uranus after the Greek god of the sky.",
+                    "source": "https://en.wikipedia.org/wiki/Discovery_of_Uranus"
+                },
+                {
+                    "date": "1814-1823",
+                    "title": "Fraunhofer Lines and Stellar Spectroscopy",
+                    "description": "Joseph von Fraunhofer maps hundreds of dark lines in the Sun's spectrum, laying the foundation for stellar spectroscopy.",
+                    "icon": "fa-rainbow",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Joseph_von_Fraunhofer.jpg/400px-Joseph_von_Fraunhofer.jpg",
+                    "details": "Joseph von Fraunhofer systematically mapped 574 dark lines in the solar spectrum, now known as Fraunhofer lines. He also observed similar lines in the spectra of other stars, noting that different stars had different patterns of lines. Though he didn't understand their cause, his work laid the foundation for stellar spectroscopy. Later, Gustav Kirchhoff and Robert Bunsen would realize these lines indicated the presence of specific chemical elements, revolutionizing our ability to determine the composition of distant stars.",
+                    "source": "https://en.wikipedia.org/wiki/Joseph_von_Fraunhofer"
+                },
+                {
+                    "date": "1838",
+                    "title": "First Stellar Parallax Measured",
+                    "description": "Friedrich Bessel measures the first stellar parallax, proving that stars are incredibly distant and providing the first direct evidence of Earth's orbital motion.",
+                    "icon": "fa-ruler-combined",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Friedrich_Wilhelm_Bessel_%281784%E2%80%931846%29.jpg/400px-Friedrich_Wilhelm_Bessel_%281784%E2%80%931846%29.jpg",
+                    "details": "Friedrich Bessel measured the parallax of the star 61 Cygni, finding it to be 0.314 arcseconds (very close to the modern value of 0.287 arcseconds). This tiny angular shift, caused by Earth's orbital motion around the Sun, corresponded to a distance of about 11 light-years. This was the first direct measurement of stellar distance and provided conclusive proof that Earth orbits the Sun. The measurement also revealed the vast scale of the universe—even the nearest stars are incredibly far away.",
+                    "source": "https://en.wikipedia.org/wiki/Stellar_parallax"
+                },
+                {
+                    "date": "1846",
+                    "title": "Discovery of Neptune",
+                    "description": "Neptune is discovered through mathematical prediction, demonstrating the power of Newton's gravitational theory.",
+                    "icon": "fa-calculator",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Urbain_Le_Verrier.jpg/400px-Urbain_Le_Verrier.jpg",
+                    "details": "Irregularities in Uranus's orbit led mathematicians Urbain Le Verrier and John Couch Adams to independently calculate that another planet must be perturbing its motion. Le Verrier sent his calculations to Johann Galle at the Berlin Observatory, who found Neptune within one degree of the predicted position on the first night of searching. This 'discovery by mathematics' was a triumph for Newton's theory of gravitation and demonstrated that the laws of physics could be used to predict the existence of unknown celestial objects.",
+                    "source": "https://en.wikipedia.org/wiki/Discovery_of_Neptune"
+                },
+                {
+                    "date": "1859",
+                    "title": "Kirchhoff's Laws of Spectroscopy",
+                    "description": "Gustav Kirchhoff establishes the laws of spectroscopy, enabling astronomers to determine the chemical composition of stars.",
+                    "icon": "fa-flask",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Gustav_Robert_Kirchhoff.jpg/400px-Gustav_Robert_Kirchhoff.jpg",
+                    "details": "Gustav Kirchhoff, working with Robert Bunsen, established three fundamental laws of spectroscopy: (1) Hot, dense objects produce continuous spectra; (2) Hot, low-density gases produce emission line spectra; and (3) Cool gases absorb light at the same wavelengths they emit, creating absorption line spectra. This work explained Fraunhofer's dark lines in the solar spectrum and opened the field of stellar spectroscopy. For the first time, astronomers could determine what stars were made of, not just where they were and how they moved.",
+                    "source": "https://en.wikipedia.org/wiki/Gustav_Kirchhoff"
+                },
+                {
+                    "date": "1868",
+                    "title": "Discovery of Helium in the Sun",
+                    "description": "Helium is discovered in the Sun's spectrum before being found on Earth, demonstrating the power of spectroscopy.",
+                    "icon": "fa-sun",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Pierre_Janssen.jpg/400px-Pierre_Janssen.jpg",
+                    "details": "During a solar eclipse in India, Pierre Janssen observed a bright yellow line in the Sun's spectrum that didn't match any known element on Earth. Norman Lockyer, observing the same line, suggested it came from a new element he named 'helium' after the Greek word for Sun (helios). Helium wasn't discovered on Earth until 1895, making it the first element discovered in space before being found on our planet. This discovery demonstrated that spectroscopy could reveal the composition of celestial objects and even discover new elements.",
+                    "source": "https://en.wikipedia.org/wiki/Helium#Discovery"
+                },
+                {
+                    "date": "1877",
+                    "title": "Discovery of Mars' Moons",
+                    "description": "Asaph Hall discovers Mars' two small moons, Phobos and Deimos, using the newly improved telescopes.",
+                    "icon": "fa-binoculars",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Asaph_Hall.jpg/400px-Asaph_Hall.jpg",
+                    "details": "Using the 26-inch refractor at the U.S. Naval Observatory, Asaph Hall discovered two tiny moons orbiting Mars. He named them Phobos (Fear) and Deimos (Panic) after the sons of the Greek god Ares (Mars in Roman mythology). These moons are very small—Phobos is only about 22 kilometers across and Deimos about 12 kilometers. Their discovery was significant because it showed that even small celestial objects could be detected with improved telescopes and careful observation techniques.",
+                    "source": "https://en.wikipedia.org/wiki/Moons_of_Mars#Discovery"
+                }
+            ]
+        };
+        
+        // Space Age (1957-present)
+        timelineData["space-age"] = {
+            "name": "Space Age Astronomy",
+            "period": "1957 CE - Present",
+            "events": [
+                {
+                    "date": "1957",
+                    "title": "Sputnik & The Space Age Begins",
+                    "description": "The Soviet Union launches Sputnik, the first artificial satellite, beginning the Space Age.",
+                    "icon": "fa-satellite",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Sputnik_asm.jpg/600px-Sputnik_asm.jpg",
+                    "details": "On October 4, 1957, the Soviet Union launched Sputnik 1, the first artificial satellite to orbit Earth. This simple 58 cm diameter sphere with four antennas transmitted radio signals that could be detected around the world, demonstrating that space was now accessible to human technology. Sputnik's launch shocked the United States and triggered the Space Race between the two Cold War superpowers. Within months, the U.S. launched its first satellite, Explorer 1, which discovered the Van Allen radiation belts. The Space Age had begun, and humanity's view of the cosmos would never be the same.",
+                    "source": "https://en.wikipedia.org/wiki/Sputnik_1"
+                },
+                {
+                    "date": "1963-1964",
+                    "title": "Quasars Discovered",
+                    "description": "Astronomers discover quasars, the extremely bright cores of distant active galaxies.",
+                    "icon": "fa-radiation-alt",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/3C_273_Hubble.jpg/600px-3C_273_Hubble.jpg",
+                    "details": "Dutch-American astronomer Maarten Schmidt identified the first quasar (3C 273) by determining that its unusual spectrum was actually a highly redshifted hydrogen spectrum, placing it at an enormous distance. Quasars (quasi-stellar radio sources) are now known to be the incredibly bright cores of active galaxies, powered by supermassive black holes actively consuming matter. As material falls into the black hole, it forms an accretion disk that heats up and emits tremendous amounts of energy. Some quasars are over 1,000 times brighter than our entire Milky Way galaxy. Their discovery provided evidence for the existence of supermassive black holes and opened a window to study the early universe.",
+                    "source": "https://en.wikipedia.org/wiki/Quasar"
+                },
+                {
+                    "date": "1965",
+                    "title": "Discovery of Cosmic Microwave Background",
+                    "description": "Penzias and Wilson accidentally discover the cosmic microwave background radiation, providing strong evidence for the Big Bang.",
+                    "icon": "fa-wave-square",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Horn_Antenna-in_Holmdel%2C_New_Jersey.jpeg/600px-Horn_Antenna-in_Holmdel%2C_New_Jersey.jpeg",
+                    "details": "While working with a radio antenna at Bell Labs, Arno Penzias and Robert Wilson detected a persistent background noise coming from all directions in space. Initially thinking it was interference, they eventually realized they had discovered the cosmic microwave background (CMB)—radiation left over from the Big Bang. This discovery provided crucial evidence for the Big Bang theory and earned them the Nobel Prize in Physics. The CMB is often called the 'afterglow' of the Big Bang.",
+                    "source": "https://en.wikipedia.org/wiki/Discovery_of_cosmic_microwave_background_radiation"
+                },
+                {
+                    "date": "1967",
+                    "title": "Pulsars Discovered",
+                    "description": "Jocelyn Bell Burnell discovers pulsars, rapidly rotating neutron stars that emit beams of radiation.",
+                    "icon": "fa-stopwatch",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Jocelyn_Bell_Burnell_1967.jpg/400px-Jocelyn_Bell_Burnell_1967.jpg",
+                    "details": "Graduate student Jocelyn Bell Burnell noticed unusual 'scruff' in the data from a radio telescope she helped build with her advisor Antony Hewish. She identified a strange signal that pulsed with remarkable precision every 1.33 seconds. Initially labeled 'LGM-1' (for 'Little Green Men'), the team soon discovered more of these pulsing sources, now called pulsars. Pulsars are rapidly rotating neutron stars—incredibly dense remnants of massive stars after supernova explosions. Like cosmic lighthouses, they emit beams of radiation that sweep past Earth at extremely regular intervals. Their discovery provided the first observational evidence for neutron stars, which had been theoretically predicted in 1934.",
+                    "source": "https://en.wikipedia.org/wiki/Pulsar"
+                },
+                {
+                    "date": "1990",
+                    "title": "Hubble Space Telescope Launched",
+                    "description": "The Hubble Space Telescope begins operations, providing unprecedented views of the universe from above Earth's atmosphere.",
+                    "icon": "fa-telescope",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/HST-SM4.jpeg/600px-HST-SM4.jpeg",
+                    "details": "The Hubble Space Telescope revolutionized astronomy by providing crystal-clear images from above Earth's atmosphere. Despite initial problems with its primary mirror that were fixed by a dramatic Space Shuttle servicing mission in 1993, Hubble has made countless discoveries. It has observed the most distant galaxies, helped determine the age of the universe, discovered that the universe's expansion is accelerating, and captured iconic images that have inspired the public's interest in astronomy.",
+                    "source": "https://en.wikipedia.org/wiki/Hubble_Space_Telescope"
+                },
+                {
+                    "date": "1995",
+                    "title": "First Exoplanet Around Sun-like Star",
+                    "description": "Michel Mayor and Didier Queloz discover 51 Pegasi b, the first confirmed exoplanet orbiting a Sun-like star.",
+                    "icon": "fa-globe-americas",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Michel_Mayor_2012.jpg/400px-Michel_Mayor_2012.jpg",
+                    "details": "Using the radial velocity method, Michel Mayor and Didier Queloz detected tiny wobbles in the star 51 Pegasi caused by an orbiting planet. The planet, 51 Pegasi b, was a 'hot Jupiter'—a gas giant orbiting very close to its star. This discovery opened the field of exoplanet astronomy and challenged theories of planetary formation. It earned Mayor and Queloz the 2019 Nobel Prize in Physics and marked the beginning of the search for potentially habitable worlds beyond our solar system.",
+                    "source": "https://en.wikipedia.org/wiki/51_Pegasi_b"
+                },
+                {
+                    "date": "2015",
+                    "title": "First Detection of Gravitational Waves",
+                    "description": "LIGO detects gravitational waves from merging black holes, opening a new window on the universe.",
+                    "icon": "fa-water",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/LIGO_measurement_of_gravitational_waves.svg/600px-LIGO_measurement_of_gravitational_waves.svg.png",
+                    "details": "On September 14, 2015, the Laser Interferometer Gravitational-Wave Observatory (LIGO) detected ripples in spacetime caused by two black holes merging 1.3 billion years ago. This detection confirmed Einstein's 1915 prediction of gravitational waves and opened an entirely new field of astronomy. Gravitational wave astronomy allows us to observe cosmic events that are invisible to traditional telescopes, such as black hole mergers and neutron star collisions, providing new insights into the most extreme objects in the universe.",
+                    "source": "https://en.wikipedia.org/wiki/First_observation_of_gravitational_waves"
+                },
+                {
+                    "date": "2019",
+                    "title": "First Image of a Black Hole",
+                    "description": "The Event Horizon Telescope captures the first direct image of a black hole's event horizon in galaxy M87.",
+                    "icon": "fa-circle",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Black_hole_-_Messier_87_crop_max_res.jpg/600px-Black_hole_-_Messier_87_crop_max_res.jpg",
+                    "details": "Using a global network of radio telescopes working together as the Event Horizon Telescope (EHT), astronomers captured the first direct image of a black hole's event horizon. The target was the supermassive black hole at the center of galaxy M87, which has a mass 6.5 billion times that of our Sun. The image shows the black hole's shadow surrounded by a bright ring of glowing gas. This achievement confirmed Einstein's predictions about black holes and provided new insights into these extreme objects.",
+                    "source": "https://en.wikipedia.org/wiki/Event_Horizon_Telescope"
+                }
+            ]
+        };
+        
+        // Recent Discoveries (2020-Present)
+        timelineData["recent"] = {
+            "name": "Recent Discoveries",
+            "period": "2020 CE - Present",
+            "events": [
+                {
+                    "date": "2021",
+                    "title": "James Webb Space Telescope Launched",
+                    "description": "The most powerful space telescope ever built launches to observe the universe in infrared light.",
+                    "icon": "fa-satellite-dish",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/James_Webb_Space_Telescope_Mirrors_Will_Piece_Together_Cosmic_Puzzles_%2851773202148%29.jpg/600px-James_Webb_Space_Telescope_Mirrors_Will_Piece_Together_Cosmic_Puzzles_%2851773202148%29.jpg",
+                    "details": "On December 25, 2021, the James Webb Space Telescope (JWST) was successfully launched, representing the most ambitious and complex space observatory ever built. With its 6.5-meter primary mirror and suite of infrared instruments, JWST can peer through cosmic dust to observe the first galaxies that formed after the Big Bang, directly image exoplanets, and study star and planet formation in unprecedented detail. Operating at the L2 Lagrange point 1.5 million kilometers from Earth, its sensitive instruments are protected by a tennis court-sized sunshield that keeps them at -233°C. JWST represents a collaboration between NASA, ESA, and CSA and is expected to transform our understanding of the cosmos during its 20+ year mission.",
+                    "source": "https://en.wikipedia.org/wiki/James_Webb_Space_Telescope"
+                },
+                {
+                    "date": "2022",
+                    "title": "First JWST Deep Field Images",
+                    "description": "James Webb Space Telescope releases its first images, revealing the earliest galaxies and unprecedented cosmic details.",
+                    "icon": "fa-camera",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/SMACS_0723_deep_field.jpg/600px-SMACS_0723_deep_field.jpg",
+                    "details": "In July 2022, the first full-color images and spectroscopic data from the James Webb Space Telescope were released, showcasing its extraordinary capabilities. The images included the deepest and sharpest infrared image of the distant universe ever taken, showing the galaxy cluster SMACS 0723 as it appeared 4.6 billion years ago. Webb also captured detailed views of the Southern Ring Nebula, Stephan's Quintet galaxy group, and the Carina Nebula's 'Cosmic Cliffs.' Spectroscopic analysis revealed the composition of an exoplanet's atmosphere in unprecedented detail. These early observations demonstrate Webb's ability to look further back in time to the early universe and provide insights into the formation of stars, exoplanets, and galaxies.",
+                    "source": "https://www.nasa.gov/webbfirstimages"
+                },
+                {
+                    "date": "2023",
+                    "title": "Most Distant Galaxy Confirmed",
+                    "description": "Astronomers confirm the most distant galaxy ever observed, seen as it was just 320 million years after the Big Bang.",
+                    "icon": "fa-globe",
+                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/JADES-GS-z13-0_JWST.jpg/600px-JADES-GS-z13-0_JWST.jpg",
+                    "details": "Using the James Webb Space Telescope, astronomers have confirmed the most distant galaxy ever observed, JADES-GS-z13-0, with a redshift of z=13.2. This means we're seeing this galaxy as it existed just 320 million years after the Big Bang, or about 13.5 billion years ago. The discovery provides a glimpse into the universe during the 'cosmic dawn'—the era when the first stars and galaxies formed. Spectroscopic analysis reveals that these early galaxies were actively forming stars and already contained elements heavier than hydrogen and helium, suggesting that several generations of stars had already lived and died even at this early stage of the universe.",
+                    "source": "https://www.nasa.gov/universe/galaxies/webb-confirms-most-distant-galaxy-yet"
+                }
+            ]
+        };
+    </script>
 </body>
 </html>

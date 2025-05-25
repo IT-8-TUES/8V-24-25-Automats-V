@@ -9,7 +9,6 @@
 /* Import page specific styles */
 @import 'pages/home.css';
 @import 'pages/visualization.css';
-@import 'pages/history.css';
 
 /* Import theme styles */
 @import 'themes/light.css';

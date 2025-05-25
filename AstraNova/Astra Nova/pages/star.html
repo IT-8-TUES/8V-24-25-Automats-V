@@ -1,94 +1,1463 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Astra Nova – The Star</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Astra Nova - Explore the structure and anatomy of various celestial objects">
+    <title>Astra Nova – Celestial Objects</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/logo.png">
+    <style>
+        .star-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0;
+            transition: transform 0.3s ease-in-out;
+            flex: 0 0 auto;
+        }
+
+        .star-container:hover {
+            transform: scale(1.02);
+        }
+        
+        .zone {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: url(#glow);
+        }
+        
+        .zone:hover {
+            filter: url(#glow-intense);
+            transform-origin: center;
+            transform: scale(1.03);
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(16, 24, 64, 0.9);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            max-width: 250px;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            pointer-events: none;
+            top: 50%;
+            transform: translateY(-50%);
+            right: -280px; /* Position tooltip to the right of the diagram */
+        }
+        
+        .tooltip h4 {
+            margin: 0 0 5px;
+            color: var(--accent-color);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .tooltip p {
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        .tooltip-data {
+            font-size: 12px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tooltip-data span {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .photosphere-texture {
+            animation: bubbling 15s infinite linear;
+            transform-origin: center center !important; /* Keep rotation around center */
+        }
+        
+        .corona-glow {
+            animation: glow 3s infinite alternate;
+        }
+        
+        .convective-animation {
+            animation: convect 20s infinite linear;
+        }
+        
+        .radiative-pulse {
+            animation: pulse 10s infinite alternate;
+        }
+        
+        .core-energy {
+            animation: energy 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            0% { filter: brightness(1) blur(5px); }
+            100% { filter: brightness(1.2) blur(7px); }
+        }
+        
+        @keyframes bubbling {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes convect {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes energy {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.3); }
+        }
+        
+        .info-box {
+            background: rgba(16, 24, 64, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 0;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+        
+        .info-box h3 {
+            color: var(--accent-color);
+            margin-top: 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .info-box p {
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+        
+        .info-box.active {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .star-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .detail-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 6px;
+            flex: 1 1 150px;
+        }
+        
+        .detail-item h4 {
+            margin: 0 0 5px;
+            font-size: 14px;
+            color: var(--accent-color);
+        }
+        
+        .detail-item p {
+            margin: 0;
+            font-size: 13px;
+        }
+        
+        .star-interactive-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 30px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+        
+        @media (max-width: 992px) {
+            .tooltip {
+                right: auto;
+                top: auto;
+                bottom: -150px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .star-container {
+                margin-bottom: 160px;
+            }
+        }
+        
+        /* New styles for celestials page */
+        .celestial-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .celestial-tab {
+            padding: 12px 25px;
+            background: rgba(16, 24, 64, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .celestial-tab:hover {
+            background: rgba(var(--accent-color-rgb), 0.3);
+            transform: translateY(-3px);
+        }
+        
+        .celestial-tab.active {
+            background: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(var(--accent-color-rgb), 0.4);
+        }
+        
+        .celestial-icon {
+            font-size: 16px;
+        }
+        
+        .celestial-content {
+            display: none;
+        }
+        
+        .celestial-content.active {
+            display: block;
+        }
+        
+        /* Planet layers */
+        .atmosphere {
+            animation: none;
+            opacity: 0.7;
+        }
+        
+        .crust {
+            animation: none;
+        }
+        
+        .mantle {
+            animation: pulse 15s infinite alternate;
+        }
+        
+        .outer-core {
+            animation: none;
+        }
+        
+        .inner-core {
+            animation: energy 3s infinite alternate;
+        }
+        
+        /* Black hole layers */
+        .event-horizon {
+            animation: pulse 2s infinite alternate;
+            filter: url(#glow-intense);
+        }
+        
+        .accretion-disk {
+            animation: disk-spin 20s infinite linear;
+            transform-origin: center center;
+        }
+        
+        @keyframes disk-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Galaxy layers */
+        .galaxy-halo {
+            animation: glow 5s infinite alternate;
+            opacity: 0.5;
+        }
+        
+        .galaxy-disk {
+            animation: galaxy-spin 60s infinite linear;
+        }
+        
+        .galaxy-core {
+            animation: core-pulse 4s infinite alternate;
+        }
+        
+        @keyframes galaxy-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes core-pulse {
+            0% { transform: scale(1); filter: brightness(1); }
+            100% { transform: scale(1.05); filter: brightness(1.3); }
+        }
+    </style>
 </head>
 <body>
-
- 
-  <header class="site-header show" id="siteHeader">
-    <div class="container header-container">
-      <img src="../Plamen/logo.png" alt="Astra Nova Logo" class="logo">
-      <h1 class="site-title">ASTRA NOVA</h1>
-      <p class="site-subtitle">A journey through the stars and the secrets of the Universe</p>
-      <nav class="main-nav">
-        <ul>
-          <li><a href="indexMain.html">Home</a></li>
-          <li><a href="history.html">History</a></li>
-          <li><a href="star.html">The Star</a></li>
-          <li><a href="Description.html">Description</a></li>
-          <!--dachev--><li><a href="#gallery">DachevGallery</a></li>
-          <li><a href="#merch">DachevMerch</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  
-  <h1 class="page-star">Explore the Parts of a Star</h1>
-
-  <div class="star-container">
-    <svg viewBox="0 0 200 200">
-      <circle class="zone" cx="100" cy="100" r="90" fill="#ffffff33"
-              onclick="showInfo('Corona','The outer atmosphere of a star, extending millions of kilometres.')"/>
-      <circle class="zone" cx="100" cy="100" r="70" fill="#f97316aa"
-              onclick="showInfo('Photosphere','The visible surface of the star that emits most of its light.')"/>
-      <circle class="zone" cx="100" cy="100" r="50" fill="#ef4444aa"
-              onclick="showInfo('Convective Zone','Energy is carried by convection — hot plasma rises, cool plasma sinks.')"/>
-      <circle class="zone" cx="100" cy="100" r="30" fill="#eab308cc"
-              onclick="showInfo('Radiative Zone','Energy moves by radiation — photons scatter outward slowly.')"/>
-      <circle class="zone" cx="100" cy="100" r="15" fill="#facc15"
-              onclick="showInfo('Core','The centre where nuclear fusion powers the star.')"/>
-    </svg>
-  </div>
-
-  <div id="infoBox" class="info-box"></div>
-
-  
-  <footer class="site-footer">
-    <div class="container footer-container">
-    <h3>Contact Us</h3>
-    <p>Email: info@astranova.com</p>
-    <p>Phone: +359 88 123 4567</p>
-    <p>Address: Sofia Bulgaria</p>
-    <h3>About us</h3>
-    <h4> creators</h4>
-    <p>Plamen Yalamov,  Nikola Tareyn,  Alexander Dachev</p>
-    <p> we are from TUES(TECHNOLOGICAL SCHOOL ELECTRONIC SYSTEMS)</p>
-     <p> (bg: ТЕХНОЛОГИЧНО УЧИЛИЩЕ ЕЛКТРОННИ СИСТЕМИ)</p>
-    <p>we are from one class and good friends </p>
-    <nav class="footer-nav">
-      <ul>
-        <li><a href="indexMain.html">Home</a></li>
-        <li><a href="history.html">History</a></li>
-        <li><a href="star.html">The Star</a></li>
-        <li><a href="Description.html">Description</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#merch">Merch</a></li>
-    </nav>
-    <p class="copyright">© 2025 Astra Nova. All rights reserved.</p>
-  </div>
-  </footer>
-
-  
-  <script>
-   
-    function showInfo(title,text){
-      const box=document.getElementById('infoBox');
-      box.innerHTML=`<h2>${title}</h2><p>${text}</p>`;
-      box.style.display='block';
-    }
+    <div class="stars"></div>
+    <div class="twinkling"></div>
     
-    let last=0;const header=document.getElementById('siteHeader');
-    window.addEventListener('scroll',()=>{
-      const cur=window.pageYOffset||document.documentElement.scrollTop;
-      if(cur>last){header.classList.replace('show','hide');}
-      else         {header.classList.replace('hide','show');}
-      last=cur<=0?0:cur;
-    });
-  </script>
+    <!-- Theme transition overlay -->
+    <div class="theme-transition-overlay"></div>
+    
+    <!-- Announcement Banner -->
+    <div class="announcement-banner">
+        <div class="container">
+            <p><i class="fas fa-star-half-alt"></i> New Feature: Explore the Theoretical Multiverse in 3D! <a href="universe.html">Try it now</a></p>
+            <button class="close-banner"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+    
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="indexMain.html">
+                    <img src="../images/logo/logo.png" alt="Astra Nova" class="logo-img">
+                </a>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="indexMain.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Explore <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="planets.html">Planets</a></li>
+                    </ul>
+                </li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="star.html" class="active">Celestials</a></li>
+                <li><a href="kosmos.html">Kosmos</a></li>
+            </ul>
+                
+                <div class="nav-actions">
+                    <button class="theme-toggle" aria-label="Toggle dark/light mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <a href="#" class="btn outline-btn">Sign In</a>
+                    <a href="#" class="btn primary-btn">Join Us</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="title">Explore <span class="gradient-text">Celestial Objects</span></h1>
+                    <p class="subtitle">Discover the internal structure of various cosmic entities</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="celestial-interactive">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Celestial Structures</h2>
+                    <p class="section-subtitle">Select an object and interact with its layers to learn more</p>
+                </div>
+                
+                <div class="celestial-tabs">
+                    <button class="celestial-tab active" data-target="star">
+                        <i class="fas fa-sun celestial-icon"></i> Star
+                    </button>
+                    <button class="celestial-tab" data-target="planet">
+                        <i class="fas fa-globe celestial-icon"></i> Planet
+                    </button>
+                    <button class="celestial-tab" data-target="black-hole">
+                        <i class="fas fa-circle celestial-icon"></i> Black Hole
+                    </button>
+                </div>
+                
+                <!-- Star content -->
+                <div class="celestial-content active" id="star-content">
+                    <div class="star-interactive-container">
+                        <div class="star-container" id="starContainer">
+                            <svg viewBox="0 0 200 200">
+                                <!-- Filters for glow effects -->
+                                <defs>
+                                    <filter id="glow">
+                                        <feGaussianBlur stdDeviation="2.5" result="blur" />
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                    </filter>
+                                    <filter id="glow-intense">
+                                        <feGaussianBlur stdDeviation="4" result="blur" />
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                    </filter>
+                                    
+                                    <!-- Corona gradient -->
+                                    <radialGradient id="coronaGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="70%" stop-color="#ffffff22" />
+                                        <stop offset="85%" stop-color="#ffffff33" />
+                                        <stop offset="100%" stop-color="#ffffff11" />
+                                    </radialGradient>
+                                    
+                                    <!-- Photosphere gradient -->
+                                    <radialGradient id="photosphereGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#ffaa00" />
+                                        <stop offset="70%" stop-color="#ff8800" />
+                                        <stop offset="100%" stop-color="#ff6600" />
+                                    </radialGradient>
+                                    
+                                    <!-- Convective Zone gradient -->
+                                    <radialGradient id="convectiveGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#ff8800" />
+                                        <stop offset="80%" stop-color="#ff6600" />
+                                        <stop offset="100%" stop-color="#ff4400" />
+                                    </radialGradient>
+                                    
+                                    <!-- Radiative Zone gradient -->
+                                    <radialGradient id="radiativeGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#ffcc44" />
+                                        <stop offset="80%" stop-color="#ffaa22" />
+                                        <stop offset="100%" stop-color="#ff8800" />
+                                    </radialGradient>
+                                    
+                                    <!-- Core gradient -->
+                                    <radialGradient id="coreGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#ffffcc" />
+                                        <stop offset="50%" stop-color="#ffeeaa" />
+                                        <stop offset="100%" stop-color="#ffcc44" />
+                                    </radialGradient>
+                                </defs>
+                                
+                                <!-- Corona (outermost layer) -->
+                                <circle class="zone corona-glow" cx="100" cy="100" r="90" 
+                                    fill="url(#coronaGradient)" 
+                                    data-name="Corona" 
+                                    data-desc="The outer atmosphere of a star, extending millions of kilometers into space." 
+                                    data-temp="1-3 million K" 
+                                    data-feature="Extremely hot but very low density plasma"
+                                    data-info="The extended outer atmosphere of a star that reaches temperatures of millions of degrees. Despite being the hottest region, it is almost invisible in ordinary light because of its extremely low density. It is only visible during a total solar eclipse as a faint, pearly white glow."
+                                    data-density="Very low"
+                                    data-keyfeature="Solar flares and coronal mass ejections originate here" />
+                                
+                                <!-- Photosphere -->
+                                <circle class="zone photosphere-texture" cx="100" cy="100" r="70" 
+                                    fill="url(#photosphereGradient)" 
+                                    data-name="Photosphere" 
+                                    data-desc="The visible surface of the star that emits most of its light." 
+                                    data-temp="5,500 K (Sun)" 
+                                    data-feature="Granular texture from convection cells"
+                                    data-info="The surface of the star that we see, though stars do not have a solid surface. This layer is where most of the star's visible light is emitted. It appears granulated due to the convection cells below it, with bright centers and darker boundaries resembling a honeycomb pattern."
+                                    data-density="Medium"
+                                    data-keyfeature="Sunspots, granules, and faculae can be observed here" />
+                                
+                                <!-- Convective Zone -->
+                                <circle class="zone convective-animation" cx="100" cy="100" r="50" 
+                                    fill="url(#convectiveGradient)" 
+                                    data-name="Convective Zone" 
+                                    data-desc="Region where energy is transported by convection - hot plasma rises and cool plasma sinks." 
+                                    data-temp="2-5 million K" 
+                                    data-feature="Constantly moving plasma conveyor belts"
+                                    data-info="In this turbulent region, energy is transported outward by convection - the same process that forms thunderstorms on Earth. Hot plasma rises to the surface, cools as it releases energy, then sinks back down to be reheated. These enormous convection cells create the visible granulation pattern on the photosphere."
+                                    data-density="High"
+                                    data-keyfeature="Creates granulation patterns visible on the photosphere" />
+                                
+                                <!-- Radiative Zone -->
+                                <circle class="zone radiative-pulse" cx="100" cy="100" r="30" 
+                                    fill="url(#radiativeGradient)" 
+                                    data-name="Radiative Zone" 
+                                    data-desc="Energy moves outward by radiation - photons scatter through the plasma." 
+                                    data-temp="5-10 million K" 
+                                    data-feature="Takes thousands of years for photons to traverse"
+                                    data-info="In this stable region, energy moves outward as radiation (photons). The plasma is so dense that photons are constantly absorbed and re-emitted in random directions. A single photon may take tens to hundreds of thousands of years to traverse this region, despite traveling at the speed of light."
+                                    data-density="Very high"
+                                    data-keyfeature="Light takes thousands of years to traverse this region" />
+                                
+                                <!-- Core -->
+                                <circle class="zone core-energy" cx="100" cy="100" r="15" 
+                                    fill="url(#coreGradient)" 
+                                    data-name="Core" 
+                                    data-desc="The central engine where nuclear fusion converts hydrogen to helium." 
+                                    data-temp="15 million K (Sun)" 
+                                    data-feature="Produces the energy that powers the star"
+                                    data-info="The central furnace of the star where nuclear fusion occurs. Under extreme temperatures and pressures, hydrogen nuclei fuse to form helium, releasing enormous amounts of energy in the process. This energy production counteracts gravity, preventing the star from collapsing. In the Sun, the core extends about 25% of the solar radius."
+                                    data-density="Extremely high"
+                                    data-keyfeature="Nuclear fusion releases energy that powers the entire star" />
+                            </svg>
+                            
+                            <!-- Tooltip that will appear on hover -->
+                            <div class="tooltip" id="starTooltip"></div>
+                        </div>
+
+                        <div id="infoBox" class="info-box">
+                            <h3>Star Layer Details</h3>
+                            <p>Click on any layer for detailed information about that region of the star.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Planet content -->
+                <div class="celestial-content" id="planet-content">
+                    <div class="star-interactive-container">
+                        <div class="star-container" id="planetContainer">
+                            <svg viewBox="0 0 200 200">
+                                <!-- Filters for glow effects -->
+                                <defs>
+                                    <filter id="planet-glow">
+                                        <feGaussianBlur stdDeviation="1.5" result="blur" />
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                    </filter>
+                                    
+                                    <!-- Atmosphere gradient -->
+                                    <radialGradient id="atmosphereGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="75%" stop-color="#60a5fa33" />
+                                        <stop offset="90%" stop-color="#3b82f622" />
+                                        <stop offset="100%" stop-color="#2563eb11" />
+                                    </radialGradient>
+                                    
+                                    <!-- Crust gradient -->
+                                    <radialGradient id="crustGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#22c55e" />
+                                        <stop offset="50%" stop-color="#16a34a" />
+                                        <stop offset="100%" stop-color="#15803d" />
+                                    </radialGradient>
+                                    
+                                    <!-- Mantle gradient -->
+                                    <radialGradient id="mantleGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#aa6655" />
+                                        <stop offset="70%" stop-color="#cc7766" />
+                                        <stop offset="100%" stop-color="#bb6655" />
+                                    </radialGradient>
+                                    
+                                    <!-- Outer Core gradient -->
+                                    <radialGradient id="outerCoreGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#ff8800" />
+                                        <stop offset="80%" stop-color="#ee7700" />
+                                        <stop offset="100%" stop-color="#dd6600" />
+                                    </radialGradient>
+                                    
+                                    <!-- Inner Core gradient -->
+                                    <radialGradient id="innerCoreGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#ffcc00" />
+                                        <stop offset="70%" stop-color="#eebb00" />
+                                        <stop offset="100%" stop-color="#ddaa00" />
+                                    </radialGradient>
+                                </defs>
+                                
+                                <!-- Atmosphere -->
+                                <circle class="zone atmosphere" cx="100" cy="100" r="90" 
+                                    fill="url(#atmosphereGradient)" 
+                                    data-name="Atmosphere" 
+                                    data-desc="The layer of gases surrounding the planet." 
+                                    data-temp="-90°C to 60°C (Earth)" 
+                                    data-feature="Protects the planet and regulates temperature"
+                                    data-info="The atmosphere is the layer of gases surrounding a planet, held in place by gravity. Earth's atmosphere is composed primarily of nitrogen (78%) and oxygen (21%), with trace amounts of other gases. It protects life by filtering out harmful solar radiation, warming the surface through the greenhouse effect, and reducing temperature extremes between day and night."
+                                    data-density="Low (decreases with altitude)"
+                                    data-keyfeature="Weather systems, protection from cosmic radiation, and heat regulation" />
+                                
+                                <!-- Crust -->
+                                <circle class="zone crust" cx="100" cy="100" r="70" 
+                                    fill="url(#crustGradient)" 
+                                    data-name="Crust" 
+                                    data-desc="The thin, solid outer layer of the planet." 
+                                    data-temp="0°C to 1,000°C (increases with depth)" 
+                                    data-feature="Forms the continents and ocean floors"
+                                    data-info="The crust is the outermost solid layer of a planet, forming a thin skin over the interior. On Earth, there are two types: continental crust (thicker, primarily granite) and oceanic crust (thinner, primarily basalt). The crust is where most geological processes visible at the surface occur, including mountain building, volcanism, and erosion."
+                                    data-density="2.7-3.0 g/cm³ (continental), 3.0-3.3 g/cm³ (oceanic)"
+                                    data-keyfeature="Contains most mineral resources and supports surface ecosystems" />
+                                
+                                <!-- Mantle -->
+                                <circle class="zone mantle" cx="100" cy="100" r="50" 
+                                    fill="url(#mantleGradient)" 
+                                    data-name="Mantle" 
+                                    data-desc="The semi-solid layer between the crust and outer core." 
+                                    data-temp="1,000°C to 4,000°C" 
+                                    data-feature="Convection currents drive plate tectonics"
+                                    data-info="The mantle is the largest layer of Earth's interior, making up about 84% of the planet's volume. It's composed primarily of silicate rocks rich in magnesium and iron. Though mostly solid, it behaves plastically over geological time scales. Convection currents in the mantle drive the movement of tectonic plates, causing continental drift, mountain building, and volcanic activity."
+                                    data-density="3.4-5.6 g/cm³ (increases with depth)"
+                                    data-keyfeature="Drives plate tectonics and volcanic activity" />
+                                
+                                <!-- Outer Core -->
+                                <circle class="zone outer-core" cx="100" cy="100" r="30" 
+                                    fill="url(#outerCoreGradient)" 
+                                    data-name="Outer Core" 
+                                    data-desc="The liquid metal layer surrounding the inner core." 
+                                    data-temp="4,000°C to 6,000°C" 
+                                    data-feature="Generates the planet's magnetic field"
+                                    data-info="Earth's outer core is a liquid layer composed primarily of iron and nickel. The rotation of Earth causes this electrically conductive fluid to flow, generating Earth's magnetic field through a process called the geodynamo. This magnetic field extends far into space, forming the magnetosphere that shields Earth from solar winds and cosmic radiation."
+                                    data-density="9.9-12.2 g/cm³"
+                                    data-keyfeature="Generates the planetary magnetic field that protects from solar radiation" />
+                                
+                                <!-- Inner Core -->
+                                <circle class="zone inner-core" cx="100" cy="100" r="15" 
+                                    fill="url(#innerCoreGradient)" 
+                                    data-name="Inner Core" 
+                                    data-desc="The solid metal center of the planet." 
+                                    data-temp="5,000°C to 6,500°C" 
+                                    data-feature="Extremely dense ball of mostly iron"
+                                    data-info="At the very center of Earth lies the inner core, a solid sphere composed primarily of iron-nickel alloy. Despite temperatures as hot as the Sun's surface, the inner core remains solid due to the immense pressure. The inner core rotates slightly faster than the rest of the planet, a phenomenon called super-rotation. It continues to grow slowly as the planet cools, with the outer core solidifying onto its surface."
+                                    data-density="12.6-13.0 g/cm³"
+                                    data-keyfeature="Provides insights into the planet's formation and cooling history" />
+                            </svg>
+                            
+                            <!-- Tooltip that will appear on hover -->
+                            <div class="tooltip" id="planetTooltip"></div>
+                        </div>
+
+                        <div id="planetInfoBox" class="info-box">
+                            <h3>Planet Layer Details</h3>
+                            <p>Click on any layer for detailed information about that region of the planet.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Black hole content -->
+                <div class="celestial-content" id="black-hole-content">
+                    <div class="star-interactive-container">
+                        <div class="star-container" id="blackHoleContainer">
+                            <svg viewBox="0 0 200 200">
+                                <!-- Filters for glow effects -->
+                                <defs>
+                                    <filter id="blackhole-glow">
+                                        <feGaussianBlur stdDeviation="3" result="blur" />
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                    </filter>
+                                    
+                                    <!-- Jet gradient -->
+                                    <linearGradient id="jetGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" stop-color="#6ee7b7aa" />
+                                        <stop offset="50%" stop-color="#10b981aa" />
+                                        <stop offset="100%" stop-color="#047857aa" />
+                                    </linearGradient>
+                                    
+                                    <!-- Event Horizon gradient -->
+                                    <radialGradient id="eventHorizonGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#000000" />
+                                        <stop offset="70%" stop-color="#000000" />
+                                        <stop offset="90%" stop-color="#111111" />
+                                        <stop offset="100%" stop-color="#222222" />
+                                    </radialGradient>
+                                    
+                                    <!-- Accretion disk gradient -->
+                                    <radialGradient id="accretionDiskGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#ffffff" />
+                                        <stop offset="40%" stop-color="#6366f1" />
+                                        <stop offset="70%" stop-color="#3730a3" />
+                                        <stop offset="100%" stop-color="#1e1b4b" />
+                                    </radialGradient>
+                                    
+                                    <!-- Outer region gradient -->
+                                    <radialGradient id="outerRegionGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                        <stop offset="0%" stop-color="#6366f1aa" />
+                                        <stop offset="50%" stop-color="#4f46e5aa" />
+                                        <stop offset="100%" stop-color="#3730a3aa" />
+                                    </radialGradient>
+                                </defs>
+                                
+                                <!-- Outer region - gravitational influence -->
+                                <circle class="zone" cx="100" cy="100" r="90" 
+                                    fill="url(#outerRegionGradient)" 
+                                    data-name="Gravitational Influence" 
+                                    data-desc="The region where the black hole's gravity dominates." 
+                                    data-temp="Variable" 
+                                    data-feature="Extreme spacetime curvature affects nearby objects"
+                                    data-info="This extended region is where the black hole's gravitational influence dominates over other nearby celestial bodies. It can stretch for thousands of light-years in the case of supermassive black holes. In this zone, stars may orbit the black hole, their trajectories clearly showing the effects of the black hole's gravity. Studying these stellar orbits helps astronomers detect and measure black holes."
+                                    data-density="Very low (interstellar medium)"
+                                    data-keyfeature="Contains orbiting stars whose movements reveal the black hole's presence" />
+                                
+                                <!-- Accretion disk -->
+                                <ellipse class="zone accretion-disk" cx="100" cy="100" rx="70" ry="20" 
+                                    fill="url(#accretionDiskGradient)" 
+                                    data-name="Accretion Disk" 
+                                    data-desc="Rapidly spinning disk of superheated matter falling toward the black hole." 
+                                    data-temp="Millions of degrees K" 
+                                    data-feature="Emits intense radiation across the electromagnetic spectrum"
+                                    data-info="The accretion disk is a flattened band of gas and dust spiraling into the black hole. As matter in the disk accelerates and compresses, it heats up to millions of degrees, causing it to emit radiation across the electromagnetic spectrum. The inner regions of the disk can approach the speed of light. This intense radiation makes active black holes some of the brightest objects in the universe, despite the black hole itself emitting no light."
+                                    data-density="Variable (increases toward center)"
+                                    data-keyfeature="Primary source of electromagnetic radiation from black hole systems" />
+                                    
+                                <!-- Event Horizon -->
+                                <circle class="zone event-horizon" cx="100" cy="100" r="25" 
+                                    fill="url(#eventHorizonGradient)" 
+                                    data-name="Event Horizon" 
+                                    data-desc="The boundary beyond which nothing can escape, not even light." 
+                                    data-temp="Approximately 10⁻⁷ K (Hawking radiation)" 
+                                    data-feature="Point of no return for matter and energy"
+                                    data-info="The event horizon is not a physical surface but a mathematical boundary in spacetime. It marks the point of no return—once anything crosses the event horizon, it can never escape the black hole's gravity. No information from inside the event horizon can reach outside observers. The radius of the event horizon (Schwarzschild radius) is directly proportional to the black hole's mass: for a black hole with the mass of our Sun, it would be about 3 kilometers."
+                                    data-density="N/A (boundary rather than physical object)"
+                                    data-keyfeature="Defines the black hole's size and is proportional to its mass" />
+                                    
+                                <!-- Jets (optional - present in some black holes) -->
+                                <rect class="zone" x="95" y="10" width="10" height="80" 
+                                    fill="url(#jetGradient)" 
+                                    data-name="Relativistic Jet" 
+                                    data-desc="Beam of energetic particles ejected along the black hole's axis of rotation." 
+                                    data-temp="Billions of degrees K" 
+                                    data-feature="Can extend for thousands of light-years"
+                                    data-info="Some black holes, particularly those in active galactic nuclei, produce powerful jets of particles that travel at near light speed. These jets form perpendicular to the accretion disk along the black hole's axis of rotation. The exact mechanism that creates these jets involves complex interactions between the black hole's rotation, magnetic fields, and the accretion disk. These jets can extend for thousands or even millions of light-years, making them some of the largest structures in the universe."
+                                    data-density="Extremely low but high-energy"
+                                    data-keyfeature="Interacts with intergalactic medium creating radio lobes visible from Earth" />
+                                    
+                                <rect class="zone" x="95" y="110" width="10" height="80" 
+                                    fill="url(#jetGradient)" 
+                                    data-name="Relativistic Jet" 
+                                    data-desc="Beam of energetic particles ejected along the black hole's axis of rotation." 
+                                    data-temp="Billions of degrees K" 
+                                    data-feature="Can extend for thousands of light-years"
+                                    data-info="Some black holes, particularly those in active galactic nuclei, produce powerful jets of particles that travel at near light speed. These jets form perpendicular to the accretion disk along the black hole's axis of rotation. The exact mechanism that creates these jets involves complex interactions between the black hole's rotation, magnetic fields, and the accretion disk. These jets can extend for thousands or even millions of light-years, making them some of the largest structures in the universe."
+                                    data-density="Extremely low but high-energy"
+                                    data-keyfeature="Interacts with intergalactic medium creating radio lobes visible from Earth" />
+                            </svg>
+                            
+                            <!-- Tooltip that will appear on hover -->
+                            <div class="tooltip" id="blackHoleTooltip"></div>
+                        </div>
+
+                        <div id="blackHoleInfoBox" class="info-box">
+                            <h3>Black Hole Structure</h3>
+                            <p>Click on any region for detailed information about that part of the black hole system.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-columns">
+                    <div class="footer-column">
+                        <div class="footer-logo">
+                            <span>Astra</span>Nova
+                        </div>
+                        <p class="footer-text">Exploring the cosmos since 2023</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Explore</h3>
+                        <ul class="footer-links">
+                            <li><a href="planets.html">Solar System</a></li>
+                            <li><a href="galaxies.html">Galaxies</a></li>
+                            <li><a href="universe.html">Multiverse</a></li>
+                            <li><a href="history.html">History</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Pages</h3>
+                        <ul class="footer-links">
+                            <li><a href="indexMain.html">Home</a></li>
+                            <li><a href="history.html">History</a></li>
+                            <li><a href="star.html">Celestials</a></li>
+                            <li><a href="kosmos.html">Kosmos</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Contact Us</h3>
+                        <ul class="footer-links">
+                            <li>Email: info@astranova.com</li>
+                            <li>Phone: +359 88 123 4567</li>
+                            <li>Address: Sofia, Bulgaria</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">&copy; 2025 Astra Nova. All rights reserved.</p>
+                <p class="attribution">Made by Plamen Yalamov, Nikola Tareyn, Alexander Dachev (TUES)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Cookie consent -->
+    <div class="cookie-consent">
+        <div class="container">
+            <p>We use cookies to enhance your browsing experience. <a href="#">Learn more</a></p>
+            <div class="cookie-buttons">
+                <button class="btn outline-btn">Preferences</button>
+                <button class="btn primary">Accept All</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Main initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            initTabSystem();
+            initStarVisualization();
+            
+            // Add planet content
+            addPlanetContent();
+            // Add black hole content
+            addBlackHoleContent();
+        });
+        
+        // Tab system for switching between celestial objects
+        function initTabSystem() {
+            const tabs = document.querySelectorAll('.celestial-tab');
+            const contents = document.querySelectorAll('.celestial-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all content
+                    contents.forEach(content => content.classList.remove('active'));
+                    
+                    // Show content that matches this tab
+                    const targetId = this.getAttribute('data-target') + '-content';
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        }
+        
+        // Star visualization functions
+        function initStarVisualization() {
+            const tooltip = document.getElementById('starTooltip');
+            const zones = document.querySelectorAll('#starContainer .zone');
+            const starContainer = document.getElementById('starContainer');
+            const infoBox = document.getElementById('infoBox');
+            
+            // Initialize with Core information
+            const coreElement = document.querySelector('.core-energy');
+            if (coreElement) {
+                const name = coreElement.getAttribute('data-name');
+                const info = coreElement.getAttribute('data-info');
+                const temp = coreElement.getAttribute('data-temp');
+                const density = coreElement.getAttribute('data-density');
+                const keyFeature = coreElement.getAttribute('data-keyfeature');
+                
+                showInfo(name, info, temp, density, keyFeature);
+            }
+            
+            // Fix for photosphere layer
+            const fixPhotosphere = () => {
+                const photosphere = document.querySelector('.photosphere-texture');
+                if (photosphere) {
+                    photosphere.setAttribute('cx', '100');
+                    photosphere.setAttribute('cy', '100');
+                    photosphere.style.transform = 'none';
+                }
+            };
+            
+            zones.forEach(zone => {
+                zone.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const info = this.getAttribute('data-info');
+                    const temp = this.getAttribute('data-temp');
+                    const density = this.getAttribute('data-density');
+                    const keyFeature = this.getAttribute('data-keyfeature');
+                    
+                    showInfo(name, info, temp, density, keyFeature);
+                });
+                
+                zone.addEventListener('mouseenter', function(e) {
+                    const name = this.getAttribute('data-name');
+                    const desc = this.getAttribute('data-desc');
+                    const temp = this.getAttribute('data-temp');
+                    const feature = this.getAttribute('data-feature');
+                    
+                    tooltip.innerHTML = `
+                        <h4>${name}</h4>
+                        <p>${desc}</p>
+                        <div class="tooltip-data">
+                            <p><span>Temperature:</span> ${temp}</p>
+                            <p><span>Feature:</span> ${feature}</p>
+                        </div>
+                    `;
+                    
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
+                    
+                    if (window.innerWidth <= 992) {
+                        tooltip.style.bottom = '-150px';
+                        tooltip.style.left = '50%';
+                        tooltip.style.transform = 'translateX(-50%)';
+                    }
+                });
+                
+                zone.addEventListener('mouseleave', function() {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.visibility = 'hidden';
+                });
+            });
+            
+            const fixLayerPositions = () => {
+                const svg = starContainer.querySelector('svg');
+                const circles = svg.querySelectorAll('circle');
+                circles.forEach(circle => {
+                    circle.setAttribute('cx', '100');
+                    circle.setAttribute('cy', '100');
+                });
+                
+                fixPhotosphere();
+            };
+            
+            fixLayerPositions();
+            window.addEventListener('resize', fixLayerPositions);
+            
+            const photosphere = document.querySelector('.photosphere-texture');
+            if (photosphere) {
+                photosphere.style.animation = 'none';
+                void photosphere.offsetWidth;
+                setTimeout(() => {
+                    photosphere.style.animation = 'bubbling 15s infinite linear';
+                    fixPhotosphere();
+                }, 100);
+            }
+        }
+        
+        // Detailed info display when clicking on a zone
+        function showInfo(title, text, temperature, density, keyFeature) {
+            const box = document.getElementById('infoBox');
+            
+            let detailsHTML = '';
+            if (temperature || density || keyFeature) {
+                detailsHTML = `
+                <div class="star-details">
+                    ${temperature ? `<div class="detail-item">
+                        <h4><i class="fas fa-temperature-high"></i> Temperature</h4>
+                        <p>${temperature}</p>
+                    </div>` : ''}
+                    
+                    ${density ? `<div class="detail-item">
+                        <h4><i class="fas fa-atom"></i> Density</h4>
+                        <p>${density}</p>
+                    </div>` : ''}
+                    
+                    ${keyFeature ? `<div class="detail-item">
+                        <h4><i class="fas fa-star"></i> Key Feature</h4>
+                        <p>${keyFeature}</p>
+                    </div>` : ''}
+                </div>`;
+            }
+            
+            box.innerHTML = `<h3>${title}</h3><p>${text}</p>${detailsHTML}`;
+            box.style.display = 'block';
+            
+            box.classList.add('active');
+            
+            setTimeout(() => {
+                box.classList.remove('active');
+            }, 300);
+        }
+        
+        // Dynamic content addition functions
+        function addPlanetContent() {
+            const container = document.querySelector('#celestial-interactive .container');
+            
+            // Create planet content div
+            const planetContent = document.createElement('div');
+            planetContent.className = 'celestial-content';
+            planetContent.id = 'planet-content';
+            
+            // Add planet content HTML
+            planetContent.innerHTML = `
+                <div class="star-interactive-container">
+                    <div class="star-container" id="planetContainer">
+                        <svg viewBox="0 0 200 200">
+                            <!-- Filters for glow effects -->
+                            <defs>
+                                <filter id="planet-glow">
+                                    <feGaussianBlur stdDeviation="1.5" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                                
+                                <!-- Atmosphere gradient -->
+                                <radialGradient id="atmosphereGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="75%" stop-color="#60a5fa33" />
+                                    <stop offset="90%" stop-color="#3b82f622" />
+                                    <stop offset="100%" stop-color="#2563eb11" />
+                                </radialGradient>
+                                
+                                <!-- Crust gradient -->
+                                <radialGradient id="crustGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#22c55e" />
+                                    <stop offset="50%" stop-color="#16a34a" />
+                                    <stop offset="100%" stop-color="#15803d" />
+                                </radialGradient>
+                                
+                                <!-- Mantle gradient -->
+                                <radialGradient id="mantleGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#aa6655" />
+                                    <stop offset="70%" stop-color="#cc7766" />
+                                    <stop offset="100%" stop-color="#bb6655" />
+                                </radialGradient>
+                                
+                                <!-- Outer Core gradient -->
+                                <radialGradient id="outerCoreGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#ff8800" />
+                                    <stop offset="80%" stop-color="#ee7700" />
+                                    <stop offset="100%" stop-color="#dd6600" />
+                                </radialGradient>
+                                
+                                <!-- Inner Core gradient -->
+                                <radialGradient id="innerCoreGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#ffcc00" />
+                                    <stop offset="70%" stop-color="#eebb00" />
+                                    <stop offset="100%" stop-color="#ddaa00" />
+                                </radialGradient>
+                            </defs>
+                            
+                            <!-- Atmosphere -->
+                            <circle class="zone atmosphere" cx="100" cy="100" r="90" 
+                                fill="url(#atmosphereGradient)" 
+                                data-name="Atmosphere" 
+                                data-desc="The layer of gases surrounding the planet." 
+                                data-temp="-90°C to 60°C (Earth)" 
+                                data-feature="Protects the planet and regulates temperature"
+                                data-info="The atmosphere is the layer of gases surrounding a planet, held in place by gravity. Earth's atmosphere is composed primarily of nitrogen (78%) and oxygen (21%), with trace amounts of other gases. It protects life by filtering out harmful solar radiation, warming the surface through the greenhouse effect, and reducing temperature extremes between day and night."
+                                data-density="Low (decreases with altitude)"
+                                data-keyfeature="Weather systems, protection from cosmic radiation, and heat regulation" />
+                                
+                            <!-- Crust -->
+                            <circle class="zone crust" cx="100" cy="100" r="70" 
+                                fill="url(#crustGradient)" 
+                                data-name="Crust" 
+                                data-desc="The thin, solid outer layer of the planet." 
+                                data-temp="0°C to 1,000°C (increases with depth)" 
+                                data-feature="Forms the continents and ocean floors"
+                                data-info="The crust is the outermost solid layer of a planet, forming a thin skin over the interior. On Earth, there are two types: continental crust (thicker, primarily granite) and oceanic crust (thinner, primarily basalt). The crust is where most geological processes visible at the surface occur, including mountain building, volcanism, and erosion."
+                                data-density="2.7-3.0 g/cm³ (continental), 3.0-3.3 g/cm³ (oceanic)"
+                                data-keyfeature="Contains most mineral resources and supports surface ecosystems" />
+                                
+                            <!-- Mantle -->
+                            <circle class="zone mantle" cx="100" cy="100" r="50" 
+                                fill="url(#mantleGradient)" 
+                                data-name="Mantle" 
+                                data-desc="The semi-solid layer between the crust and outer core." 
+                                data-temp="1,000°C to 4,000°C" 
+                                data-feature="Convection currents drive plate tectonics"
+                                data-info="The mantle is the largest layer of Earth's interior, making up about 84% of the planet's volume. It's composed primarily of silicate rocks rich in magnesium and iron. Though mostly solid, it behaves plastically over geological time scales. Convection currents in the mantle drive the movement of tectonic plates, causing continental drift, mountain building, and volcanic activity."
+                                data-density="3.4-5.6 g/cm³ (increases with depth)"
+                                data-keyfeature="Drives plate tectonics and volcanic activity" />
+                                
+                            <!-- Outer Core -->
+                            <circle class="zone outer-core" cx="100" cy="100" r="30" 
+                                fill="url(#outerCoreGradient)" 
+                                data-name="Outer Core" 
+                                data-desc="The liquid metal layer surrounding the inner core." 
+                                data-temp="4,000°C to 6,000°C" 
+                                data-feature="Generates the planet's magnetic field"
+                                data-info="Earth's outer core is a liquid layer composed primarily of iron and nickel. The rotation of Earth causes this electrically conductive fluid to flow, generating Earth's magnetic field through a process called the geodynamo. This magnetic field extends far into space, forming the magnetosphere that shields Earth from solar winds and cosmic radiation."
+                                data-density="9.9-12.2 g/cm³"
+                                data-keyfeature="Generates the planetary magnetic field that protects from solar radiation" />
+                                
+                            <!-- Inner Core -->
+                            <circle class="zone inner-core" cx="100" cy="100" r="15" 
+                                fill="url(#innerCoreGradient)" 
+                                data-name="Inner Core" 
+                                data-desc="The solid metal center of the planet." 
+                                data-temp="5,000°C to 6,500°C" 
+                                data-feature="Extremely dense ball of mostly iron"
+                                data-info="At the very center of Earth lies the inner core, a solid sphere composed primarily of iron-nickel alloy. Despite temperatures as hot as the Sun's surface, the inner core remains solid due to the immense pressure. The inner core rotates slightly faster than the rest of the planet, a phenomenon called super-rotation. It continues to grow slowly as the planet cools, with the outer core solidifying onto its surface."
+                                data-density="12.6-13.0 g/cm³"
+                                data-keyfeature="Provides insights into the planet's formation and cooling history" />
+                        </svg>
+                        
+                        <!-- Tooltip that will appear on hover -->
+                        <div class="tooltip" id="planetTooltip"></div>
+                    </div>
+
+                    <div id="planetInfoBox" class="info-box">
+                        <h3>Planet Layer Details</h3>
+                        <p>Click on any layer for detailed information about that region of the planet.</p>
+                    </div>
+                </div>
+            `;
+            
+            // Add to container
+            container.appendChild(planetContent);
+            
+            // Initialize the planet visualization
+            initPlanetVisualization();
+        }
+        
+        // Planet visualization functions
+        function initPlanetVisualization() {
+            const tooltip = document.getElementById('planetTooltip');
+            const zones = document.querySelectorAll('#planetContainer .zone');
+            const planetContainer = document.getElementById('planetContainer');
+            const infoBox = document.getElementById('planetInfoBox');
+            
+            // Initialize with Core information
+            const coreElement = document.querySelector('#planetContainer .inner-core');
+            if (coreElement) {
+                const name = coreElement.getAttribute('data-name');
+                const info = coreElement.getAttribute('data-info');
+                const temp = coreElement.getAttribute('data-temp');
+                const density = coreElement.getAttribute('data-density');
+                const keyFeature = coreElement.getAttribute('data-keyfeature');
+                
+                showPlanetInfo(name, info, temp, density, keyFeature);
+            }
+            
+            zones.forEach(zone => {
+                zone.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const info = this.getAttribute('data-info');
+                    const temp = this.getAttribute('data-temp');
+                    const density = this.getAttribute('data-density');
+                    const keyFeature = this.getAttribute('data-keyfeature');
+                    
+                    showPlanetInfo(name, info, temp, density, keyFeature);
+                });
+                
+                zone.addEventListener('mouseenter', function(e) {
+                    const name = this.getAttribute('data-name');
+                    const desc = this.getAttribute('data-desc');
+                    const temp = this.getAttribute('data-temp');
+                    const feature = this.getAttribute('data-feature');
+                    
+                    tooltip.innerHTML = `
+                        <h4>${name}</h4>
+                        <p>${desc}</p>
+                        <div class="tooltip-data">
+                            <p><span>Temperature:</span> ${temp}</p>
+                            <p><span>Feature:</span> ${feature}</p>
+                        </div>
+                    `;
+                    
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
+                    
+                    if (window.innerWidth <= 992) {
+                        tooltip.style.bottom = '-150px';
+                        tooltip.style.left = '50%';
+                        tooltip.style.transform = 'translateX(-50%)';
+                    }
+                });
+                
+                zone.addEventListener('mouseleave', function() {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.visibility = 'hidden';
+                });
+            });
+            
+            // Fix SVG positioning
+            const fixLayerPositions = () => {
+                const svg = planetContainer.querySelector('svg');
+                const circles = svg.querySelectorAll('circle');
+                circles.forEach(circle => {
+                    circle.setAttribute('cx', '100');
+                    circle.setAttribute('cy', '100');
+                });
+            };
+            
+            fixLayerPositions();
+            window.addEventListener('resize', fixLayerPositions);
+        }
+        
+        // Detailed info display for planet
+        function showPlanetInfo(title, text, temperature, density, keyFeature) {
+            const box = document.getElementById('planetInfoBox');
+            
+            let detailsHTML = '';
+            if (temperature || density || keyFeature) {
+                detailsHTML = `
+                <div class="star-details">
+                    ${temperature ? `<div class="detail-item">
+                        <h4><i class="fas fa-temperature-high"></i> Temperature</h4>
+                        <p>${temperature}</p>
+                    </div>` : ''}
+                    
+                    ${density ? `<div class="detail-item">
+                        <h4><i class="fas fa-atom"></i> Density</h4>
+                        <p>${density}</p>
+                    </div>` : ''}
+                    
+                    ${keyFeature ? `<div class="detail-item">
+                        <h4><i class="fas fa-globe"></i> Key Feature</h4>
+                        <p>${keyFeature}</p>
+                    </div>` : ''}
+                </div>`;
+            }
+            
+            box.innerHTML = `<h3>${title}</h3><p>${text}</p>${detailsHTML}`;
+            box.style.display = 'block';
+            
+            box.classList.add('active');
+            
+            setTimeout(() => {
+                box.classList.remove('active');
+            }, 300);
+        }
+        
+        function addBlackHoleContent() {
+            const container = document.querySelector('#celestial-interactive .container');
+            
+            // Create black hole content div
+            const blackHoleContent = document.createElement('div');
+            blackHoleContent.className = 'celestial-content';
+            blackHoleContent.id = 'black-hole-content';
+            
+            // Add black hole content HTML
+            blackHoleContent.innerHTML = `
+                <div class="star-interactive-container">
+                    <div class="star-container" id="blackHoleContainer">
+                        <svg viewBox="0 0 200 200">
+                            <!-- Filters for glow effects -->
+                            <defs>
+                                <filter id="blackhole-glow">
+                                    <feGaussianBlur stdDeviation="3" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                                
+                                <!-- Jet gradient -->
+                                <linearGradient id="jetGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#6ee7b7aa" />
+                                    <stop offset="50%" stop-color="#10b981aa" />
+                                    <stop offset="100%" stop-color="#047857aa" />
+                                </linearGradient>
+                                
+                                <!-- Event Horizon gradient -->
+                                <radialGradient id="eventHorizonGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#000000" />
+                                    <stop offset="70%" stop-color="#000000" />
+                                    <stop offset="90%" stop-color="#111111" />
+                                    <stop offset="100%" stop-color="#222222" />
+                                </radialGradient>
+                                
+                                <!-- Accretion disk gradient -->
+                                <radialGradient id="accretionDiskGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#ffffff" />
+                                    <stop offset="40%" stop-color="#6366f1" />
+                                    <stop offset="70%" stop-color="#3730a3" />
+                                    <stop offset="100%" stop-color="#1e1b4b" />
+                                </radialGradient>
+                                
+                                <!-- Outer region gradient -->
+                                <radialGradient id="outerRegionGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#6366f1aa" />
+                                    <stop offset="50%" stop-color="#4f46e5aa" />
+                                    <stop offset="100%" stop-color="#3730a3aa" />
+                                </radialGradient>
+                            </defs>
+                            
+                            <!-- Outer region - gravitational influence -->
+                            <circle class="zone" cx="100" cy="100" r="90" 
+                                fill="url(#outerRegionGradient)" 
+                                data-name="Gravitational Influence" 
+                                data-desc="The region where the black hole's gravity dominates." 
+                                data-temp="Variable" 
+                                data-feature="Extreme spacetime curvature affects nearby objects"
+                                data-info="This extended region is where the black hole's gravitational influence dominates over other nearby celestial bodies. It can stretch for thousands of light-years in the case of supermassive black holes. In this zone, stars may orbit the black hole, their trajectories clearly showing the effects of the black hole's gravity. Studying these stellar orbits helps astronomers detect and measure black holes."
+                                data-density="Very low (interstellar medium)"
+                                data-keyfeature="Contains orbiting stars whose movements reveal the black hole's presence" />
+                                
+                            <!-- Accretion disk -->
+                            <ellipse class="zone accretion-disk" cx="100" cy="100" rx="70" ry="20" 
+                                fill="url(#accretionDiskGradient)" 
+                                data-name="Accretion Disk" 
+                                data-desc="Rapidly spinning disk of superheated matter falling toward the black hole." 
+                                data-temp="Millions of degrees K" 
+                                data-feature="Emits intense radiation across the electromagnetic spectrum"
+                                data-info="The accretion disk is a flattened band of gas and dust spiraling into the black hole. As matter in the disk accelerates and compresses, it heats up to millions of degrees, causing it to emit radiation across the electromagnetic spectrum. The inner regions of the disk can approach the speed of light. This intense radiation makes active black holes some of the brightest objects in the universe, despite the black hole itself emitting no light."
+                                data-density="Variable (increases toward center)"
+                                data-keyfeature="Primary source of electromagnetic radiation from black hole systems" />
+                                
+                            <!-- Event Horizon -->
+                            <circle class="zone event-horizon" cx="100" cy="100" r="25" 
+                                fill="url(#eventHorizonGradient)" 
+                                data-name="Event Horizon" 
+                                data-desc="The boundary beyond which nothing can escape, not even light." 
+                                data-temp="Approximately 10⁻⁷ K (Hawking radiation)" 
+                                data-feature="Point of no return for matter and energy"
+                                data-info="The event horizon is not a physical surface but a mathematical boundary in spacetime. It marks the point of no return—once anything crosses the event horizon, it can never escape the black hole's gravity. No information from inside the event horizon can reach outside observers. The radius of the event horizon (Schwarzschild radius) is directly proportional to the black hole's mass: for a black hole with the mass of our Sun, it would be about 3 kilometers."
+                                data-density="N/A (boundary rather than physical object)"
+                                data-keyfeature="Defines the black hole's size and is proportional to its mass" />
+                                
+                            <!-- Jets (optional - present in some black holes) -->
+                            <rect class="zone" x="95" y="10" width="10" height="80" 
+                                fill="url(#jetGradient)" 
+                                data-name="Relativistic Jet" 
+                                data-desc="Beam of energetic particles ejected along the black hole's axis of rotation." 
+                                data-temp="Billions of degrees K" 
+                                data-feature="Can extend for thousands of light-years"
+                                data-info="Some black holes, particularly those in active galactic nuclei, produce powerful jets of particles that travel at near light speed. These jets form perpendicular to the accretion disk along the black hole's axis of rotation. The exact mechanism that creates these jets involves complex interactions between the black hole's rotation, magnetic fields, and the accretion disk. These jets can extend for thousands or even millions of light-years, making them some of the largest structures in the universe."
+                                data-density="Extremely low but high-energy"
+                                data-keyfeature="Interacts with intergalactic medium creating radio lobes visible from Earth" />
+                                
+                            <rect class="zone" x="95" y="110" width="10" height="80" 
+                                fill="url(#jetGradient)" 
+                                data-name="Relativistic Jet" 
+                                data-desc="Beam of energetic particles ejected along the black hole's axis of rotation." 
+                                data-temp="Billions of degrees K" 
+                                data-feature="Can extend for thousands of light-years"
+                                data-info="Some black holes, particularly those in active galactic nuclei, produce powerful jets of particles that travel at near light speed. These jets form perpendicular to the accretion disk along the black hole's axis of rotation. The exact mechanism that creates these jets involves complex interactions between the black hole's rotation, magnetic fields, and the accretion disk. These jets can extend for thousands or even millions of light-years, making them some of the largest structures in the universe."
+                                data-density="Extremely low but high-energy"
+                                data-keyfeature="Interacts with intergalactic medium creating radio lobes visible from Earth" />
+                        </svg>
+                        
+                        <!-- Tooltip that will appear on hover -->
+                        <div class="tooltip" id="blackHoleTooltip"></div>
+                    </div>
+
+                    <div id="blackHoleInfoBox" class="info-box">
+                        <h3>Black Hole Structure</h3>
+                        <p>Click on any region for detailed information about that part of the black hole system.</p>
+                    </div>
+                </div>
+            `;
+            
+            // Add to container
+            container.appendChild(blackHoleContent);
+            
+            // Initialize the black hole visualization
+            initBlackHoleVisualization();
+        }
+        
+        // Black Hole visualization functions
+        function initBlackHoleVisualization() {
+            const tooltip = document.getElementById('blackHoleTooltip');
+            const zones = document.querySelectorAll('#blackHoleContainer .zone');
+            const blackHoleContainer = document.getElementById('blackHoleContainer');
+            const infoBox = document.getElementById('blackHoleInfoBox');
+            
+            // Initialize with Event Horizon information
+            const horizonElement = document.querySelector('#blackHoleContainer .event-horizon');
+            if (horizonElement) {
+                const name = horizonElement.getAttribute('data-name');
+                const info = horizonElement.getAttribute('data-info');
+                const temp = horizonElement.getAttribute('data-temp');
+                const density = horizonElement.getAttribute('data-density');
+                const keyFeature = horizonElement.getAttribute('data-keyfeature');
+                
+                showBlackHoleInfo(name, info, temp, density, keyFeature);
+            }
+            
+            zones.forEach(zone => {
+                zone.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const info = this.getAttribute('data-info');
+                    const temp = this.getAttribute('data-temp');
+                    const density = this.getAttribute('data-density');
+                    const keyFeature = this.getAttribute('data-keyfeature');
+                    
+                    showBlackHoleInfo(name, info, temp, density, keyFeature);
+                });
+                
+                zone.addEventListener('mouseenter', function(e) {
+                    const name = this.getAttribute('data-name');
+                    const desc = this.getAttribute('data-desc');
+                    const temp = this.getAttribute('data-temp');
+                    const feature = this.getAttribute('data-feature');
+                    
+                    tooltip.innerHTML = `
+                        <h4>${name}</h4>
+                        <p>${desc}</p>
+                        <div class="tooltip-data">
+                            <p><span>Temperature:</span> ${temp}</p>
+                            <p><span>Feature:</span> ${feature}</p>
+                        </div>
+                    `;
+                    
+                    tooltip.style.opacity = '1';
+                    tooltip.style.visibility = 'visible';
+                    
+                    if (window.innerWidth <= 992) {
+                        tooltip.style.bottom = '-150px';
+                        tooltip.style.left = '50%';
+                        tooltip.style.transform = 'translateX(-50%)';
+                    }
+                });
+                
+                zone.addEventListener('mouseleave', function() {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.visibility = 'hidden';
+                });
+            });
+            
+            // Fix SVG positioning
+            const fixLayerPositions = () => {
+                const circles = blackHoleContainer.querySelectorAll('circle');
+                circles.forEach(circle => {
+                    circle.setAttribute('cx', '100');
+                    circle.setAttribute('cy', '100');
+                });
+                
+                const ellipses = blackHoleContainer.querySelectorAll('ellipse');
+                ellipses.forEach(ellipse => {
+                    ellipse.setAttribute('cx', '100');
+                    ellipse.setAttribute('cy', '100');
+                });
+            };
+            
+            fixLayerPositions();
+            window.addEventListener('resize', fixLayerPositions);
+        }
+        
+        // Detailed info display for black hole
+        function showBlackHoleInfo(title, text, temperature, density, keyFeature) {
+            const box = document.getElementById('blackHoleInfoBox');
+            
+            let detailsHTML = '';
+            if (temperature || density || keyFeature) {
+                detailsHTML = `
+                <div class="star-details">
+                    ${temperature ? `<div class="detail-item">
+                        <h4><i class="fas fa-temperature-high"></i> Temperature</h4>
+                        <p>${temperature}</p>
+                    </div>` : ''}
+                    
+                    ${density ? `<div class="detail-item">
+                        <h4><i class="fas fa-atom"></i> Density</h4>
+                        <p>${density}</p>
+                    </div>` : ''}
+                    
+                    ${keyFeature ? `<div class="detail-item">
+                        <h4><i class="fas fa-circle"></i> Key Feature</h4>
+                        <p>${keyFeature}</p>
+                    </div>` : ''}
+                </div>`;
+            }
+            
+            box.innerHTML = `<h3>${title}</h3><p>${text}</p>${detailsHTML}`;
+            box.style.display = 'block';
+            
+            box.classList.add('active');
+            
+            setTimeout(() => {
+                box.classList.remove('active');
+            }, 300);
+        }
+    </script>
 </body>
-</html>
+</html> 
