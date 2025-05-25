@@ -8,8 +8,7 @@ body {
   text-align: center;
 }
 
-/* Хедър */
-.site-header {
+ .site-header {
   background: linear-gradient(135deg, #0a1e40, #00172d);
     padding: 20px 20px 10px;
     text-align: center;
@@ -214,9 +213,13 @@ section p {
 }
 
 
+
+
 .responsive-image {
   display: block;
-  max-width: 60%;
+  width: 600px; /* фиксирана ширина */
+  height:600px; /* фиксирана височина */
+  object-fit: cover;
   height: auto;
   border-radius: 12px;
   box-shadow: 0 0 20px #00ffa1aa;
